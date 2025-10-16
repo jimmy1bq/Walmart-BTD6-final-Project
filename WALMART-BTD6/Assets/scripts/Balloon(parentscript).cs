@@ -66,19 +66,16 @@ public class Box : MonoBehaviour
             { bigBoxType.ddt, 8 },
             { bigBoxType.bad, 1 },
     };
-   protected List<Transform> wayPoints = new List<Transform>();
+   public List<Transform> wayPoints = new List<Transform>();
     private void Awake()
     {
-     
+        
+
     }
 
     void Start()
     {
-        foreach (GameObject h in GameObject.FindGameObjectsWithTag("WayPoints"))
-        {
-            wayPoints.Add(h.transform);
-        }
-
+      
     }
 
     // Update is called once per frame

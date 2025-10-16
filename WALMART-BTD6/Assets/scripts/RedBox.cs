@@ -6,7 +6,9 @@ public class RedBox : Box
     boxType boxColor = boxType.red;
     int layer;
     int balloonSpeedValue;
-    
+    int i=0;
+   
+
     private void Awake()
     {
         layer = balloonLayer[boxColor];
@@ -15,24 +17,25 @@ public class RedBox : Box
 
     }
     private void Start()
-    {
-        moveToWayPoint();
+    { 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+      Debug.Log(wayPoints.Count);
+       if (transform.position != WayPointManager.instance.wayPoints[i].position)
+       {
+           moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
+       }
+       else { i++; }
     }
     void gotPop() { 
         Destroy(gameObject);
     }
-    void moveToWayPoint()
+    void moveToWayPoint(Vector3 wayPointOn)
     {
-        foreach (Transform point in wayPoints)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, point.position, balloonSpeedValue * Time.deltaTime);
-        }
+       gameObject.transform.position = Vector3.MoveTowards(transform.position, wayPointOn, balloonSpeedValue * Time.deltaTime);
     }
 
 }
