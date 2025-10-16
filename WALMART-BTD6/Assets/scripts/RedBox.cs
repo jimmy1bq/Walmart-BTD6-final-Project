@@ -29,7 +29,7 @@ public class RedBox : Box
            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
        }
        else { i++; }
-        if()
+       
     }
     void gotPop() { 
         Destroy(gameObject);
