@@ -23,12 +23,13 @@ public class RedBox : Box
     // Update is called once per frame
     void Update()
     {
-      Debug.Log(wayPoints.Count);
-       if (transform.position != WayPointManager.instance.wayPoints[i].position)
+      
+        if (transform.position != WayPointManager.instance.wayPoints[i].position)
        {
            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
        }
        else { i++; }
+        if()
     }
     void gotPop() { 
         Destroy(gameObject);
