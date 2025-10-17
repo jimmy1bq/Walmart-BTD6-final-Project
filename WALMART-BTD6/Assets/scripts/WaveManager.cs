@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] GameObject redbox;
+    [SerializeField] GameObject pinkbox;
     [SerializeField] Transform spawnPoint;
 
 
@@ -21,6 +22,7 @@ public class WaveManager : MonoBehaviour
     }
     void startWave1()
     {
-       Instantiate(redbox, spawnPoint.position, Quaternion.identity);
+       Instantiate(pinkbox, spawnPoint.position, Quaternion.identity);
+        Instantiate(redbox, spawnPoint.position, Quaternion.identity);
     }
 }

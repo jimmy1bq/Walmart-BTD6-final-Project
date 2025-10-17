@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class RedBox : Box
+public class PinkBox : Box
 {
    
-    boxType boxColor = boxType.red;
+
+    boxType boxColor = boxType.pink;
     int layer;
     int balloonSpeedValue;
-    int i=0;
+    int i = 0;
     int totalWayPoints;
 
 
@@ -16,13 +17,12 @@ public class RedBox : Box
     {
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
-        //minus one because of index start @ 0 
-        totalWayPoints = WayPointManager.instance.wayPoints.Count-1;
+        totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
 
 
     }
     private void Start()
-    { 
+    {
     }
 
     // Update is called once per frame
@@ -37,19 +37,17 @@ public class RedBox : Box
         {
             i++;
         }
-        else if (i >= totalWayPoints)
-        {
-            
+        else if (i >= totalWayPoints) {
+            events.LoseLives.Invoke(balloonLayer[boxColor]);
             Destroy(gameObject);
         }
 
+
     }
-    void gotPop() { 
-        Destroy(gameObject);
-    }
+
     void moveToWayPoint(Vector3 wayPointOn)
     {
-       gameObject.transform.position = Vector3.MoveTowards(transform.position, wayPointOn, balloonSpeedValue * Time.deltaTime);
+        gameObject.transform.position = Vector3.MoveTowards(transform.position, wayPointOn, balloonSpeedValue * Time.deltaTime);
     }
 
 }

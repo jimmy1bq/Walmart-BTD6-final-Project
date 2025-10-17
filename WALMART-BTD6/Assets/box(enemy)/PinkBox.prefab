@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3842490214894986177
+--- !u!1 &2676424228484237119
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1598432201626424281}
-  - component: {fileID: 8656699031174940105}
-  - component: {fileID: 4054569481116620412}
-  - component: {fileID: 7600781517628845742}
+  - component: {fileID: 5270832514955020165}
+  - component: {fileID: 995583609698028606}
+  - component: {fileID: 5734092998205174891}
+  - component: {fileID: 1923642470976861367}
   m_Layer: 0
-  m_Name: RedBox
+  m_Name: PinkBox
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1598432201626424281
+--- !u!4 &5270832514955020165
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3842490214894986177}
+  m_GameObject: {fileID: 2676424228484237119}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.37, y: 3.02, z: 1.35}
+  m_LocalPosition: {x: -7.80597, y: 3.02, z: -2.11432}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8656699031174940105
+--- !u!33 &995583609698028606
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3842490214894986177}
+  m_GameObject: {fileID: 2676424228484237119}
   m_Mesh: {fileID: 2529389747858766315, guid: 5155f6fabf3dc0c4ea40663cb9b2ead0, type: 3}
---- !u!23 &4054569481116620412
+--- !u!23 &5734092998205174891
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3842490214894986177}
+  m_GameObject: {fileID: 2676424228484237119}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8812e228b2792ba489b0c1ce228d2b14, type: 2}
+  - {fileID: 2100000, guid: fed6814399b3a3145a531dd99f045485, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,16 +90,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7600781517628845742
+--- !u!114 &1923642470976861367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3842490214894986177}
+  m_GameObject: {fileID: 2676424228484237119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42c7d2376334b8b48b59fb3ebc1a1313, type: 3}
+  m_Script: {fileID: 11500000, guid: 79fbf9f663f03144d9f83bdd0b2fed35, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RedBox
+  m_EditorClassIdentifier: Assembly-CSharp::PinkBox
   wayPoints: []

@@ -5,7 +5,7 @@ public class Box : MonoBehaviour
 {
    
     protected enum boxType { 
-    none,red,blue,green, yellow, pink, black, white, purple, lead, zebra, rainbow }
+    none,red,blue,green, yellow, pink, black, white, purple, lead, orange, seagreen }
     protected enum bigBoxType
     {
        ceramic, moab, bfb, zomg, ddt, bad
@@ -21,8 +21,8 @@ public class Box : MonoBehaviour
             { boxType.white, 6 },
             { boxType.purple, 6 },
             { boxType.lead, 7 },
-            { boxType.zebra, 7 },
-            { boxType.rainbow, 8 },
+            { boxType.orange, 7 },
+            { boxType.seagreen, 8 },
     };
     protected Dictionary<bigBoxType, int> bigBalloonHp =new Dictionary<bigBoxType, int>() {
             { bigBoxType.ceramic, 200 },
@@ -41,7 +41,7 @@ public class Box : MonoBehaviour
             { 5, boxType.pink },
             { 6, boxType.black },
             { 7, boxType.lead },
-            { 8, boxType.rainbow },
+            { 8, boxType.seagreen },
     };
     //balloon speed
     protected Dictionary<boxType, int> balloonSpeed = new Dictionary<boxType, int>() {
@@ -54,8 +54,8 @@ public class Box : MonoBehaviour
             { boxType.white, 3 },
             { boxType.purple, 6 },
             { boxType.lead, 2 },
-            { boxType.zebra, 3 },
-            { boxType.rainbow, 3},
+            { boxType.orange, 3 },
+            { boxType.seagreen, 3},
     };
     //big balloon speed
     protected Dictionary<bigBoxType, int> bigBalloonSpeed =  new Dictionary<bigBoxType, int>() {
