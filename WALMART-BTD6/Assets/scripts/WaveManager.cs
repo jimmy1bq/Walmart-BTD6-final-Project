@@ -15,7 +15,7 @@ public class WaveManager : MonoBehaviour
     bool waveOnGoing = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {   Debug.Log("Wave starting....");
+    {  
         waveOnGoing = true;
         startWave1();
     }

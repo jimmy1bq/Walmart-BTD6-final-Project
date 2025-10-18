@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class GreenBox : Box
 {
 
-  
+    Coroutine AdvanceIndex;
     boxType boxColor = boxType.green;
     int layer;
     int balloonSpeedValue;
@@ -23,25 +24,14 @@ public class GreenBox : Box
     }
     private void Start()
     {
+        AdvanceIndex = StartCoroutine(advanceIndex());
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (transform.position != WayPointManager.instance.wayPoints[i].position)
-        {
-            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
-        }
-        else if (i < totalWayPoints)
-        {
-            i++;
-        }
-        else if (i >= totalWayPoints)
-        {
-            events.LoseLives.Invoke(balloonLayer[boxColor]);
-            Destroy(gameObject);
-        }
+
     }
 
     void moveToWayPoint(Vector3 wayPointOn)
@@ -52,7 +42,34 @@ public class GreenBox : Box
     {
         boxType downToLayer = pop(damage, box);
 
+    }
+    IEnumerator advanceIndex()
+    {
+      
+        yield return new WaitUntil(onWayPoint);
+        i++;
+        if (!(i >= totalWayPoints + 1))
+        {
+            StartCoroutine(advanceIndex());
+        }
+        else
+        {
+            events.LoseLives.Invoke(layer);
+            Destroy(gameObject);
+        }
 
+    }
+    bool onWayPoint()
+    {
+        if (transform.position == WayPointManager.instance.wayPoints[i].position)
+        {
+            return true;
+        }
+        else
+        {
+            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
+            return false;
+        }
 
     }
 }

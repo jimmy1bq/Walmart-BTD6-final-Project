@@ -84,6 +84,7 @@ public class Box : MonoBehaviour
             { boxType.yellow, yellowb },
             { boxType.pink, pinkb },
         };
+        Debug.Log(balloonPreFab[boxType.red].name);
     }
 
     void Start()
@@ -109,7 +110,7 @@ public class Box : MonoBehaviour
     protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,int speed) { 
     this.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
-
+    
    
   
 }
