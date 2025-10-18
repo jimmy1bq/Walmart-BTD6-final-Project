@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PinkBox : Box
 {
+
    
 
     boxType boxColor = boxType.pink;
@@ -41,13 +42,16 @@ public class PinkBox : Box
             events.LoseLives.Invoke(balloonLayer[boxColor]);
             Destroy(gameObject);
         }
-
-
     }
 
     void moveToWayPoint(Vector3 wayPointOn)
     {
-        gameObject.transform.position = Vector3.MoveTowards(transform.position, wayPointOn, balloonSpeedValue * Time.deltaTime);
+      enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
+    void damageTaken(int damage, boxType box) {
+        boxType downToLayer = pop(damage, box);
 
+       
+
+    }
 }

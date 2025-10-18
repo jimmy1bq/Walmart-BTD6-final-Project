@@ -3,13 +3,21 @@ using UnityEngine;
 
 public class Box : MonoBehaviour
 {
-   
+  
+    [SerializeField]  GameObject redb;
+    [SerializeField]  GameObject blueb;
+    [SerializeField]  GameObject greenb;
+    [SerializeField]  GameObject yellowb;
+    [SerializeField]  GameObject pinkb;
+
+
     protected enum boxType { 
     none,red,blue,green, yellow, pink, black, white, purple, lead, orange, seagreen }
     protected enum bigBoxType
     {
        ceramic, moab, bfb, zomg, ddt, bad
     }
+    protected Dictionary<boxType, GameObject> balloonPreFab;
     protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
             { boxType.none, 0 },
             { boxType.red, 1 },
@@ -66,11 +74,16 @@ public class Box : MonoBehaviour
             { bigBoxType.ddt, 8 },
             { bigBoxType.bad, 1 },
     };
-   public List<Transform> wayPoints = new List<Transform>();
-    private void Awake()
-    {
-        
 
+    private void Awake()
+    {//unity throws an error if I try to initialize the dictionary above with serialized game objects if I don't put it in awake/start
+        balloonPreFab = new Dictionary<boxType, GameObject>() {
+            { boxType.red, redb },
+            { boxType.blue, blueb },
+            { boxType.green, greenb },
+            { boxType.yellow, yellowb },
+            { boxType.pink, pinkb },
+        };
     }
 
     void Start()
@@ -83,19 +96,20 @@ public class Box : MonoBehaviour
     {
         
     }
-    protected void takeDamage(int damage) { 
     
-    }
     protected boxType pop(int damage, boxType box) {
         int damageTaken= balloonLayer[box]-damage;
         if (damageTaken <=0 ) {
             return boxType.none;
         }
-
         return layerToBalloon[damageTaken];
     }
-    //empty on purpose to be overridden
-    protected void boxMovement() { 
-    
+
+
+    protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,int speed) { 
+    this.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
+
+   
+  
 }
