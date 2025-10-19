@@ -4,11 +4,9 @@ using UnityEngine;
 public class Box : MonoBehaviour
 {
   
-    [SerializeField]  GameObject redb;
-    [SerializeField]  GameObject blueb;
-    [SerializeField]  GameObject greenb;
-    [SerializeField]  GameObject yellowb;
-    [SerializeField]  GameObject pinkb;
+    [SerializeField] protected  boxscriptableObj boxData;
+    [SerializeField] private int[] noob;
+    public static Box instance;
 
 
     protected enum boxType { 
@@ -17,7 +15,8 @@ public class Box : MonoBehaviour
     {
        ceramic, moab, bfb, zomg, ddt, bad
     }
-    protected Dictionary<boxType, GameObject> balloonPreFab;
+    protected Dictionary<boxType, GameObject> balloonPreFab=new Dictionary<boxType, GameObject>();
+
     protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
             { boxType.none, 0 },
             { boxType.red, 1 },
@@ -75,17 +74,7 @@ public class Box : MonoBehaviour
             { bigBoxType.bad, 1 },
     };
 
-    private void Awake()
-    {//unity throws an error if I try to initialize the dictionary above with serialized game objects if I don't put it in awake/start
-        balloonPreFab = new Dictionary<boxType, GameObject>() {
-            { boxType.red, redb },
-            { boxType.blue, blueb },
-            { boxType.green, greenb },
-            { boxType.yellow, yellowb },
-            { boxType.pink, pinkb },
-        };
-        Debug.Log(balloonPreFab[boxType.red].name);
-    }
+  
 
     void Start()
     {
@@ -95,7 +84,7 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(boxData.redb);
     }
     
     protected boxType pop(int damage, boxType box) {
@@ -110,7 +99,18 @@ public class Box : MonoBehaviour
     protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,int speed) { 
     this.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
-    
+
+    public void initDictionary() {
+        //       balloonPreFab = new Dictionary<boxType, GameObject>() {
+        //     { boxType.red, boxData.redb },
+        //    { boxType.blue, boxData.blueb },
+        //    { boxType.green, boxData.greenb },
+        //   { boxType.yellow, boxData.yellowb },
+        //  { boxType.pink, boxData.pinkb },
+        // };
+        Debug.Log(boxData.redb);
+    }
    
-  
+
+
 }

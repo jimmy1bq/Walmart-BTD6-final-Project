@@ -102,4 +102,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79fbf9f663f03144d9f83bdd0b2fed35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PinkBox
-  wayPoints: []
+  boxData: {fileID: 0}
+  noob: 01000000

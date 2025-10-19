@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class PinkBox : Box
 {
-
+    [SerializeField] private int[] noob;
     Coroutine AdvanceIndex;
 
+  
     boxType boxColor = boxType.pink;
   
     int layer;
@@ -27,8 +28,11 @@ public class PinkBox : Box
     }
     private void Start()
     {
+        Debug.Log(Box.instance);
+        Debug.Log(boxData);
         AdvanceIndex =  StartCoroutine(advanceIndex());
-        damageTaken(1, boxColor);
+        StartCoroutine(popTest());
+       
     }
 
     // Update is called once per frame
@@ -45,13 +49,17 @@ public class PinkBox : Box
     void damageTaken(int damage, boxType box) {
        
         boxType downToLayer = pop(damage, box);
-     
-       
-        //Debug.Log(balloonPreFab[downToLayer]);
+
+
+        Debug.Log(balloonPreFab[downToLayer]);
       //  Instantiate(balloonPreFab[downToLayer],transform.position,Quaternion.identity);
     }
 
+    IEnumerator popTest() {
 
+        yield return new WaitForSeconds(3);
+        damageTaken(1, boxColor);
+    }
     IEnumerator advanceIndex() {
       
         yield return new WaitUntil(onWayPoint);

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af17d2b39893dbe4c99bcad29e9cf4a3, type: 3}
+  m_Name: balloonScriptableObject
+  m_EditorClassIdentifier: Assembly-CSharp::boxscriptableObj
+  redb: {fileID: 3842490214894986177, guid: 5b3e41400c3f78f44a1c67ef25082037, type: 3}
+  blueb: {fileID: 8790730137325624923, guid: 788df2ad6b7caac4cbccbe1cc8232e57, type: 3}
+  greenb: {fileID: 9005163089464676047, guid: ce792b844f365a04497280b57a872b49, type: 3}
+  yellowb: {fileID: 1127350582203549054, guid: 7d1ec3bbf62692d48a3320218b367e4c, type: 3}
+  pinkb: {fileID: 2676424228484237119, guid: cbd2cc3ec28348349b70292f150e61ef, type: 3}
