@@ -3,10 +3,13 @@ using UnityEngine;
 public class intializer : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-   
+     void Awake()
+    {
+        
+    }
     void Start()
     {
-       Box.instance.initDictionary();
+    
     }
 
     // Update is called once per frame

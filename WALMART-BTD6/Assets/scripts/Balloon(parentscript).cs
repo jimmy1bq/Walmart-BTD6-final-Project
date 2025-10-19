@@ -4,10 +4,9 @@ using UnityEngine;
 public class Box : MonoBehaviour
 {
   
-    [SerializeField] protected  boxscriptableObj boxData;
-    [SerializeField] private int[] noob;
-    public static Box instance;
+  
 
+   
 
     protected enum boxType { 
     none,red,blue,green, yellow, pink, black, white, purple, lead, orange, seagreen }
@@ -76,16 +75,7 @@ public class Box : MonoBehaviour
 
   
 
-    void Start()
-    {
-      
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.Log(boxData.redb);
-    }
+  
     
     protected boxType pop(int damage, boxType box) {
         int damageTaken= balloonLayer[box]-damage;
@@ -100,16 +90,7 @@ public class Box : MonoBehaviour
     this.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
 
-    public void initDictionary() {
-        //       balloonPreFab = new Dictionary<boxType, GameObject>() {
-        //     { boxType.red, boxData.redb },
-        //    { boxType.blue, boxData.blueb },
-        //    { boxType.green, boxData.greenb },
-        //   { boxType.yellow, boxData.yellowb },
-        //  { boxType.pink, boxData.pinkb },
-        // };
-        Debug.Log(boxData.redb);
-    }
+   
    
 
 

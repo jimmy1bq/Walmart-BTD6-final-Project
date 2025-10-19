@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PinkBox : Box
 {
-    [SerializeField] private int[] noob;
+    [SerializeField] protected boxscriptableObj boxData;
     Coroutine AdvanceIndex;
 
   
@@ -28,8 +28,8 @@ public class PinkBox : Box
     }
     private void Start()
     {
-        Debug.Log(Box.instance);
-        Debug.Log(boxData);
+        Debug.Log(boxData.boxTypeToGO);
+       
         AdvanceIndex =  StartCoroutine(advanceIndex());
         StartCoroutine(popTest());
        
@@ -51,7 +51,7 @@ public class PinkBox : Box
         boxType downToLayer = pop(damage, box);
 
 
-        Debug.Log(balloonPreFab[downToLayer]);
+       
       //  Instantiate(balloonPreFab[downToLayer],transform.position,Quaternion.identity);
     }
 

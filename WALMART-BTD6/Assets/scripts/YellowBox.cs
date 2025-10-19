@@ -6,7 +6,7 @@ using UnityEngine;
 public class YellowBox : Box
 {
 
-
+    [SerializeField] protected boxscriptableObj boxData;
     Coroutine AdvanceIndex;
     boxType boxColor = boxType.yellow;
     int layer;

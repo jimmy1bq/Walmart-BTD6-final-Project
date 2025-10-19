@@ -102,8 +102,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c7d2376334b8b48b59fb3ebc1a1313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RedBox
-  redb: {fileID: 3842490214894986177}
-  blueb: {fileID: 8790730137325624923, guid: 788df2ad6b7caac4cbccbe1cc8232e57, type: 3}
-  greenb: {fileID: 9005163089464676047, guid: ce792b844f365a04497280b57a872b49, type: 3}
-  yellowb: {fileID: 1127350582203549054, guid: 7d1ec3bbf62692d48a3320218b367e4c, type: 3}
-  pinkb: {fileID: 2676424228484237119, guid: cbd2cc3ec28348349b70292f150e61ef, type: 3}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}

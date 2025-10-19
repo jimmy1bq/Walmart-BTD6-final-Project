@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class RedBox : Box
 {
+    [SerializeField] protected boxscriptableObj boxData;
     Coroutine AdvanceIndex;
     boxType boxColor = boxType.red;
     int layer;

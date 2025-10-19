@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GreenBox : Box
 {
-
+    [SerializeField] protected boxscriptableObj boxData;
     Coroutine AdvanceIndex;
     boxType boxColor = boxType.green;
     int layer;

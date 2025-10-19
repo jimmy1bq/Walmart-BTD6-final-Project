@@ -102,8 +102,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402cbea4e87d26f4d9694499583525d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GreenBbox
-  redb: {fileID: 0}
-  blueb: {fileID: 0}
-  greenb: {fileID: 0}
-  yellowb: {fileID: 0}
-  pinkb: {fileID: 0}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
