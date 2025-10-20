@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "balloonScriptableObject")]
-public class boxscriptableObj : ScriptableObject {
+public class boxSO : ScriptableObject {
     public int i = 1;
     public GameObject redb;
     public GameObject blueb;
@@ -20,14 +20,14 @@ public class boxscriptableObj : ScriptableObject {
         ceramic, moab, bfb, zomg, ddt, bad
     }
     public List<GameObject> objects;
-    public boxscriptableObj.boxType[] boxArray = ((boxscriptableObj.boxType[])System.Enum.GetValues(typeof(boxscriptableObj.boxType)));
-    public Dictionary<boxscriptableObj.boxType, GameObject> boxTypeToGO;
+    public boxSO.boxType[] boxArray = ((boxSO.boxType[])System.Enum.GetValues(typeof(boxSO.boxType)));
+    public Dictionary<boxSO.boxType, GameObject> boxTypeToGO;
 
     private void OnEnable()
     {
       
         if (boxTypeToGO==null) {
-            boxTypeToGO = new Dictionary<boxscriptableObj.boxType, GameObject>();
+            boxTypeToGO = new Dictionary<boxSO.boxType, GameObject>();
             for (int j = 0; j < objects.Count; j++)
             {
                 Debug.Log("HI");

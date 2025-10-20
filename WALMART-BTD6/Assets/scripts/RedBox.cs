@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class RedBox : Box
 {
-    [SerializeField] protected boxscriptableObj boxData;
+    [SerializeField] protected boxSO boxData;
     Coroutine AdvanceIndex;
-    boxscriptableObj.boxType boxColor = boxscriptableObj.boxType.red;
+    boxSO.boxType boxColor = boxSO.boxType.red;
     int layer;
     int balloonSpeedValue;
     int i=0;
@@ -39,7 +39,7 @@ public class RedBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxscriptableObj.boxType box)
+    void damageTaken(int damage, boxSO.boxType box)
     {
 
         Destroy(gameObject);

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af17d2b39893dbe4c99bcad29e9cf4a3, type: 3}
-  m_Name: balloonScriptableObject
+  m_Name: balloonSO
   m_EditorClassIdentifier: Assembly-CSharp::boxscriptableObj
   i: 7
   redb: {fileID: 3842490214894986177, guid: 5b3e41400c3f78f44a1c67ef25082037, type: 3}

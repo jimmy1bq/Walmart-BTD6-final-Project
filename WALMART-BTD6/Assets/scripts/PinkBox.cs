@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class PinkBox : Box
 {
-    [SerializeField] protected boxscriptableObj boxData;
+    [SerializeField] protected boxSO boxData;
 
-    boxscriptableObj.boxType boxColor = boxscriptableObj.boxType.pink;
+    boxSO.boxType boxColor = boxSO.boxType.pink;
    Coroutine AdvanceIndex;
     int layer;
     int balloonSpeedValue;
@@ -27,7 +27,7 @@ public class PinkBox : Box
     private void Start()
     {
         Debug.Log(boxData.boxTypeToGO);
-        Debug.Log(boxData.boxTypeToGO[boxscriptableObj.boxType.yellow]);
+        Debug.Log(boxData.boxTypeToGO[boxSO.boxType.yellow]);
         damageTaken(1, boxColor);
         AdvanceIndex =  StartCoroutine(advanceIndex());
         
@@ -45,9 +45,9 @@ public class PinkBox : Box
     {
       enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxscriptableObj.boxType box) {
+    void damageTaken(int damage, boxSO.boxType box) {
        
-        boxscriptableObj.boxType downToLayer = pop(damage, box);
+        boxSO.boxType downToLayer = pop(damage, box);
         Instantiate(boxData.boxTypeToGO[downToLayer],transform.position,Quaternion.identity);
         Destroy(gameObject);
     }

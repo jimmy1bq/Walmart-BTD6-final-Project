@@ -6,9 +6,9 @@ using UnityEngine;
 public class BlueBox : Box
 {
 
-    [SerializeField] protected boxscriptableObj boxData;
+    [SerializeField] protected boxSO boxData;
     Coroutine AdvanceIndex;
-    boxscriptableObj.boxType boxColor = boxscriptableObj.boxType.blue;
+    boxSO.boxType boxColor = boxSO.boxType.blue;
     int layer;
     int balloonSpeedValue;
     int i = 0;
@@ -40,9 +40,9 @@ public class BlueBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxscriptableObj.boxType box)
+    void damageTaken(int damage, boxSO.boxType box)
     {
-        boxscriptableObj.boxType downToLayer = pop(damage, box);
+        boxSO.boxType downToLayer = pop(damage, box);
         Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

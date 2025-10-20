@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GreenBox : Box
 {
-    [SerializeField] protected boxscriptableObj boxData;
+    [SerializeField] protected boxSO boxData;
     Coroutine AdvanceIndex;
-    boxscriptableObj.boxType boxColor = boxscriptableObj.boxType.green;
+    boxSO.boxType boxColor = boxSO.boxType.green;
     int layer;
     int balloonSpeedValue;
     int i = 0;
@@ -38,10 +38,10 @@ public class GreenBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxscriptableObj.boxType box)
+    void damageTaken(int damage, boxSO.boxType box)
     {
 
-        boxscriptableObj.boxType downToLayer = pop(damage, box);
+        boxSO.boxType downToLayer = pop(damage, box);
         Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
