@@ -43,8 +43,8 @@ public class BlueBox : Box
     void damageTaken(int damage, boxscriptableObj.boxType box)
     {
         boxscriptableObj.boxType downToLayer = pop(damage, box);
-       
-
+        Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
     IEnumerator advanceIndex()
     {

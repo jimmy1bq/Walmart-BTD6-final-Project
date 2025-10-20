@@ -41,8 +41,8 @@ public class RedBox : Box
     }
     void damageTaken(int damage, boxscriptableObj.boxType box)
     {
-        boxscriptableObj.boxType downToLayer = pop(damage, box);
 
+        Destroy(gameObject);
     }
     IEnumerator advanceIndex()
     {

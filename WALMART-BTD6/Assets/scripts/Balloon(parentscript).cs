@@ -13,7 +13,7 @@ public class Box : MonoBehaviour
     protected Dictionary<boxscriptableObj.boxType, GameObject> balloonPreFab=new Dictionary<boxscriptableObj.boxType, GameObject>();
 
     protected Dictionary<boxscriptableObj.boxType, int> balloonLayer =new Dictionary<boxscriptableObj.boxType, int>() {
-            { boxscriptableObj.boxType.none, 0 },
+            { boxType.none, 0 },
             { boxscriptableObj.boxType.red, 1 },
             { boxscriptableObj.boxType.blue, 2 },
             { boxscriptableObj.boxType.green, 3 },

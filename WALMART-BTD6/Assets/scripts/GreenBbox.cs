@@ -40,8 +40,10 @@ public class GreenBox : Box
     }
     void damageTaken(int damage, boxscriptableObj.boxType box)
     {
-        boxscriptableObj.boxType downToLayer = pop(damage, box);
 
+        boxscriptableObj.boxType downToLayer = pop(damage, box);
+        Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
     IEnumerator advanceIndex()
     {
