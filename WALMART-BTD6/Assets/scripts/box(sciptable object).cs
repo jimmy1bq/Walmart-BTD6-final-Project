@@ -20,15 +20,17 @@ public class boxscriptableObj : ScriptableObject {
         ceramic, moab, bfb, zomg, ddt, bad
     }
     public List<GameObject> objects;
-    public boxType[] boxArray = ((boxType[])System.Enum.GetValues(typeof(boxType)));
-    public Dictionary<boxType, GameObject> boxTypeToGO;
+    public boxscriptableObj.boxType[] boxArray = ((boxscriptableObj.boxType[])System.Enum.GetValues(typeof(boxscriptableObj.boxType)));
+    public Dictionary<boxscriptableObj.boxType, GameObject> boxTypeToGO;
 
     private void OnEnable()
     {
-        boxTypeToGO = new Dictionary<boxType, GameObject>();
+      
         if (boxTypeToGO==null) {
+            boxTypeToGO = new Dictionary<boxscriptableObj.boxType, GameObject>();
             for (int j = 0; j < objects.Count; j++)
             {
+                Debug.Log("HI");
                 var balloon = objects[j];
                 var type = boxArray[j+1];
                 if (!boxTypeToGO.ContainsKey(type))

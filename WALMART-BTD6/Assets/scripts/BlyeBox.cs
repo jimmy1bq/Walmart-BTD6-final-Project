@@ -8,7 +8,7 @@ public class BlueBox : Box
 
     [SerializeField] protected boxscriptableObj boxData;
     Coroutine AdvanceIndex;
-    boxType boxColor = boxType.blue;
+    boxscriptableObj.boxType boxColor = boxscriptableObj.boxType.blue;
     int layer;
     int balloonSpeedValue;
     int i = 0;
@@ -40,9 +40,9 @@ public class BlueBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxType box)
+    void damageTaken(int damage, boxscriptableObj.boxType box)
     {
-        boxType downToLayer = pop(damage, box);
+        boxscriptableObj.boxType downToLayer = pop(damage, box);
        
 
     }

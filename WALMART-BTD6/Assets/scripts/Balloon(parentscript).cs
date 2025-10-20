@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static boxscriptableObj;
 
 public class Box : MonoBehaviour
 {
@@ -8,27 +9,22 @@ public class Box : MonoBehaviour
 
    
 
-    protected enum boxType { 
-    none,red,blue,green, yellow, pink, black, white, purple, lead, orange, seagreen }
-    protected enum bigBoxType
-    {
-       ceramic, moab, bfb, zomg, ddt, bad
-    }
-    protected Dictionary<boxType, GameObject> balloonPreFab=new Dictionary<boxType, GameObject>();
+ 
+    protected Dictionary<boxscriptableObj.boxType, GameObject> balloonPreFab=new Dictionary<boxscriptableObj.boxType, GameObject>();
 
-    protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
-            { boxType.none, 0 },
-            { boxType.red, 1 },
-            { boxType.blue, 2 },
-            { boxType.green, 3 },
-            { boxType.yellow, 4 },
-            { boxType.pink, 5 },
-            { boxType.black, 6 },
-            { boxType.white, 6 },
-            { boxType.purple, 6 },
-            { boxType.lead, 7 },
-            { boxType.orange, 7 },
-            { boxType.seagreen, 8 },
+    protected Dictionary<boxscriptableObj.boxType, int> balloonLayer =new Dictionary<boxscriptableObj.boxType, int>() {
+            { boxscriptableObj.boxType.none, 0 },
+            { boxscriptableObj.boxType.red, 1 },
+            { boxscriptableObj.boxType.blue, 2 },
+            { boxscriptableObj.boxType.green, 3 },
+            { boxscriptableObj.boxType.yellow, 4 },
+            { boxscriptableObj.boxType.pink, 5 },
+            { boxscriptableObj.boxType.black, 6 },
+            { boxscriptableObj.boxType.white, 6 },
+            { boxscriptableObj.boxType.purple, 6 },
+            { boxscriptableObj.boxType.lead, 7 },
+            { boxscriptableObj.boxType.orange, 7 },
+            { boxscriptableObj.boxType.seagreen, 8 },
     };
     protected Dictionary<bigBoxType, int> bigBalloonHp =new Dictionary<bigBoxType, int>() {
             { bigBoxType.ceramic, 200 },
@@ -39,29 +35,29 @@ public class Box : MonoBehaviour
             { bigBoxType.bad, 1000000 },
     };
     //this dictionary is used to get the balloon based on layer so I don't have to loop through the top dictionary to match the hp
-    protected Dictionary<int, boxType> layerToBalloon = new Dictionary<int, boxType>() {
-            { 1, boxType.red },
-            { 2, boxType.blue },
-            { 3, boxType.green },
-            { 4, boxType.yellow },
-            { 5, boxType.pink },
-            { 6, boxType.black },
-            { 7, boxType.lead },
-            { 8, boxType.seagreen },
+    protected Dictionary<int, boxscriptableObj.boxType> layerToBalloon = new Dictionary<int, boxscriptableObj.boxType>() {
+            { 1, boxscriptableObj.boxType.red },
+            { 2, boxscriptableObj.boxType.blue },
+            { 3, boxscriptableObj.boxType.green },
+            { 4, boxscriptableObj.boxType.yellow },
+            { 5, boxscriptableObj.boxType.pink },
+            { 6, boxscriptableObj.boxType.black },
+            { 7, boxscriptableObj.boxType.lead },
+            { 8, boxscriptableObj.boxType.seagreen },
     };
     //balloon speed
-    protected Dictionary<boxType, int> balloonSpeed = new Dictionary<boxType, int>() {
-            { boxType.red, 1 },
-            { boxType.blue, 2},
-            { boxType.green, 3 },
-            { boxType.yellow, 4},
-            { boxType.pink, 5 },
-            { boxType.black, 3},
-            { boxType.white, 3 },
-            { boxType.purple, 6 },
-            { boxType.lead, 2 },
-            { boxType.orange, 3 },
-            { boxType.seagreen, 3},
+    protected Dictionary<boxscriptableObj.boxType, int> balloonSpeed = new Dictionary<boxscriptableObj.boxType, int>() {
+            { boxscriptableObj.boxType.red, 1 },
+            { boxscriptableObj.boxType.blue, 2},
+            { boxscriptableObj.boxType.green, 3 },
+            { boxscriptableObj.boxType.yellow, 4},
+            { boxscriptableObj.boxType.pink, 5 },
+            { boxscriptableObj.boxType.black, 3},
+            { boxscriptableObj.boxType.white, 3 },
+            { boxscriptableObj.boxType.purple, 6 },
+            { boxscriptableObj.boxType.lead, 2 },
+            { boxscriptableObj.boxType.orange, 3 },
+            { boxscriptableObj.boxType.seagreen, 3},
     };
     //big balloon speed
     protected Dictionary<bigBoxType, int> bigBalloonSpeed =  new Dictionary<bigBoxType, int>() {
@@ -77,10 +73,10 @@ public class Box : MonoBehaviour
 
   
     
-    protected boxType pop(int damage, boxType box) {
+    protected boxscriptableObj.boxType pop(int damage, boxscriptableObj.boxType box) {
         int damageTaken= balloonLayer[box]-damage;
         if (damageTaken <=0 ) {
-            return boxType.none;
+            return boxscriptableObj.boxType.none;
         }
         return layerToBalloon[damageTaken];
     }
