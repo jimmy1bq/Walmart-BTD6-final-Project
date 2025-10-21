@@ -30,7 +30,7 @@ public class boxSO : ScriptableObject {
             boxTypeToGO = new Dictionary<boxSO.boxType, GameObject>();
             for (int j = 0; j < objects.Count; j++)
             {
-                Debug.Log("HI");
+                
                 var balloon = objects[j];
                 var type = boxArray[j+1];
                 if (!boxTypeToGO.ContainsKey(type))

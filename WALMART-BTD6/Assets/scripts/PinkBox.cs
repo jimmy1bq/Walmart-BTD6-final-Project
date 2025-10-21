@@ -26,8 +26,7 @@ public class PinkBox : Box
     }
     private void Start()
     {
-        Debug.Log(boxData.boxTypeToGO);
-        Debug.Log(boxData.boxTypeToGO[boxSO.boxType.yellow]);
+        
         damageTaken(1, boxColor);
         AdvanceIndex =  StartCoroutine(advanceIndex());
         
