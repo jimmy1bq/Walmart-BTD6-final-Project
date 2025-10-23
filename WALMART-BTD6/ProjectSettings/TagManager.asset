@@ -8,6 +8,9 @@ TagManager:
   - WayPoints
   - enemy
   - Tower
+  - range
+  - path
+  - placeableArea
   layers:
   - Default
   - TransparentFX

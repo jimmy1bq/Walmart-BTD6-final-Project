@@ -22,7 +22,8 @@ public class boxSO : ScriptableObject {
     public List<GameObject> objects;
     public boxSO.boxType[] boxArray = ((boxSO.boxType[])System.Enum.GetValues(typeof(boxSO.boxType)));
     public Dictionary<boxSO.boxType, GameObject> boxTypeToGO;
-
+    public Dictionary<int,GameObject> boxsesOnMap = new Dictionary<int,GameObject>();
+    public int ID = 0;
     private void OnEnable()
     {
       
@@ -39,6 +40,13 @@ public class boxSO : ScriptableObject {
                 }
             }
         }
+    }
+    private void OnDisable()
+    {
+        ID = 0;
+       
+        boxsesOnMap.Clear();
+        
     }
 
 }

@@ -1,10 +1,15 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using static TowersSO;
 public class RayCast : MonoBehaviour
 {
     Camera cam;
     Vector3 mousePostionRaycast;
-   [SerializeField]  GameObject tower1;
+    [SerializeField]  GameObject tower1;
+    [SerializeField] TextMeshProUGUI cantPlaceErrorMessage;
+    GameObject currentTower;
+    [SerializeField] TowersSO towerData;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,18 +24,41 @@ public class RayCast : MonoBehaviour
         Vector3 mousPos = Input.mousePosition;
         Ray ray = cam.ScreenPointToRay(mousPos);
         RaycastHit hit;
-      
+       
         if (Physics.Raycast(ray, out hit)) {
-           //don't do transform.position get the ray hit poistion
-            mousePostionRaycast = hit.point;
-             Debug.Log(mousePostionRaycast);
+            Debug.Log(hit.collider.gameObject.name);
+            if (hit.collider.tag == "placeableArea")
+            {
+                mousePostionRaycast = hit.point;
+                currentTower = null;
+            }
+            else if (hit.collider.tag == "Tower") {             
+                mousePostionRaycast = new Vector3(float.NaN, float.NaN, float.NaN);
+                currentTower = hit.collider.gameObject;
+
+            }
+            else
+            {
+                mousePostionRaycast = new Vector3(float.NaN, float.NaN, float.NaN);
+                currentTower = null;
+            }
+            
         }
         if (Input.GetKeyDown(KeyCode.Q)) {
-            if (mousePostionRaycast != null)
+            if (float.IsNaN(mousePostionRaycast.x))
             {
-                
+                cantPlaceErrorMessage.enabled = true;
+            }
+            else if (mousePostionRaycast.x != float.NaN)
+            {
+                Debug.Log("+1");
                 Instantiate(tower1, mousePostionRaycast, Quaternion.identity);
 
+            }
+            else if (currentTower != null) {
+                Debug.Log(currentTower);
+           
+            
             }
         
         } 

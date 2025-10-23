@@ -19,8 +19,10 @@ public class RedBox : Box
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         //minus one because of index start @ 0 
+        
         totalWayPoints = WayPointManager.instance.wayPoints.Count-1;
-
+        boxData.boxsesOnMap.Add(boxData.ID, gameObject);
+        boxData.ID++;
 
     }
     private void Start()
@@ -41,7 +43,7 @@ public class RedBox : Box
     }
     void damageTaken(int damage, boxSO.boxType box)
     {
-
+        boxData.boxsesOnMap.Remove(boxData.ID);
         Destroy(gameObject);
     }
     IEnumerator advanceIndex()

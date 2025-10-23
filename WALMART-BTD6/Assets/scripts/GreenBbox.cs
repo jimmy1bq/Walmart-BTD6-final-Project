@@ -19,7 +19,8 @@ public class GreenBox : Box
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
-
+        boxData.boxsesOnMap.Add(boxData.ID, gameObject);
+        boxData.ID++;
 
     }
     private void Start()
@@ -43,6 +44,7 @@ public class GreenBox : Box
 
         boxSO.boxType downToLayer = pop(damage, box);
         Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+        boxData.boxsesOnMap.Remove(boxData.ID);
         Destroy(gameObject);
     }
     IEnumerator advanceIndex()
