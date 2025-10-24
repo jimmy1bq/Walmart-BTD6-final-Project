@@ -9,7 +9,7 @@ public class DartMonke : MonoBehaviour
     float range = 10;
     [SerializeField] TowersSO towerData;
     [SerializeField] boxSO boxData;
-     [SerializeField] int fireRate;
+    [SerializeField] int fireRate;
     void Start()
     {
      Vector3 rangePos = towerData.placeTowerRangeCircle(gameObject);
@@ -41,11 +41,13 @@ public class DartMonke : MonoBehaviour
                 }
             }
         }
-        
-        Debug.Log("Hit");
-        gameObject.transform.LookAt(closestEnemy.transform);
-        GameObject dart = Instantiate(towerData.dartProjectile, transform.GetChild(4).position, transform.GetChild(4).rotation);
-        //dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
+        if (closestEnemy != null)
+        {
+            Debug.Log("Hit");
+            gameObject.transform.LookAt(closestEnemy.transform);
+            GameObject dart = Instantiate(towerData.dartProjectile, transform.GetChild(4).position, transform.GetChild(4).rotation);
+            dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);            
+        }
         yield return new WaitForSeconds(fireRate);
         StartCoroutine(attackEnemy());
     }
