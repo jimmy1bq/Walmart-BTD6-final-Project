@@ -23,12 +23,11 @@ public class PinkBox : Box
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         boxData.boxsesOnMap.Add(boxData.ID,gameObject);
         boxData.ID++;
-
+        
 
     }
     private void Start()
     {
-        
         damageTaken(1, boxColor);
         AdvanceIndex =  StartCoroutine(advanceIndex());
         
@@ -38,8 +37,7 @@ public class PinkBox : Box
     // Update is called once per frame
     void Update()
     {
-
-        Debug.Log(boxData.boxsesOnMap[1]);
+       
     }
 
     void moveToWayPoint(Vector3 wayPointOn)

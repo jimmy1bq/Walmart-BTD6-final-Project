@@ -950,7 +950,7 @@ Transform:
   m_GameObject: {fileID: 1674676602017868784}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.1036048, y: 3.02, z: -4.105541}
+  m_LocalPosition: {x: 0.18532252, y: 3.02, z: -2.4932566}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -996,6 +996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DartMonke
   towerData: {fileID: 11400000, guid: eb0b0c18afe548542902d1b9e3d8877d, type: 2}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
   fireRate: 3
 --- !u!1 &1714790066212624337
 GameObject:
@@ -1489,8 +1490,10 @@ GameObject:
   - component: {fileID: 6868594666463776847}
   - component: {fileID: 6108663283395242872}
   - component: {fileID: 7859134176621908001}
+  - component: {fileID: 706921265681819083}
+  - component: {fileID: -8006460616098590387}
   m_Layer: 0
-  m_Name: _Dart_
+  m_Name: dartProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1504,13 +1507,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2749526370460404350}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5214238, y: 0.48212966, z: 0.516926, w: 0.47797054}
-  m_LocalPosition: {x: -0.64, y: 0.93, z: -0.034}
-  m_LocalScale: {x: 3.095, y: 0.40176, z: 2.3638}
+  m_LocalRotation: {x: 0.5267497, y: 0.48705372, z: 0.5114981, w: 0.47295156}
+  m_LocalPosition: {x: -0.64912254, y: 0.9649999, z: -0.07134342}
+  m_LocalScale: {x: 3.0949998, y: 0.40176004, z: 2.3638}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8727537742040641661}
-  m_LocalEulerAnglesHint: {x: 0, y: 90.496, z: 94.485}
+  m_LocalEulerAnglesHint: {x: 0, y: 91.683, z: 94.485}
 --- !u!33 &6108663283395242872
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1567,6 +1570,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &706921265681819083
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749526370460404350}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.019480355
+  m_Height: 0.60000014
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.30000007, z: 0}
+--- !u!114 &-8006460616098590387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749526370460404350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb582d35d24986e498c738a4f4f1023c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &2774750480983512973
 GameObject:
   m_ObjectHideFlags: 0

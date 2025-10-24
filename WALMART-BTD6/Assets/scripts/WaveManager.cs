@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -18,6 +19,7 @@ public class WaveManager : MonoBehaviour
     {  
         waveOnGoing = true;
         startWave1();
+        StartCoroutine(spawnPink());
     }
 
     // Update is called once per frame
@@ -31,5 +33,12 @@ public class WaveManager : MonoBehaviour
         Instantiate(greenBox, spawnPoint.position, Quaternion.identity);
         Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
         Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
+    }
+    IEnumerator spawnPink() {
+
+        yield return new WaitForSeconds(1);
+        Instantiate(pinkbox, spawnPoint.position, Quaternion.identity);
+        StartCoroutine(spawnPink());
+       
     }
 }

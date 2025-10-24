@@ -15,3 +15,4 @@ MonoBehaviour:
   selectedTower: {fileID: 0}
   rangeCricle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
   tower1: {fileID: 1674676602017868784, guid: d35badb14d582f24082f8f8f0c28a015, type: 3}
+  dartProjectile: {fileID: 2749526370460404350, guid: c98eb0492bb08fb479e66af664c1ae5f, type: 3}
