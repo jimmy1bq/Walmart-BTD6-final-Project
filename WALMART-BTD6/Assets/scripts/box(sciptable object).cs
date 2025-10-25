@@ -23,6 +23,7 @@ public class boxSO : ScriptableObject {
     public boxSO.boxType[] boxArray = ((boxSO.boxType[])System.Enum.GetValues(typeof(boxSO.boxType)));
     public Dictionary<boxSO.boxType, GameObject> boxTypeToGO;
     public Dictionary<int,GameObject> boxsesOnMap = new Dictionary<int,GameObject>();
+   
     public int ID = 0;
     private void OnEnable()
     {
@@ -31,9 +32,8 @@ public class boxSO : ScriptableObject {
             boxTypeToGO = new Dictionary<boxSO.boxType, GameObject>();
             for (int j = 0; j < objects.Count; j++)
             {
-                
                 var balloon = objects[j];
-                var type = boxArray[j+1];
+                var type = boxArray[j];
                 if (!boxTypeToGO.ContainsKey(type))
                 {
                     boxTypeToGO.Add(type, balloon);
@@ -43,10 +43,8 @@ public class boxSO : ScriptableObject {
     }
     private void OnDisable()
     {
-        ID = 0;
-       
-        boxsesOnMap.Clear();
-        
+        ID = 0;   
+        boxsesOnMap.Clear();   
     }
 
 }

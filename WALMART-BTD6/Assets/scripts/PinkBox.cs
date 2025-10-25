@@ -3,21 +3,24 @@ using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using JetBrains.Annotations;
 
-public class PinkBox : Box
+public class PinkBox : Box, IDamageTaken, IIndex
 {
     [SerializeField] protected boxSO boxData;
 
     boxSO.boxType boxColor = boxSO.boxType.pink;
-   Coroutine AdvanceIndex;
+    Coroutine AdvanceIndex;
     int layer;
     int balloonSpeedValue;
     int i = 0;
+    int ogI;
     int totalWayPoints;
 
 
     private void Awake()
     {
+       
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
@@ -28,7 +31,7 @@ public class PinkBox : Box
     }
     private void Start()
     {
-        damageTaken(1, boxColor);
+        StartCoroutine(Iframes());
         AdvanceIndex =  StartCoroutine(advanceIndex());
         
        
@@ -44,19 +47,8 @@ public class PinkBox : Box
     {
       enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxSO.boxType box) {
-       
-        boxSO.boxType downToLayer = pop(damage, box);
-        Instantiate(boxData.boxTypeToGO[downToLayer],transform.position,Quaternion.identity);
-        boxData.boxsesOnMap.Remove(boxData.ID);
-        Destroy(gameObject);
-    }
-
-    IEnumerator popTest() {
-
-        yield return new WaitForSeconds(3);
-        damageTaken(1, boxColor);
-    }
+    
+   
     IEnumerator advanceIndex() {
       
         yield return new WaitUntil(onWayPoint);
@@ -82,6 +74,30 @@ public class PinkBox : Box
             return false;
         }
             
+    }
+
+    public void damageTaken(int damage)
+    {
+        
+        boxSO.boxType downToLayer = pop(damage, boxColor);
+      
+
+        if (downToLayer == boxSO.boxType.none)
+        {
+            Destroy(gameObject);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+        }
+        else
+        {
+            GameObject box=Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            IIndex boxIndex = box.GetComponent<IIndex>();
+            boxIndex.wayPointReciever(i);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+            Destroy(gameObject);
+        } 
+    }
+    public void wayPointReciever(int index) { 
+    ogI= index;
     }
 }
     

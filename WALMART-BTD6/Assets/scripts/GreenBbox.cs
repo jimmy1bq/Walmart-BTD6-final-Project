@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GreenBox : Box
+public class GreenBox : Box, IDamageTaken, IIndex
 {
     [SerializeField] protected boxSO boxData;
     Coroutine AdvanceIndex;
@@ -15,12 +15,14 @@ public class GreenBox : Box
 
 
     private void Awake()
-    {
+    {   
+      
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         boxData.boxsesOnMap.Add(boxData.ID, gameObject);
         boxData.ID++;
+        StartCoroutine(Iframes());
 
     }
     private void Start()
@@ -39,13 +41,21 @@ public class GreenBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxSO.boxType box)
+    public void damageTaken(int damage)
     {
 
-        boxSO.boxType downToLayer = pop(damage, box);
-        Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
-        boxData.boxsesOnMap.Remove(boxData.ID);
-        Destroy(gameObject);
+        boxSO.boxType downToLayer = pop(damage, boxColor);
+        if (downToLayer == boxSO.boxType.none)
+        {
+            Destroy(gameObject);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+        }
+        else
+        {
+            Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+            Destroy(gameObject);
+        }
     }
     IEnumerator advanceIndex()
     {
@@ -75,6 +85,10 @@ public class GreenBox : Box
             return false;
         }
 
+    }
+    public void wayPointReciever(int index)
+    {
+        i = index;
     }
 }
 

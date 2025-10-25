@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class BlueBox : Box
+public class BlueBox : Box, IDamageTaken, IIndex
 {
 
     [SerializeField] protected boxSO boxData;
@@ -22,6 +22,7 @@ public class BlueBox : Box
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         boxData.boxsesOnMap.Add(boxData.ID, gameObject);
         boxData.ID++;
+        StartCoroutine(Iframes());
 
     }
     private void Start()
@@ -41,12 +42,21 @@ public class BlueBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxSO.boxType box)
+    public void damageTaken(int damage)
     {
-        boxSO.boxType downToLayer = pop(damage, box);
-        Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
-        boxData.boxsesOnMap.Remove(boxData.ID);
-        Destroy(gameObject);
+
+        boxSO.boxType downToLayer = pop(damage, boxColor);
+        if (downToLayer == boxSO.boxType.none)
+        {
+            Destroy(gameObject);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+        }
+        else
+        {
+            Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+            Destroy(gameObject);
+        }
     }
     IEnumerator advanceIndex()
     {
@@ -77,5 +87,9 @@ public class BlueBox : Box
             return false;
         }
 
+    }
+    public void wayPointReciever(int index)
+    {
+        i = index;
     }
 }

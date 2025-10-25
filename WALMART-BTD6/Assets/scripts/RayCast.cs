@@ -10,6 +10,7 @@ public class RayCast : MonoBehaviour
     [SerializeField] TextMeshProUGUI cantPlaceErrorMessage;
     GameObject currentTower;
     [SerializeField] TowersSO towerData;
+    [SerializeField] GameObject brick;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +28,7 @@ public class RayCast : MonoBehaviour
        
         if (Physics.Raycast(ray, out hit)) {
             Debug.Log(hit.collider.gameObject.name);
+        
             if (hit.collider.tag == "placeableArea")
             {
                 mousePostionRaycast = hit.point;

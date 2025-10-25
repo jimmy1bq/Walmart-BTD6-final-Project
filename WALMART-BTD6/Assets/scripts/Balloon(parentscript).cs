@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static boxSO;
@@ -75,6 +76,7 @@ public class Box : MonoBehaviour
     
     protected boxSO.boxType pop(int damage, boxSO.boxType box) {
         int damageTaken= balloonLayer[box]-damage;
+       
         if (damageTaken <=0 ) {
             return boxSO.boxType.none;
         }
@@ -85,9 +87,17 @@ public class Box : MonoBehaviour
     protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,int speed) { 
     this.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
+    protected IEnumerator Iframes()
+    {
+        yield return new WaitForFixedUpdate();
+        gameObject.GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        gameObject.GetComponent<Collider>().enabled = true;
+    }
 
-   
-   
+
+
+
 
 
 }

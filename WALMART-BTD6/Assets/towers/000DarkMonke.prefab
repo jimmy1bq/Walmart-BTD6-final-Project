@@ -934,6 +934,7 @@ GameObject:
   - component: {fileID: 8727537742040641661}
   - component: {fileID: 345058202370915993}
   - component: {fileID: 2009081712479584887}
+  - component: {fileID: 1909807788983667701}
   m_Layer: 0
   m_Name: 000DarkMonke
   m_TagString: Tower
@@ -950,7 +951,7 @@ Transform:
   m_GameObject: {fileID: 1674676602017868784}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.928837, y: 3.02, z: 6.9518037}
+  m_LocalPosition: {x: -2.2428226, y: 3.02, z: -2.7143934}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -996,8 +997,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DartMonke
   towerData: {fileID: 11400000, guid: eb0b0c18afe548542902d1b9e3d8877d, type: 2}
+  projctileData: {fileID: 11400000, guid: 8ca519b3cafd5d14fb9258614228cafa, type: 2}
   boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
   fireRate: 3
+--- !u!64 &1909807788983667701
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674676602017868784}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1714790066212624337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,13 +1530,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2749526370460404350}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5267497, y: 0.48705372, z: 0.5114981, w: 0.47295156}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: -0.64912254, y: 0.9649999, z: -0.07134342}
   m_LocalScale: {x: 3.0949998, y: 0.40176004, z: 2.3638}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8727537742040641661}
-  m_LocalEulerAnglesHint: {x: 0, y: 91.683, z: 94.485}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &6108663283395242872
 MeshFilter:
   m_ObjectHideFlags: 0

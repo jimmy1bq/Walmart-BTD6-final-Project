@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "TowersSO")]
 public class TowersSO : ScriptableObject {
@@ -5,7 +6,8 @@ public class TowersSO : ScriptableObject {
     public GameObject selectedTower;
     public GameObject rangeCricle;
     public GameObject tower1;
-    public GameObject dartProjectile;
+    
+    public int towerID = 0;
 
     private void Awake()
     {

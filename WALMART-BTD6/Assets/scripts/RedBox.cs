@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class RedBox : Box
+public class RedBox : Box , IIndex, IDamageTaken
 {
     [SerializeField] protected boxSO boxData;
     Coroutine AdvanceIndex;
@@ -23,6 +23,7 @@ public class RedBox : Box
         totalWayPoints = WayPointManager.instance.wayPoints.Count-1;
         boxData.boxsesOnMap.Add(boxData.ID, gameObject);
         boxData.ID++;
+        StartCoroutine(Iframes());
 
     }
     private void Start()
@@ -41,9 +42,8 @@ public class RedBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxSO.boxType box)
+    public void damageTaken(int damage)
     {
-        boxData.boxsesOnMap.Remove(boxData.ID);
         Destroy(gameObject);
     }
     IEnumerator advanceIndex()
@@ -75,5 +75,9 @@ public class RedBox : Box
             return false;
         }
 
+    }
+    public void wayPointReciever(int index)
+    {
+        i = index;
     }
 }

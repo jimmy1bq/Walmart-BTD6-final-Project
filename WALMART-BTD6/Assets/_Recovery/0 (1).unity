@@ -2173,7 +2173,6 @@ MonoBehaviour:
   tower1: {fileID: 1674676602017868784, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
   cantPlaceErrorMessage: {fileID: 448658807}
   towerData: {fileID: 11400000, guid: eb0b0c18afe548542902d1b9e3d8877d, type: 2}
-  brick: {fileID: 6997003656227999053, guid: bd57e93c4b445534e8d706eb213e4ccf, type: 3}
 --- !u!4 &916317999
 Transform:
   m_ObjectHideFlags: 0

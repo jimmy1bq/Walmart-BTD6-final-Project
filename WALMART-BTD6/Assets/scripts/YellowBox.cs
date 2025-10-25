@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class YellowBox : Box
+public class YellowBox : Box, IDamageTaken, IIndex
 {
 
     [SerializeField] protected boxSO boxData;
@@ -12,6 +13,7 @@ public class YellowBox : Box
     int layer;
     int balloonSpeedValue;
     int i = 0;
+    int ogI;
     int totalWayPoints;
 
 
@@ -22,11 +24,19 @@ public class YellowBox : Box
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         boxData.boxsesOnMap.Add(boxData.ID, gameObject);
         boxData.ID++;
+        StartCoroutine(Iframes());
+      
 
     }
     private void Start()
     {
+        if (ogI != 0)
+        {
+            i = ogI;
+        }
+        Debug.Log(ogI);
         AdvanceIndex = StartCoroutine(advanceIndex());
+       
     }
 
     // Update is called once per frame
@@ -39,14 +49,7 @@ public class YellowBox : Box
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    void damageTaken(int damage, boxSO.boxType box)
-    {
-
-        boxSO.boxType downToLayer = pop(damage, box);
-        Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
-        boxData.boxsesOnMap.Remove(boxData.ID);
-        Destroy(gameObject);
-    }
+    
 
     IEnumerator advanceIndex()
     {
@@ -77,6 +80,32 @@ public class YellowBox : Box
             return false;
         }
 
+    }
+
+
+    public void damageTaken(int damage)
+    {
+
+        boxSO.boxType downToLayer = pop(damage, boxColor);
+
+
+        if (downToLayer == boxSO.boxType.none)
+        {
+            Destroy(gameObject);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+        }
+        else
+        {
+            GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            IIndex boxIndex = box.GetComponent<IIndex>();
+            boxIndex.wayPointReciever(i);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+            Destroy(gameObject);
+        }
+    }
+    public void wayPointReciever(int index)
+    {
+        ogI = index;
     }
 }
 
