@@ -85,9 +85,5 @@ public class DartMonke : MonoBehaviour
         }
           return false;
     }
-    //find first child with the string name; yes its suppose to be like roblox's findfirstChild method that they provide
-    int findFirstChild() {
-
-        return 1;
-    }
+    
 }

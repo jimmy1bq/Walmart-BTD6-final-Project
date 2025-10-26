@@ -24,11 +24,13 @@ public class RayCast : MonoBehaviour
     {
         Vector3 mousPos = Input.mousePosition;
         Ray ray = cam.ScreenPointToRay(mousPos);
+        Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red);
+
         RaycastHit hit;
        
         if (Physics.Raycast(ray, out hit)) {
             Debug.Log(hit.collider.gameObject.name);
-        
+            
             if (hit.collider.tag == "placeableArea")
             {
                 mousePostionRaycast = hit.point;
