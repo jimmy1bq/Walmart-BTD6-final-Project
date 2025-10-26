@@ -1,5 +1,6 @@
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static TowersSO;
 public class RayCast : MonoBehaviour
@@ -9,6 +10,7 @@ public class RayCast : MonoBehaviour
     [SerializeField]  GameObject tower1;
     [SerializeField] TextMeshProUGUI cantPlaceErrorMessage;
     GameObject currentTower;
+    GameObject selectedTower;
     [SerializeField] TowersSO towerData;
     [SerializeField] GameObject brick;
 
@@ -24,12 +26,11 @@ public class RayCast : MonoBehaviour
     {
         Vector3 mousPos = Input.mousePosition;
         Ray ray = cam.ScreenPointToRay(mousPos);
-        Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red);
 
         RaycastHit hit;
        
         if (Physics.Raycast(ray, out hit)) {
-            Debug.Log(hit.collider.gameObject.name);
+            
             
             if (hit.collider.tag == "placeableArea")
             {
@@ -39,7 +40,7 @@ public class RayCast : MonoBehaviour
             else if (hit.collider.tag == "Tower") {             
                 mousePostionRaycast = new Vector3(float.NaN, float.NaN, float.NaN);
                 currentTower = hit.collider.gameObject;
-
+               
             }
             else
             {
@@ -51,21 +52,43 @@ public class RayCast : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (float.IsNaN(mousePostionRaycast.x))
             {
-                cantPlaceErrorMessage.enabled = true;
+                if (currentTower != null)
+                {
+                    selectedTower = currentTower;
+                    selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(true);
+
+                } else if(currentTower == null){
+                    selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
+                    selectedTower = null;
+                    Debug.Log("Can't Place here");
+                }
             }
             else if (mousePostionRaycast.x != float.NaN)
             {
-                Debug.Log("+1");
+                selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
+                selectedTower = null;
                 Instantiate(tower1, mousePostionRaycast, Quaternion.identity);
-
             }
-            else if (currentTower != null) {
-                Debug.Log(currentTower);
-           
-            
-            }
-        
         } 
+    }
+    int findFirstChild(string name, GameObject objectToSearch) {
+        int i = 0;
+        foreach (Transform child in objectToSearch.transform) {
+            Debug.Log(child.name == name);
+            if (child.name == name)
+            { 
+                return i;
+            }
+            else 
+            { 
+                i++; 
+            }
+        }
+        
+            i++;
+        return -1;
+       
+      
     }
     
 }

@@ -34,7 +34,7 @@ public class YellowBox : Box, IDamageTaken, IIndex
         {
             i = ogI;
         }
-        Debug.Log(ogI);
+      
         AdvanceIndex = StartCoroutine(advanceIndex());
        
     }
