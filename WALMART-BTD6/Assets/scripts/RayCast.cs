@@ -58,15 +58,15 @@ public class RayCast : MonoBehaviour
                     selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(true);
 
                 } else if(currentTower == null){
-                    selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
-                    selectedTower = null;
-                    Debug.Log("Can't Place here");
+                    //selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
+                    //selectedTower = null;
+                    //Debug.Log("Can't Place here");
                 }
             }
             else if (mousePostionRaycast.x != float.NaN)
             {
-                selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
-                selectedTower = null;
+                //selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
+                //selectedTower = null;
                 Instantiate(tower1, mousePostionRaycast, Quaternion.identity);
             }
         } 
