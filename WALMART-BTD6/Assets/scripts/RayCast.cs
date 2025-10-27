@@ -13,12 +13,14 @@ public class RayCast : MonoBehaviour
     GameObject selectedTower;
     [SerializeField] TowersSO towerData;
     [SerializeField] GameObject brick;
+    GameObject towerOnMouse;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {   
         cam = Camera.main;
-       
+        events.towerSelected.AddListener(towerSelectedEvent);
+
     }
 
     // Update is called once per frame
@@ -89,6 +91,11 @@ public class RayCast : MonoBehaviour
         return -1;
        
       
+    }
+    void towerSelectedEvent(GameObject tower) { 
+    
+    towerOnMouse = tower;
+
     }
     
 }

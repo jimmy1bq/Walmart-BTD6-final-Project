@@ -45,6 +45,8 @@ public class GreenBox : Box, IDamageTaken, IIndex
     {
 
         boxSO.boxType downToLayer = pop(damage, boxColor);
+
+
         if (downToLayer == boxSO.boxType.none)
         {
             Destroy(gameObject);
@@ -52,7 +54,9 @@ public class GreenBox : Box, IDamageTaken, IIndex
         }
         else
         {
-            Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            IIndex boxIndex = box.GetComponent<IIndex>();
+            boxIndex.wayPointReciever(i);
             boxData.boxsesOnMap.Remove(boxData.ID);
             Destroy(gameObject);
         }

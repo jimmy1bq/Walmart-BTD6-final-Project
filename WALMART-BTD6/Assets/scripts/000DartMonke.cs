@@ -56,6 +56,7 @@ public class DartMonke : MonoBehaviour
         {
          //   Debug.Log("Throw");
             gameObject.transform.LookAt(closestEnemy.transform);
+            
             Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
          //   Debug.Log(projctileData.dartProjctile);
             GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
