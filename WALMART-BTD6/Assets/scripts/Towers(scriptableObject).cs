@@ -4,13 +4,12 @@ using UnityEngine;
 public class TowersSO : ScriptableObject {
     //put in tower stuff like targetting and make it refernce other boxSO
     public GameObject selectedTower;
-    public GameObject rangeCricle;
     public GameObject tower1;
     
     public int towerID = 0;
 
     
-    
+    //delte this SO later
     public bool rangeCheck(float distance,float range)
     {
         if (distance <= range) {

@@ -25,10 +25,10 @@ public class GameManager : MonoBehaviour
         
     }
     void loseLives(int damage) { 
-    hp -= damage;
+        hp -= damage;
     }
     void gainCoins(int cash)
     {
-       coins -= cash;
+       coins += cash;
     }
 }

@@ -1,43 +1,40 @@
-using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEditor.Animations;
 using UnityEngine;
 
-public class DartMonke : towersParent
+public class DartMonke : towersParent, IHovering, ISelected
 {
-    [SerializeField] TowersSO towerData;
     [SerializeField] projectileSO projctileData;
     [SerializeField] boxSO boxData;
+
+
+    [SerializeField] GameObject rangeCircle;
     [SerializeField] int fireRate;
 
     float range = 5;
-   
+    bool hoveringS = false;
+    GameObject rangeC;
+
 
     private void Awake()
     {
-       
+        Vector3 rangePos = placeTowerRangeCircle(gameObject);
+        rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
+        rangeC.transform.parent = gameObject.transform;
+        rangeC.SetActive(false);
     }
     void Start()
     {
-     Debug.Log(towerData.placeTowerRangeCircle(gameObject));
-     Vector3 rangePos = placeTowerRangeCircle(gameObject);
-        GameObject rangeC =Instantiate(towerData.rangeCricle,rangePos, Quaternion.identity);
-     rangeC.transform.parent = gameObject.transform;
 
-        rangeC.SetActive(false);
-     StartCoroutine(spawnattackCD());
-     
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    IEnumerator attackEnemy() {
-      GameObject closestEnemy = null;
+    IEnumerator attackEnemy()
+    {
+        GameObject closestEnemy = null;
         range = 5;
 
         foreach (var keyValuePair in boxData.boxsesOnMap)
@@ -46,7 +43,7 @@ public class DartMonke : towersParent
             {
 
                 float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-                if (towerData.rangeCheck(distance, range))
+                if (distance <= range)
                 {
                     closestEnemy = keyValuePair.Value;
                     range = distance;
@@ -56,36 +53,78 @@ public class DartMonke : towersParent
         //transform.GetChild(4).position
         if (closestEnemy != null)
         {
-         //   Debug.Log("Throw");
+            //   Debug.Log("Throw");
             gameObject.transform.LookAt(closestEnemy.transform);
             Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-         //   Debug.Log(projctileData.dartProjctile);
+            //   Debug.Log(projctileData.dartProjctile);
             GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
             dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
         }
-        else if (closestEnemy == null) {
+        else if (closestEnemy == null)
+        {
             //if theres no enemy in range waait until theres one in range
             yield return new WaitUntil(enemyInRange);
             StartCoroutine(attackEnemy());
         }
-            yield return new WaitForSeconds(fireRate);
-            StartCoroutine(attackEnemy());
+        yield return new WaitForSeconds(fireRate);
+        StartCoroutine(attackEnemy());
     }
-    IEnumerator spawnattackCD() { 
-             yield return new WaitForSeconds(1);
-             StartCoroutine(attackEnemy());
+    IEnumerator spawnattackCD()
+    {
+        yield return new WaitForSeconds(1);
+        StartCoroutine(attackEnemy());
     }
-    bool enemyInRange() {
-        foreach (var keyValuePair in boxData.boxsesOnMap) {
-            if (keyValuePair.Value != null) { 
-            float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-               // Debug.Log("checking:"+ distance + ": " + keyValuePair  );
-               //holy shit thank god unity loops thru the whole dictionary in a frame i was about to start
-               // n(dictionary length) amount of thread to get all of them at the same time
+    /// <summary>
+    /// Use SphereCasting later
+    /// </summary>
+    /// <returns></returns>
+    bool enemyInRange()
+    {
+        foreach (var keyValuePair in boxData.boxsesOnMap)
+        {
+            if (keyValuePair.Value != null)
+            {
+                float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+                // Debug.Log("checking:"+ distance + ": " + keyValuePair  );
+
                 if (distance <= range) { return true; }
+            }
         }
-        }
-          return false;
+        return false;
     }
+
+    /// <summary>
+    /// If the tower is hovering show the range cicrle and if its not diisable the range circle and start the attack coroutine
+    /// </summary>
+    /// <param name="hovering">bool whether is the tower is selected and hovering over the mouse for placement </param>
+    public void hoveringState(bool hovering)
+    {
+        hoveringS = hovering;
+        if (rangeCircle != null)
+        {
+            checkHovering(hoveringS);
+        }
+        else if (rangeCircle == null)
+        {
+            checkHovering(hoveringS);
+        }
+    }
+    void checkHovering(bool hovering) {
+        if (!hovering)
+        {
+            rangeC.SetActive(false);
+            StartCoroutine(spawnattackCD());
+        }
+        else
+        {
+            rangeC.SetActive(true);
+        }
+    }
+    /// <summary>
+    /// Interface method for when the tower is selected
+    /// </summary>
+    public void towerSelected() { 
     
+    
+    }
 }
