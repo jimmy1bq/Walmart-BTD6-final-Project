@@ -1,0 +1,14 @@
+*credits(AI Uses): 
+I used ChatGpt to debug but along the way it introduced me to an important concept: Scriptable object. 
+Heres the whole chat(all came from an inheritance issue): https://chatgpt.com/share/68f43b0f-858c-800b-b182-40a6a0fa3e07
+Debugging disabling collision and enabling mid runtime
+https://chatgpt.com/c/68fd3745-05e8-8321-8f10-9606169b3fea
+https://chatgpt.com/c/68fa9622-bd58-8329-8c8a-3fc9249a74af
+Changing transparency of an object:
+https://chatgpt.com/c/68fa8c3b-5184-832a-b19d-5598a73e75fb
+Parent-childern issues(this was different parent being of different gameobject than children):
+https://chatgpt.com/c/68f1633a-457c-8331-b434-c67c84614461
+Dictionary-inti debugging issue(these 2 issue came up from dictionary) :
+https://chatgpt.com/c/68f41cef-b678-8324-813b-8d967afd77d2
+https://chatgpt.com/c/68f2d424-c8f4-832d-be14-39de6f5def24
+
