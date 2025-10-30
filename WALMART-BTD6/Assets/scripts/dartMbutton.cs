@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class firstTowerButton : MonoBehaviour
+public class dartMbutton : MonoBehaviour
 {
     [SerializeField] TowersSO towerData;
-    public void OnClick() { 
-    events.GainCash.Invoke(-200);
-    events.towerSelected.Invoke(towerData.tower1);
+
+    [SerializeField] bool testBool1;
+    public void selected() { 
+        events.GainCash.Invoke(-200);
+        events.towerSelected.Invoke(towerData.tower1);
+        Debug.Log("false");
     }
 }

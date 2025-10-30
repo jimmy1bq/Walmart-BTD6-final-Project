@@ -80,7 +80,7 @@ public class PinkBox : Box, IDamageTaken, IIndex
     {
         
         boxSO.boxType downToLayer = pop(damage, boxColor);
-      
+        
 
         if (downToLayer == boxSO.boxType.none)
         {

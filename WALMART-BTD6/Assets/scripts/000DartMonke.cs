@@ -5,24 +5,26 @@ using Unity.Mathematics;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public class DartMonke : MonoBehaviour
+public class DartMonke : towersParent
 {
-    float range = 5;
     [SerializeField] TowersSO towerData;
     [SerializeField] projectileSO projctileData;
     [SerializeField] boxSO boxData;
     [SerializeField] int fireRate;
-    int towerIDIM;
+
+    float range = 5;
+   
+
     private void Awake()
     {
-        towerIDIM = towerData.towerID;
-        towerData.towerID++;
+       
     }
     void Start()
     {
-     Vector3 rangePos = towerData.placeTowerRangeCircle(gameObject);
-     GameObject rangeC =Instantiate(towerData.rangeCricle,rangePos, Quaternion.identity);
-        rangeC.transform.parent = gameObject.transform;
+     Debug.Log(towerData.placeTowerRangeCircle(gameObject));
+     Vector3 rangePos = placeTowerRangeCircle(gameObject);
+        GameObject rangeC =Instantiate(towerData.rangeCricle,rangePos, Quaternion.identity);
+     rangeC.transform.parent = gameObject.transform;
 
         rangeC.SetActive(false);
      StartCoroutine(spawnattackCD());
@@ -56,7 +58,6 @@ public class DartMonke : MonoBehaviour
         {
          //   Debug.Log("Throw");
             gameObject.transform.LookAt(closestEnemy.transform);
-            
             Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
          //   Debug.Log(projctileData.dartProjctile);
             GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);

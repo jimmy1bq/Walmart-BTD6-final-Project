@@ -27,8 +27,7 @@ public class projectileSO : ScriptableObject
 
     private void OnDisable()
     {
-        //projectileID = 0;
-        //projctileOnMap.Clear();
+        
     }
 
 }

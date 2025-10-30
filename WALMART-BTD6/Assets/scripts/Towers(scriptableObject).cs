@@ -9,16 +9,8 @@ public class TowersSO : ScriptableObject {
     
     public int towerID = 0;
 
-    private void Awake()
-    {
-        Debug.Log("hi");
-        Debug.Log(tower1);
-    }
-    public Vector3 placeTowerRangeCircle(GameObject tower) {
-        Vector3 rangePos =new Vector3(tower.transform.position.x, tower.transform.position.y, tower.transform.position.z) + new Vector3(0, 0.01f, 0);
-
-        return rangePos;
-    }
+    
+    
     public bool rangeCheck(float distance,float range)
     {
         if (distance <= range) {
