@@ -35,7 +35,7 @@ public class RayCast : MonoBehaviour
 
         RaycastHit hit;
         if (towerOnMouse != null)
-        {   Debug.Log("Moving Tower");
+        {  
             if (Physics.Raycast(ray, out hit, 999999f, layerMaskMap))
             {
               towerOnMouse.transform.position = hit.point;
@@ -47,45 +47,43 @@ public class RayCast : MonoBehaviour
             }
         }else if(towerOnMouse == null)
         {
-            Debug.Log("Searching");
-            if (Physics.Raycast(ray, out hit,9999999f,layerMaskTower)) { 
-                Debug.Log(hit.point);
-
+            //if theres no tower on mouse then check if its a tower or just another object getting clicked
+            //if its a tower select and unselect the other tower if there is one selected
+            //if its not a tower then unselect the selected tower if there is one selected
+            //Can this have lower if ststaments?
+            //maybe a corotuine fix? Like use a corotuine waitUntil mouseButtonDown then do the raycast
+            //then since clicking anywhere deselects the tower then check if we are clicking another tower or not
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("HitNPressed");
+                    if (hit.collider.gameObject.tag == "Tower")
+                    { 
+                        if (selectedTower)
+                        {
+                            selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+                        }
+                        selectedTower = hit.collider.gameObject;
+                        selectedTower.GetComponent<IUNORSelected>().towerSelected();
+                    }
+                    else
+                    {
+                        if (selectedTower)
+                        {
+                            selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+                            selectedTower = null;
+                        }
+                    }
+                }
             }
-
         }
-       
-       
-
-
-
-        //    if (float.IsNaN(mousePostionRaycast.x))
-        //    {
-        //        if (currentTower != null)
-        //        {
-        //            selectedTower = currentTower;
-        //            selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(true);
-
-        //        }
-        //        else if (currentTower == null)
-        //        {
-        //            //selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
-        //            //selectedTower = null;
-        //            //Debug.Log("Can't Place here");
-        //        }
-        //    }
-        //    else if (mousePostionRaycast.x != float.NaN)
-        //    {
-        //        //selectedTower.transform.GetChild(findFirstChild("RangeCircleThing(Clone)", selectedTower)).gameObject.SetActive(false);
-        //        //selectedTower = null;
-        //        Instantiate(tower1, mousePostionRaycast, Quaternion.identity);
-        //    }
-        //}
     }
 
     //Find first child is a method that takes a string name and a gameObject to search through to find the name in gameObject
     //returns the index of the child if found otherwise returns -1
     //name is the string name and objectToSearch is the gameObject to search through
+    //here because of some previous script but clearly I don't need it anymore since Interface exist but might as well save it for the future
     int findFirstChild(string name, GameObject objectToSearch)
     {
         int i = 0;
@@ -122,24 +120,3 @@ public class RayCast : MonoBehaviour
     }
 
 }
-//Code blocks used for later
-//if (Physics.Raycast(ray, out hit))
-//{
-//    if (hit.collider.tag == "placeableArea")
-//    {
-//        mousePostionRaycast = hit.point;
-//        currentTower = null;
-//    }
-//    else if (hit.collider.tag == "Tower")
-//    {
-//        mousePostionRaycast = new Vector3(float.NaN, float.NaN, float.NaN);
-//        currentTower = hit.collider.gameObject;
-
-//    }
-//    else
-//    {
-//        mousePostionRaycast = new Vector3(float.NaN, float.NaN, float.NaN);
-//        currentTower = null;
-//    }
-
-//}

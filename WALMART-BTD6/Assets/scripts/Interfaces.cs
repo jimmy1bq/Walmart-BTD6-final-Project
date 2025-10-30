@@ -11,9 +11,10 @@ public interface IHovering {
     public void hoveringState(bool hovering);
 }
 
-public interface ISelected
+public interface IUNORSelected
 {
     public void towerSelected();
+    public void towerUnSelected();
 }
 
 

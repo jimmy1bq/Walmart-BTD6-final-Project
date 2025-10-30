@@ -1,12 +1,13 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
-public class DartMonke : towersParent, IHovering, ISelected
+public class DartMonke : towersParent, IHovering, IUNORSelected
 {
     [SerializeField] projectileSO projctileData;
     [SerializeField] boxSO boxData;
 
-
+    [SerializeField] TextMeshProUGUI dMtowerUI;
     [SerializeField] GameObject rangeCircle;
     [SerializeField] int fireRate;
 
@@ -124,7 +125,10 @@ public class DartMonke : towersParent, IHovering, ISelected
     /// Interface method for when the tower is selected
     /// </summary>
     public void towerSelected() { 
-    
-    
+    rangeC.SetActive(true);
+
+    }
+    public void towerUnSelected() {
+    rangeC.SetActive(false);
     }
 }
