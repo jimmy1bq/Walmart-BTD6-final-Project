@@ -16,5 +16,14 @@ public interface IUNORSelected
     public void towerSelected();
     public void towerUnSelected();
 }
+public interface IPopToPopCount 
+{
+    public void damageDealt(int popCount);
+
+}
+public interface IProjctileOwner
+{
+   public void setProjectileOwner(GameObject owner);
+}
 
 

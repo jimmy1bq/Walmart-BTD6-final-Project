@@ -3,13 +3,15 @@ using Unity.Mathematics;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-public class dartProj : MonoBehaviour
+public class dartProj : MonoBehaviour, IProjctileOwner
 {//should be making this into a scriptable object considering im using a lot of public vars and functions
     [SerializeField] GameObject lastPosition;
     [SerializeField] projectileSO projectileData;
-   
+
+    GameObject owner;
     GameObject closestEnemy;
     Vector3 ogPosition;
+    int totalDamageDone = 0;
     int damage = 1;
     int pierce = 2;
    
@@ -54,6 +56,7 @@ public class dartProj : MonoBehaviour
         if (enemyDamage != null && other.gameObject.tag == "enemy")
         {
             enemyDamage.damageTaken(damage);
+            owner.GetComponent<IPopToPopCount>().damageDealt(1);
             pierce--;
             if (pierce <= 0)
             {
@@ -61,4 +64,10 @@ public class dartProj : MonoBehaviour
             }
         }
     }
+    public void setProjectileOwner(GameObject owners)
+    {
+        Debug.Log("SPO GOod");
+        owner = owners;
+    }
+
 }

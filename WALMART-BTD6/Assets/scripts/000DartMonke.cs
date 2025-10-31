@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DartMonke : towersParent, IHovering, IUNORSelected
+public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 {
     [SerializeField] projectileSO projctileData;
     [SerializeField] boxSO boxData;
@@ -64,6 +64,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected
             //   Debug.Log(projctileData.dartProjctile);
             GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
             dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
+            dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
         }
         else if (closestEnemy == null)
         {
@@ -138,5 +139,34 @@ public class DartMonke : towersParent, IHovering, IUNORSelected
     public void towerUnSelected() {
     rangeC.SetActive(false);
     Destroy(monkeyUI);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="popCounts">Recevies a damage(int) from the projctile it shot</param>
+    public void damageDealt(int popCounts)
+    {
+        popCount += popCounts;
+        if (monkeyUI) {
+            findFirstChild("popCount", monkeyUI);  
+        }
+    }
+    int findFirstChild(string name, GameObject objectToSearch)
+    {
+        int i = 0;
+        foreach (Transform child in objectToSearch.transform)
+        {
+            Debug.Log(child.name == name);
+            if (child.name == name)
+            {
+                return i;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        i++;
+        return -1;
     }
 }
