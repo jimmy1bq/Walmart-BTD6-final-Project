@@ -8,6 +8,5 @@ public class dartMbutton : MonoBehaviour
     public void selected() { 
         events.GainCash.Invoke(-200);
         events.towerSelected.Invoke(DartMonkePrefab);
-       
     }
 }

@@ -1,18 +1,22 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DartMonke : towersParent, IHovering, IUNORSelected
 {
     [SerializeField] projectileSO projctileData;
     [SerializeField] boxSO boxData;
 
-    [SerializeField] TextMeshProUGUI dMtowerUI;
+    [SerializeField] GameObject dMtowerUI;
     [SerializeField] GameObject rangeCircle;
     [SerializeField] int fireRate;
 
     float range = 5;
+    int popCount;
+    
     bool hoveringS = false;
+    GameObject monkeyUI;
     GameObject rangeC;
 
 
@@ -126,9 +130,13 @@ public class DartMonke : towersParent, IHovering, IUNORSelected
     /// </summary>
     public void towerSelected() { 
     rangeC.SetActive(true);
-
+    monkeyUI = Instantiate(dMtowerUI);
+    monkeyUI.gameObject.GetComponent<RectTransform>().Translate(965,550, 0);
+    monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
+    monkeyUI.SetActive(true);
     }
     public void towerUnSelected() {
     rangeC.SetActive(false);
+    Destroy(monkeyUI);
     }
 }

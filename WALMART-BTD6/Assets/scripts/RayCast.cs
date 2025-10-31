@@ -40,10 +40,10 @@ public class RayCast : MonoBehaviour
             {
               towerOnMouse.transform.position = hit.point;
             }
-            if (Input.GetMouseButtonUp(0)) {
+
+            if (Input.GetKeyUp(KeyCode.P)) {
                 towerOnMouse.GetComponent<IHovering>().hoveringState(false);
-                towerOnMouse = null;
-              
+                towerOnMouse = null;         
             }
         }else if(towerOnMouse == null)
         {
