@@ -16,7 +16,7 @@ public class RayCast : MonoBehaviour
 
     Vector3 mousePostionRaycast;
 
-    GameObject currentTower;
+   
     GameObject selectedTower;
     GameObject towerOnMouse;
 

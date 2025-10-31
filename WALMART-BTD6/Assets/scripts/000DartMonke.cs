@@ -147,8 +147,10 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     public void damageDealt(int popCounts)
     {
         popCount += popCounts;
+
         if (monkeyUI) {
-            findFirstChild("popCount", monkeyUI);  
+          GameObject popText= monkeyUI.GetComponent<RectTransform>().GetChild(findFirstChild("popCount", monkeyUI)).gameObject;
+          popText.GetComponent<TextMeshProUGUI>().text = popCounts.ToString();
         }
     }
     int findFirstChild(string name, GameObject objectToSearch)
@@ -156,7 +158,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         int i = 0;
         foreach (Transform child in objectToSearch.transform)
         {
-            Debug.Log(child.name == name);
+           
             if (child.name == name)
             {
                 return i;
