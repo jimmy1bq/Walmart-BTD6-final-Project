@@ -711,11 +711,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e89078fa943dc489458312cec30889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  redbox: {fileID: 3842490214894986177, guid: 5b3e41400c3f78f44a1c67ef25082037, type: 3}
-  pinkbox: {fileID: 2676424228484237119, guid: cbd2cc3ec28348349b70292f150e61ef, type: 3}
-  blueBox: {fileID: 8790730137325624923, guid: 788df2ad6b7caac4cbccbe1cc8232e57, type: 3}
-  greenBox: {fileID: 9005163089464676047, guid: ce792b844f365a04497280b57a872b49, type: 3}
-  yellowBox: {fileID: 1127350582203549054, guid: 7d1ec3bbf62692d48a3320218b367e4c, type: 3}
+  redbox: {fileID: 250104456419386795, guid: 41a84e5a9a8937e40ab00f6e7ae004fc, type: 3}
+  pinkbox: {fileID: 4064267487709473675, guid: f2737986d4a83b445a4936db01ba06f6, type: 3}
+  blueBox: {fileID: 137711323985219809, guid: ab9b6479c3151a74da5e7aca1176e045, type: 3}
+  greenBox: {fileID: 1774426271804484357, guid: 1c6814db861ef1146a53c1e49b5705ac, type: 3}
+  yellowBox: {fileID: 4799072601950863259, guid: b85ee2b70d35a0f4d82ea6b9047b7ad3, type: 3}
   spawnPoint: {fileID: 910139065}
 --- !u!4 &172364873
 Transform:
@@ -1516,63 +1516,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &607453959
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1674676602017868784, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_Name
-      value: 000DarkMonke
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.9119177
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.0200005
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.858893
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
 --- !u!1 &674736257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,9 +2521,6 @@ MonoBehaviour:
   towerData: {fileID: 11400000, guid: eb0b0c18afe548542902d1b9e3d8877d, type: 2}
   tower1: {fileID: 1674676602017868784, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
   brick: {fileID: 6997003656227999053, guid: bd57e93c4b445534e8d706eb213e4ccf, type: 3}
-  layerMaskMap:
-    serializedVersion: 2
-    m_Bits: 128
   layerMaskTower:
     serializedVersion: 2
     m_Bits: 256
@@ -5038,4 +4978,3 @@ SceneRoots:
   - {fileID: 1002222382}
   - {fileID: 1312433723}
   - {fileID: 1023712830}
-  - {fileID: 607453959}

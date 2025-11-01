@@ -108,6 +108,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         hoveringS = hovering;
         checkHovering(hovering);
     }
+    //changed added layer change remember to record this on milestone 4
     void checkHovering(bool hovering) {
         if (!hovering)
         {
@@ -117,9 +118,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         }
         else
         {
-            Debug.Log("hovering");
-            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-           Debug.Log(gameObject.layer);
+            Debug.Log(gameObject.layer);
             rangeC.SetActive(true);
         }
     }

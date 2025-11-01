@@ -27,7 +27,8 @@ public class RayCast : MonoBehaviour
         events.towerSelected.AddListener(towerSelectedEvent);
     }
 
-    // Update is called once per frame
+   
+    //changed remember to record this on milestone 4
     void Update()
     {
         Vector3 mousPos = Input.mousePosition;
@@ -59,7 +60,7 @@ public class RayCast : MonoBehaviour
                         if (selectedTower)
                         {
                             selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
-                        }  
+                        }
                         selectedTower = hit.collider.gameObject;
                         selectedTower.GetComponent<IUNORSelected>().towerSelected();
                     }
