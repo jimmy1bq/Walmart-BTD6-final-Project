@@ -66,7 +66,7 @@ public class dartProj : MonoBehaviour, IProjctileOwner
     }
     public void setProjectileOwner(GameObject owners)
     {
-        Debug.Log("SPO GOod");
+      
         owner = owners;
     }
 

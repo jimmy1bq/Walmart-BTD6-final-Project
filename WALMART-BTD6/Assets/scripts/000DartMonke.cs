@@ -15,7 +15,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     float range = 5;
     int popCount;
     
-    bool hoveringS = false;
+    bool hoveringS;
     GameObject monkeyUI;
     GameObject rangeC;
 
@@ -106,23 +106,20 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     public void hoveringState(bool hovering)
     {
         hoveringS = hovering;
-        if (rangeCircle != null)
-        {
-            checkHovering(hoveringS);
-        }
-        else if (rangeCircle == null)
-        {
-            checkHovering(hoveringS);
-        }
+        checkHovering(hovering);
     }
     void checkHovering(bool hovering) {
         if (!hovering)
         {
+            gameObject.layer = LayerMask.NameToLayer("Tower");
             rangeC.SetActive(false);
             StartCoroutine(spawnattackCD());
         }
         else
         {
+            Debug.Log("hovering");
+            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+           Debug.Log(gameObject.layer);
             rangeC.SetActive(true);
         }
     }
@@ -130,15 +127,15 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     /// Interface method for when the tower is selected
     /// </summary>
     public void towerSelected() { 
-    rangeC.SetActive(true);
-    monkeyUI = Instantiate(dMtowerUI);
-    monkeyUI.gameObject.GetComponent<RectTransform>().Translate(965,550, 0);
-    monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
-    monkeyUI.SetActive(true);
+        rangeC.SetActive(true);
+        monkeyUI = Instantiate(dMtowerUI);
+        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(965,550, 0);
+        monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
+        monkeyUI.SetActive(true);
     }
     public void towerUnSelected() {
-    rangeC.SetActive(false);
-    Destroy(monkeyUI);
+        rangeC.SetActive(false);
+        Destroy(monkeyUI);
     }
     /// <summary>
     /// 

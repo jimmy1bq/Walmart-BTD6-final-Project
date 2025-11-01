@@ -9,7 +9,7 @@ public class RayCast : MonoBehaviour
     [SerializeField] GameObject tower1;
     [SerializeField] GameObject brick;
 
-    public LayerMask layerMaskMap;
+    
     public LayerMask layerMaskTower;
 
     Camera cam;
@@ -35,51 +35,47 @@ public class RayCast : MonoBehaviour
 
         RaycastHit hit;
         if (towerOnMouse != null)
-        {  
-            if (Physics.Raycast(ray, out hit, 999999f, layerMaskMap))
-            {
-              towerOnMouse.transform.position = hit.point;
-            }
-
-            if (Input.GetKeyUp(KeyCode.P)) {
-                towerOnMouse.GetComponent<IHovering>().hoveringState(false);
-                towerOnMouse = null;         
-            }
-        }else if(towerOnMouse == null)
         {
-            //if theres no tower on mouse then check if its a tower or just another object getting clicked
-            //if its a tower select and unselect the other tower if there is one selected
-            //if its not a tower then unselect the selected tower if there is one selected
-            //Can this have lower if ststaments?
-            //maybe a corotuine fix? Like use a corotuine waitUntil mouseButtonDown then do the raycast
-            //then since clicking anywhere deselects the tower then check if we are clicking another tower or not
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, 999999f))
             {
-                if (Input.GetMouseButtonDown(0))
+              
+                towerOnMouse.transform.position = hit.point;
+            }
+            if (Input.GetKeyUp(KeyCode.P))
+            {
+                if (hit.collider.gameObject.tag == "placeableArea")
                 {
-                    Debug.Log("HitNPressed");
+                    towerOnMouse.GetComponent<IHovering>().hoveringState(false);
+                    towerOnMouse = null;
+                }
+            }
+        }
+        else if (towerOnMouse == null) {
+            if (Input.GetMouseButtonDown(0)) {
+                if (Physics.Raycast(ray, out hit, 999999f)) {
                     if (hit.collider.gameObject.tag == "Tower")
-                    { 
+                    {
+                        Debug.Log("TowerClicked");
                         if (selectedTower)
                         {
                             selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
-                        }
+                        }  
                         selectedTower = hit.collider.gameObject;
                         selectedTower.GetComponent<IUNORSelected>().towerSelected();
                     }
-                    else
-                    {
+                    else {
                         if (selectedTower)
                         {
                             selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
                             selectedTower = null;
                         }
                     }
+                }                         
                 }
             }
         }
-    }
-
+    
+    
     //Find first child is a method that takes a string name and a gameObject to search through to find the name in gameObject
     //returns the index of the child if found otherwise returns -1
     //name is the string name and objectToSearch is the gameObject to search through
@@ -120,3 +116,35 @@ public class RayCast : MonoBehaviour
     }
 
 }
+//{
+//    //if theres no tower on mouse then check if its a tower or just another object getting clicked
+//    //if its a tower select and unselect the other tower if there is one selected
+//    //if its not a tower then unselect the selected tower if there is one selected
+//    //Can this have lower if ststaments?
+//    //maybe a corotuine fix? Like use a corotuine waitUntil mouseButtonDown then do the raycast
+//    //then since clicking anywhere deselects the tower then check if we are clicking another tower or not
+//    if (Physics.Raycast(ray, out hit))
+//    {
+//        if (Input.GetMouseButtonDown(0))
+//        {
+//            Debug.Log("HitNPressed");
+//            if (hit.collider.gameObject.tag == "Tower")
+//            { 
+//                if (selectedTower)
+//                {
+//                    selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+//                }
+//                selectedTower = hit.collider.gameObject;
+//                selectedTower.GetComponent<IUNORSelected>().towerSelected();
+//            }
+//            else
+//            {
+//                if (selectedTower)
+//                {
+//                    selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+//                    selectedTower = null;
+//                }
+//            }
+//        }
+//    }
+//}
