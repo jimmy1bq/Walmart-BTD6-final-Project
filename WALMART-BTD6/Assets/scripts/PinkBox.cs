@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 public class PinkBox : Box, IDamageTaken, IIndex
 {
-    [SerializeField] protected boxSO boxData;
+    [SerializeField]  boxSO boxData;
 
     boxSO.boxType boxColor = boxSO.boxType.pink;
     Coroutine AdvanceIndex;
@@ -89,7 +89,8 @@ public class PinkBox : Box, IDamageTaken, IIndex
         }
         else
         {
-            GameObject box=Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            Debug.Log(boxData);
+            GameObject box= Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
             IIndex boxIndex = box.GetComponent<IIndex>();
             boxIndex.wayPointReciever(i);
             boxData.boxsesOnMap.Remove(boxData.ID);

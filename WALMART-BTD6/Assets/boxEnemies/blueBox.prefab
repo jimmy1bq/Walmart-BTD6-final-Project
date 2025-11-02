@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1413695974105493502}
   - component: {fileID: 4369811482104770130}
   - component: {fileID: 4672153000618104738}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: blueBox
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -124,4 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e76510baf32d24bab5bbe2c34ce712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlueBox
-  boxData: {fileID: 0}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 42296725422428971}
   - component: {fileID: 1222482636340644242}
   - component: {fileID: 7115590464379017522}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: redBox
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -124,4 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c7d2376334b8b48b59fb3ebc1a1313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RedBox
-  boxData: {fileID: 0}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}

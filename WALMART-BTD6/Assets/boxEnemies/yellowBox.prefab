@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7331860945092247659}
   - component: {fileID: 395271392013431875}
   - component: {fileID: 8896045564370359955}
-  - component: {fileID: -7361740546386065112}
-  m_Layer: 0
+  - component: {fileID: -4505607934477939205}
+  m_Layer: 2
   m_Name: yellowBox
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7624283, y: 0.76903933, z: 0.70660365}
   m_Center: {x: 0, y: 0.3845196, z: -0.000000044703484}
---- !u!114 &-7361740546386065112
+--- !u!114 &-4505607934477939205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4799072601950863259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d2a7b76d1d8c434288473735b2fc643, type: 3}
+  m_Script: {fileID: 11500000, guid: f4dfdc991dda18b45a3dc18da37042f0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::whiteBoxScript
-  boxData: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::YellowBox
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}

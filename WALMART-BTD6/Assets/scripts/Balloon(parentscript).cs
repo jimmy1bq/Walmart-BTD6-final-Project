@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static boxSO;
 
@@ -26,15 +27,10 @@ public class Box : MonoBehaviour
             { boxSO.boxType.lead, 7 },
             { boxSO.boxType.orange, 7 },
             { boxSO.boxType.seagreen, 8 },
+            { boxSO.boxType.ceramic, 9 },
+
     };
-    protected Dictionary<boxSO.bigBoxType, int> bigBalloonHp =new Dictionary<boxSO.bigBoxType, int>() {
-            { boxSO.bigBoxType.ceramic, 200 },
-            { boxSO.bigBoxType.moab, 2000 },
-            { boxSO.bigBoxType.bfb, 6000 },
-            { boxSO.bigBoxType.zomg, 20000 },
-            { boxSO.bigBoxType.ddt, 1000 },
-            { boxSO.bigBoxType.bad, 1000000 },
-    };
+   
     //this dictionary is used to get the balloon based on layer boxSO I don't have to loop through the top dictionary to match the hp
     protected Dictionary<int, boxSO.boxType> layerToBalloon = new Dictionary<int, boxSO.boxType>() {
             { 1, boxSO.boxType.red },
@@ -59,15 +55,7 @@ public class Box : MonoBehaviour
             { boxSO.boxType.lead, 2 },
             { boxSO.boxType.orange, 3 },
             { boxSO.boxType.seagreen, 3},
-    };
-    //big balloon speed
-    protected Dictionary<boxSO.bigBoxType, int> bigBalloonSpeed =  new Dictionary<boxSO.bigBoxType, int>() {
-            { boxSO.bigBoxType.ceramic, 2 },
-            { boxSO.bigBoxType.moab, 4 },
-            { boxSO.bigBoxType.bfb,  3},
-            { boxSO.bigBoxType.zomg, 2 },
-            { boxSO.bigBoxType.ddt, 8 },
-            { boxSO.bigBoxType.bad, 1 },
+            { boxSO.boxType.ceramic, 3 },
     };
 
   
@@ -96,8 +84,7 @@ public class Box : MonoBehaviour
     }
 
 
-
-
+   
 
 
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7538875370691469786}
   - component: {fileID: 4107117164629309920}
   - component: {fileID: 2905199673313632920}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: purpleBox
   m_TagString: enemy
   m_Icon: {fileID: 0}

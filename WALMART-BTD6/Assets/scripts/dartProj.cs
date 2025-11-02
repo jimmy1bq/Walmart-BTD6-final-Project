@@ -11,7 +11,7 @@ public class dartProj : MonoBehaviour, IProjctileOwner
     GameObject owner;
     GameObject closestEnemy;
     Vector3 ogPosition;
-    int totalDamageDone = 0;
+    
     int damage = 1;
     int pierce = 2;
    

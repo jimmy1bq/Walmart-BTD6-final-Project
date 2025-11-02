@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3733996287113764470}
   - component: {fileID: 4138511020311450952}
   - component: {fileID: 4174161673134955782}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: seaGreenBox
   m_TagString: enemy
   m_Icon: {fileID: 0}

@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class YellowBox : Box, IDamageTaken, IIndex
+public class cermBoxHp : Box, IDamageTaken, IIndex
 {
 
     [SerializeField] boxSO boxData;
+
     Coroutine AdvanceIndex;
-    boxSO.boxType boxColor = boxSO.boxType.yellow;
+    boxSO.boxType boxColor = boxSO.boxType.ceramic;
+    int hp;
     int layer;
     int balloonSpeedValue;
     int i = 0;
@@ -20,6 +22,7 @@ public class YellowBox : Box, IDamageTaken, IIndex
     private void Awake()
     {
         layer = balloonLayer[boxColor];
+        hp = 10;
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         boxData.boxsesOnMap.Add(boxData.ID, gameObject);

@@ -9,7 +9,16 @@ public class WaveManager : MonoBehaviour
     [SerializeField] GameObject blueBox;
     [SerializeField] GameObject greenBox;
     [SerializeField] GameObject yellowBox;
-  
+
+    [SerializeField] GameObject blackbox;
+    [SerializeField] GameObject whitebox;
+    [SerializeField] GameObject metalBox;
+    [SerializeField] GameObject purpleBox;
+    [SerializeField] GameObject orangeBox;
+    [SerializeField] GameObject seaGreenBox;
+    [SerializeField] GameObject ceramucBox;
+
+
     [SerializeField] Transform spawnPoint;
 
 
@@ -33,6 +42,13 @@ public class WaveManager : MonoBehaviour
         Instantiate(greenBox, spawnPoint.position, Quaternion.identity);
         Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
         Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(whitebox, spawnPoint.position, Quaternion.identity);
+        Instantiate(blackbox, spawnPoint.position, Quaternion.identity);
+        Instantiate(orangeBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(purpleBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(seaGreenBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(metalBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(ceramucBox, spawnPoint.position, Quaternion.identity);
     }
     IEnumerator spawnPink() {
 

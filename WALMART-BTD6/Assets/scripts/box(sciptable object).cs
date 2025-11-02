@@ -5,18 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "balloonScriptableObject")]
 public class boxSO : ScriptableObject {
     public int i = 1;
-    public GameObject redb;
-    public GameObject blueb;
-    public GameObject greenb;
-    public GameObject yellowb;
-    public GameObject pinkb;
-    public GameObject blackb;
+  
     public enum boxType
     {
-        none, red, blue, green, yellow, pink, black, white, purple, lead, orange, seagreen
-    }
-    public enum bigBoxType
-    {
+        none, red, blue, green, yellow, pink, black, white, purple, lead, orange, seagreen,
         ceramic, moab, bfb, zomg, ddt, bad
     }
     public List<GameObject> objects;

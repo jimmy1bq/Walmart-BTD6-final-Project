@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3791630353525233643}
   - component: {fileID: 822461160700765435}
   - component: {fileID: 3627114492771212900}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: whiteBox
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -124,4 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2a7b76d1d8c434288473735b2fc643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::whiteBoxScript
-  boxData: {fileID: 0}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}

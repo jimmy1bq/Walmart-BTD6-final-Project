@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8305913536489159128}
   - component: {fileID: 9067418229072364870}
   - component: {fileID: 6882118825538931640}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: greenBox
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -124,4 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402cbea4e87d26f4d9694499583525d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GreenBox
-  boxData: {fileID: 0}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
