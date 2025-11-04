@@ -87,7 +87,7 @@ public class purpleBoxScript : Box, IDamageTaken, IIndex
     {
 
         boxSO.boxType downToLayer = pop(damage, boxColor);
-
+        Debug.Log(boxData.boxTypeToGO[downToLayer]);
 
         if (downToLayer == boxSO.boxType.none)
         {
@@ -97,8 +97,8 @@ public class purpleBoxScript : Box, IDamageTaken, IIndex
         else
         {
             GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
-            IIndex boxIndex = box.GetComponent<IIndex>();
-            boxIndex.wayPointReciever(i);
+            IIndex wPR = box.GetComponent<IIndex>();
+            wPR.wayPointReciever(i);
             boxData.boxsesOnMap.Remove(boxData.ID);
             Destroy(gameObject);
         }

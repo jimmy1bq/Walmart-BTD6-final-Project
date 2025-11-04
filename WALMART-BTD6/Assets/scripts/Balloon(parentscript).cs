@@ -5,15 +5,10 @@ using UnityEngine;
 using static boxSO;
 
 public class Box : MonoBehaviour
+
 {
-  
-  
-    
-   
 
- 
-    protected Dictionary<boxSO.boxType, GameObject> balloonPreFab=new Dictionary<boxSO.boxType, GameObject>();
-
+   protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
     protected Dictionary<boxSO.boxType, int> balloonLayer =new Dictionary<boxSO.boxType, int>() {
             { boxSO.boxType.none, 0 },
             { boxSO.boxType.red, 1 },

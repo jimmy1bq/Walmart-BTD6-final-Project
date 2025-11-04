@@ -26,12 +26,12 @@ public class PinkBox : Box, IDamageTaken, IIndex
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         boxData.boxsesOnMap.Add(boxData.ID,gameObject);
         boxData.ID++;
-        
+        StartCoroutine(Iframes());
 
     }
     private void Start()
     {
-        StartCoroutine(Iframes());
+        
         AdvanceIndex =  StartCoroutine(advanceIndex());
         
        
@@ -89,7 +89,7 @@ public class PinkBox : Box, IDamageTaken, IIndex
         }
         else
         {
-            Debug.Log(boxData);
+          
             GameObject box= Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
             IIndex boxIndex = box.GetComponent<IIndex>();
             boxIndex.wayPointReciever(i);
@@ -97,8 +97,9 @@ public class PinkBox : Box, IDamageTaken, IIndex
             Destroy(gameObject);
         } 
     }
-    public void wayPointReciever(int index) { 
-    ogI= index;
+    public void wayPointReciever(int index) {
+        
+    i= index;
     }
 }
     

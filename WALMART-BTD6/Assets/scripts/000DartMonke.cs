@@ -1,7 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Xml;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UI.Image;
 
 public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 {
@@ -10,7 +14,11 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     [SerializeField] GameObject dMtowerUI;
     [SerializeField] GameObject rangeCircle;
+
+    [SerializeField] LayerMask enemyOnly;
+
     [SerializeField] int fireRate;
+
 
     float range = 5;
     int popCount;
@@ -18,18 +26,21 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     bool hoveringS;
     GameObject monkeyUI;
     GameObject rangeC;
+    Vector3 origin;
 
 
     private void Awake()
     {
+        origin= transform.position + new Vector3(0, 0.8f, 0);
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
         rangeC.transform.parent = gameObject.transform;
         rangeC.SetActive(false);
+
     }
     void Start()
     {
-
+       StartCoroutine(attackEnemy());
     }
 
     // Update is called once per frame
@@ -37,63 +48,44 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     {
 
     }
-    IEnumerator attackEnemy()
-    {
-        GameObject closestEnemy = null;
+    //changed this to not use SOs anymore milestone 4
+    // spherecast to check enemy in range if theres no enemy in range we can use the corotine to wait until there is one and insta attack the enemy
+    IEnumerator attackEnemy() {
+        Vector3 origin = transform.position + new Vector3(0, 0.8f, 0);
+        RaycastHit hit;
         range = 5;
-
-        foreach (var keyValuePair in boxData.boxsesOnMap)
-        {
-            if (keyValuePair.Value != null)
+        Debug.Log("hi");
+        if (Physics.SphereCast(origin, range, Vector3.forward, out hit,0.01f,enemyOnly)) {
+            if (hit.collider.gameObject != null)
             {
-
-                float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-                if (distance <= range)
-                {
-                    closestEnemy = keyValuePair.Value;
-                    range = distance;
-                }
+                //attack
             }
-        }
-        //transform.GetChild(4).position
-        if (closestEnemy != null)
-        {
-            //   Debug.Log("Throw");
-            gameObject.transform.LookAt(closestEnemy.transform);
-            Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-            //   Debug.Log(projctileData.dartProjctile);
-            GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
-            dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
-            dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
-        }
-        else if (closestEnemy == null)
-        {
-            //if theres no enemy in range waait until theres one in range
-            yield return new WaitUntil(enemyInRange);
-            StartCoroutine(attackEnemy());
+            else 
+            {
+                yield return new WaitUntil(enemyInRange); 
+            }
+
         }
         yield return new WaitForSeconds(fireRate);
         StartCoroutine(attackEnemy());
     }
+
     IEnumerator spawnattackCD()
     {
-        yield return new WaitForSeconds(1);
-        StartCoroutine(attackEnemy());
+       yield return new WaitForSeconds(1);
+       StartCoroutine(attackEnemy());
     }
-    /// <summary>
-    /// Use SphereCasting later
-    /// </summary>
-    /// <returns></returns>
+   //milestone 4 
+   //changed this to be much more cleaner and better. 
+   //Also no more reliance on SOs. 
+   //the nested if statment is to check if the hit acutally hit something
     bool enemyInRange()
     {
-        foreach (var keyValuePair in boxData.boxsesOnMap)
+        RaycastHit hit;
+        if (Physics.SphereCast(origin, range, Vector3.forward, out hit, 0.01f, enemyOnly))
         {
-            if (keyValuePair.Value != null)
-            {
-                float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-                // Debug.Log("checking:"+ distance + ": " + keyValuePair  );
-
-                if (distance <= range) { return true; }
+            if (hit.collider.gameObject != null) { 
+                return true; 
             }
         }
         return false;
@@ -114,11 +106,11 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         {
             gameObject.layer = LayerMask.NameToLayer("Tower");
             rangeC.SetActive(false);
+            Debug.Log("Starting Attack Coroutine");
             StartCoroutine(spawnattackCD());
         }
         else
         {
-            Debug.Log(gameObject.layer);
             rangeC.SetActive(true);
         }
     }
@@ -168,3 +160,60 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         return -1;
     }
 }
+//unused code incase I somehow need it again
+//IEnumerator attackEnemy()
+//{
+//    GameObject closestEnemy = null;
+//    range = 5;
+
+//    foreach (var keyValuePair in boxData.boxsesOnMap)
+//    {
+//        if (keyValuePair.Value != null)
+//        {
+
+//            float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+//            if (distance <= range)
+//            {
+//                closestEnemy = keyValuePair.Value;
+//                range = distance;
+//            }
+//        }
+//    }
+//    //transform.GetChild(4).position
+//    if (closestEnemy != null)
+//    {
+//        //   Debug.Log("Throw");
+//        gameObject.transform.LookAt(closestEnemy.transform);
+//        Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+//        //   Debug.Log(projctileData.dartProjctile);
+//        GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
+//        dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
+//        dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+//    }
+//    else if (closestEnemy == null)
+//    {
+//        //if theres no enemy in range waait until theres one in range
+//        yield return new WaitUntil(enemyInRange);
+//        StartCoroutine(attackEnemy());
+//    }
+//    yield return new WaitForSeconds(fireRate);
+//    StartCoroutine(attackEnemy());
+//}
+
+//if (hits.Length != 0) {
+//    foreach (RaycastHit objectHit in hits) { 
+//        if(objectHit.collider.gameObject.tag == "enemy")
+//        {
+//            float distance = Vector3.Magnitude(objectHit.collider.gameObject.transform.position - transform.position);
+//            if(distance <= range)
+//            {
+//                closestEnemy = objectHit.collider.gameObject;
+//                range = distance;
+//            }
+//        }
+//    }  
+//}
+//if (closestEnemy != null) { 
+
+
+//}

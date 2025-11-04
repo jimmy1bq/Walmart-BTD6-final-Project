@@ -9,14 +9,14 @@ public class RayCast : MonoBehaviour
     [SerializeField] GameObject tower1;
     [SerializeField] GameObject brick;
 
-    
-    public LayerMask layerMaskTower;
+
+    public LayerMask layerMaskTowerHover;
 
     Camera cam;
 
     Vector3 mousePostionRaycast;
 
-   
+
     GameObject selectedTower;
     GameObject towerOnMouse;
 
@@ -27,8 +27,11 @@ public class RayCast : MonoBehaviour
         events.towerSelected.AddListener(towerSelectedEvent);
     }
 
-   
+
     //changed remember to record this on milestone 4
+    // made the code more readable and adding layermasking
+    //hover is masking for when theres a tower on the mouse
+    //hover not is masking for when theres no tower on the mouse
     void Update()
     {
         Vector3 mousPos = Input.mousePosition;
@@ -37,46 +40,46 @@ public class RayCast : MonoBehaviour
         RaycastHit hit;
         if (towerOnMouse != null)
         {
-            if (Physics.Raycast(ray, out hit, 999999f))
+            if (Physics.Raycast(ray, out hit, 999999f,layerMaskTowerHover))
             {
-              
                 towerOnMouse.transform.position = hit.point;
+                
             }
             if (Input.GetKeyUp(KeyCode.P))
             {
+               
                 if (hit.collider.gameObject.tag == "placeableArea")
                 {
+                    
                     towerOnMouse.GetComponent<IHovering>().hoveringState(false);
                     towerOnMouse = null;
                 }
             }
         }
-        else if (towerOnMouse == null) {
-            if (Input.GetMouseButtonDown(0)) {
-                if (Physics.Raycast(ray, out hit, 999999f)) {
-                    if (hit.collider.gameObject.tag == "Tower")
-                    {
-                        Debug.Log("TowerClicked");
-                        if (selectedTower)
-                        {
-                            selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
-                        }
-                        selectedTower = hit.collider.gameObject;
-                        selectedTower.GetComponent<IUNORSelected>().towerSelected();
-                    }
-                    else {
-                        if (selectedTower)
-                        {
-                            selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
-                            selectedTower = null;
-                        }
-                    }
-                }                         
+        else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.gameObject.tag == "Tower")
+            {
+                Debug.Log("TowerClicked");
+                if (selectedTower)
+                {
+                    selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+                }
+                selectedTower = hit.collider.gameObject;
+                selectedTower.GetComponent<IUNORSelected>().towerSelected();
+            }
+            else
+            {
+                if (selectedTower)
+                {
+                    selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+                    selectedTower = null;
                 }
             }
         }
-    
-    
+    }
+
+
     //Find first child is a method that takes a string name and a gameObject to search through to find the name in gameObject
     //returns the index of the child if found otherwise returns -1
     //name is the string name and objectToSearch is the gameObject to search through

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1057294157102388652}
   - component: {fileID: 8537887611418216168}
   - component: {fileID: -6140688566697179398}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: blackBox
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -124,4 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b6dce5c1c31cc4aa6e8d2a9061162d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::blackBoxScript
-  boxData: {fileID: 0}
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}

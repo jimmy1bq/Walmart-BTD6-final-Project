@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2455079142739789047}
   - component: {fileID: 3722514447520439022}
   - component: {fileID: 6961826257999449728}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: RangeCircleThing
   m_TagString: range
   m_Icon: {fileID: 0}

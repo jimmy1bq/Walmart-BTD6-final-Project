@@ -19,6 +19,7 @@ public class YellowBox : Box, IDamageTaken, IIndex
 
     private void Awake()
     {
+        
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
@@ -103,9 +104,10 @@ public class YellowBox : Box, IDamageTaken, IIndex
             Destroy(gameObject);
         }
     }
-    public void wayPointReciever(int index)
+    public void wayPointReciever(int fhjcs)
     {
-        ogI = index;
+        Debug.Log("recieved index: " + fhjcs);
+        i = fhjcs;
     }
 }
 
