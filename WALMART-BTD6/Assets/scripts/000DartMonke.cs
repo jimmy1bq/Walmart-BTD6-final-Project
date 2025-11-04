@@ -50,6 +50,8 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     }
     //changed this to not use SOs anymore milestone 4
     // spherecast to check enemy in range if theres no enemy in range we can use the corotine to wait until there is one and insta attack the enemy
+    //why use corotuine instead of update? because its cleaner so there isn't a gaint block of code. 
+    //as of right now corotuine only serves as a better way to yield a functoin.
     IEnumerator attackEnemy() {
         Vector3 origin = transform.position + new Vector3(0, 0.8f, 0);
         RaycastHit hit;
@@ -58,13 +60,17 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         if (Physics.SphereCast(origin, range, Vector3.forward, out hit,0.01f,enemyOnly)) {
             if (hit.collider.gameObject != null)
             {
-                //attack
+                Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+                GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
+                gameObject.transform.LookAt(hit.collider.gameObject.transform);
+                dart.GetComponent<dartProj>().setClosestEnemy(hit.collider.gameObject);
+                dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
             }
             else 
             {
                 yield return new WaitUntil(enemyInRange); 
+                StartCoroutine(attackEnemy());
             }
-
         }
         yield return new WaitForSeconds(fireRate);
         StartCoroutine(attackEnemy());
