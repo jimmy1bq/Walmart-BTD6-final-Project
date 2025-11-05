@@ -31,7 +31,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     private void Awake()
     {
-        origin= transform.position + new Vector3(0, 0.8f, 0);
+        origin = transform.position + new Vector3(0, 0.8f, 0);
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
         rangeC.transform.parent = gameObject.transform;
@@ -53,11 +53,9 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //why use corotuine instead of update? because its cleaner so there isn't a gaint block of code. 
     //as of right now corotuine only serves as a better way to yield a functoin.
     IEnumerator attackEnemy() {
-        Vector3 origin = transform.position + new Vector3(0, 0.8f, 0);
         RaycastHit hit;
         range = 5;
-        Debug.Log("hi");
-        if (Physics.SphereCast(origin, range, Vector3.forward, out hit,0.01f,enemyOnly)) {
+        if (Physics.SphereCast(origin, range, Vector3.forward, out hit,0f,enemyOnly)) {
             if (hit.collider.gameObject != null)
             {
                 Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
@@ -87,6 +85,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
    //the nested if statment is to check if the hit acutally hit something
     bool enemyInRange()
     {
+        range = 5;
         RaycastHit hit;
         if (Physics.SphereCast(origin, range, Vector3.forward, out hit, 0.01f, enemyOnly))
         {
@@ -165,8 +164,16 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         i++;
         return -1;
     }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Debug.Log(origin);
+        Debug.Log(range);
+        Gizmos.DrawWireSphere(origin, range);
+    }
 }
 //unused code incase I somehow need it again
+//also comparsion code to before
 //IEnumerator attackEnemy()
 //{
 //    GameObject closestEnemy = null;
