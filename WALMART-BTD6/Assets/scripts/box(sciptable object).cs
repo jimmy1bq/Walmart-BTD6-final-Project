@@ -19,13 +19,16 @@ public class boxSO : ScriptableObject {
     public int ID = 0;
     private void OnEnable()
     {
-      
-        if (boxTypeToGO==null) {
-            boxTypeToGO = new Dictionary<boxSO.boxType, GameObject>();
+        boxTypeToGO = new Dictionary<boxType, GameObject>();
+
+        if (boxTypeToGO == null)
+        {
+            boxTypeToGO = new Dictionary<boxType, GameObject>();
             for (int j = 0; j < objects.Count; j++)
             {
+                Debug.Log("HI");
                 var balloon = objects[j];
-                var type = boxArray[j];
+                var type = boxArray[j + 1];
                 if (!boxTypeToGO.ContainsKey(type))
                 {
                     boxTypeToGO.Add(type, balloon);
@@ -33,10 +36,4 @@ public class boxSO : ScriptableObject {
             }
         }
     }
-    private void OnDisable()
-    {
-        ID = 0;   
-        boxsesOnMap.Clear();   
-    }
-
 }

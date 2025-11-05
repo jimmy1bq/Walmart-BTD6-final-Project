@@ -716,6 +716,13 @@ MonoBehaviour:
   blueBox: {fileID: 137711323985219809, guid: ab9b6479c3151a74da5e7aca1176e045, type: 3}
   greenBox: {fileID: 1774426271804484357, guid: 1c6814db861ef1146a53c1e49b5705ac, type: 3}
   yellowBox: {fileID: 4799072601950863259, guid: b85ee2b70d35a0f4d82ea6b9047b7ad3, type: 3}
+  blackbox: {fileID: 0}
+  whitebox: {fileID: 0}
+  metalBox: {fileID: 0}
+  purpleBox: {fileID: 0}
+  orangeBox: {fileID: 0}
+  seaGreenBox: {fileID: 0}
+  ceramucBox: {fileID: 0}
   spawnPoint: {fileID: 910139065}
 --- !u!4 &172364873
 Transform:
@@ -2521,9 +2528,9 @@ MonoBehaviour:
   towerData: {fileID: 11400000, guid: eb0b0c18afe548542902d1b9e3d8877d, type: 2}
   tower1: {fileID: 1674676602017868784, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
   brick: {fileID: 6997003656227999053, guid: bd57e93c4b445534e8d706eb213e4ccf, type: 3}
-  layerMaskTower:
+  layerMaskTowerHover:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 247
 --- !u!4 &916317999
 Transform:
   m_ObjectHideFlags: 0

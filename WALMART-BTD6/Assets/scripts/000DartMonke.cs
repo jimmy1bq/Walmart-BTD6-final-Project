@@ -26,12 +26,11 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     bool hoveringS;
     GameObject monkeyUI;
     GameObject rangeC;
-    Vector3 origin;
+    Vector3 castOrigin;
 
 
     private void Awake()
     {
-        origin = transform.position + new Vector3(0, 0.8f, 0);
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
         rangeC.transform.parent = gameObject.transform;
@@ -40,7 +39,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     }
     void Start()
     {
-       StartCoroutine(attackEnemy());
+       
     }
 
     // Update is called once per frame
@@ -53,25 +52,41 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //why use corotuine instead of update? because its cleaner so there isn't a gaint block of code. 
     //as of right now corotuine only serves as a better way to yield a functoin.
     IEnumerator attackEnemy() {
-        RaycastHit hit;
-        range = 5;
-        if (Physics.SphereCast(origin, range, Vector3.forward, out hit,0f,enemyOnly)) {
-            if (hit.collider.gameObject != null)
+            GameObject closestEnemy = null;
+            range = 5;
+
+            foreach (var keyValuePair in boxData.boxsesOnMap)
             {
+                if (keyValuePair.Value != null)
+                {
+
+                    float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+                    if (distance <= range)
+                    {
+                        closestEnemy = keyValuePair.Value;
+                        range = distance;
+                    }
+                }
+            }
+            //transform.GetChild(4).position
+            if (closestEnemy != null)
+            {
+                //   Debug.Log("Throw");
+                gameObject.transform.LookAt(closestEnemy.transform);
                 Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+                //   Debug.Log(projctileData.dartProjctile);
                 GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
-                gameObject.transform.LookAt(hit.collider.gameObject.transform);
-                dart.GetComponent<dartProj>().setClosestEnemy(hit.collider.gameObject);
+                dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
                 dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
             }
-            else 
+            else if (closestEnemy == null)
             {
-                yield return new WaitUntil(enemyInRange); 
+                //if theres no enemy in range waait until theres one in range
+                yield return new WaitUntil(enemyInRange);
                 StartCoroutine(attackEnemy());
             }
-        }
-        yield return new WaitForSeconds(fireRate);
-        StartCoroutine(attackEnemy());
+            yield return new WaitForSeconds(fireRate);
+            StartCoroutine(attackEnemy());       
     }
 
     IEnumerator spawnattackCD()
@@ -79,23 +94,22 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
        yield return new WaitForSeconds(1);
        StartCoroutine(attackEnemy());
     }
-   //milestone 4 
-   //changed this to be much more cleaner and better. 
-   //Also no more reliance on SOs. 
-   //the nested if statment is to check if the hit acutally hit something
+    //milestone 4 
+    //changed this to be much more cleaner and better. 
+    //Also no more reliance on SOs. 
+    //the nested if statment is to check if the hit acutally hit something
     bool enemyInRange()
     {
-        range = 5;
-        RaycastHit hit;
-        if (Physics.SphereCast(origin, range, Vector3.forward, out hit, 0.01f, enemyOnly))
+        foreach (var keyValuePair in boxData.boxsesOnMap)
         {
-            if (hit.collider.gameObject != null) { 
-                return true; 
+            if (keyValuePair.Value != null)
+            {
+                float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+                if (distance <= range) { return true; }
             }
         }
         return false;
     }
-
     /// <summary>
     /// If the tower is hovering show the range cicrle and if its not diisable the range circle and start the attack coroutine
     /// </summary>
@@ -166,10 +180,9 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     }
     private void OnDrawGizmosSelected()
     {
+        Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
         Gizmos.color = Color.red;
-        Debug.Log(origin);
-        Debug.Log(range);
-        Gizmos.DrawWireSphere(origin, range);
+        Gizmos.DrawWireSphere(castOrigin, range);
     }
 }
 //unused code incase I somehow need it again
@@ -226,7 +239,70 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 //        }
 //    }  
 //}
-//if (closestEnemy != null) { 
+//push
+//bool enemyInRange() {
+//foreach (var keyValuePair in boxData.boxsesOnMap)
+//{
+//    if (keyValuePair.Value != null)
+//    {
+//        float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+//        if (distance <= range) { return true; }
+//    }
+//}
+//  return false;
+//   }
 
 
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//future targetting system:
+//RaycastHit hit;
+//range = 5;
+//Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
+//Debug.Log(Physics.SphereCast(castOrigin, range, transform.forward, out hit, 20f));
+//if (Physics.SphereCast(castOrigin, range, transform.forward , out hit,20f)) {
+//    Debug.Log("HI1");
+//    Debug.Log(hit);
+//    if (hit.collider.gameObject != null)
+//    {
+//        Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+//        GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
+//        gameObject.transform.LookAt(hit.collider.gameObject.transform);
+//        dart.GetComponent<dartProj>().setClosestEnemy(hit.collider.gameObject);
+//        dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+//    }
+//    else 
+//    {
+//        Debug.Log("HI2");
+//        yield return new WaitUntil(enemyInRange); 
+//        StartCoroutine(attackEnemy());
+//    }
+//}
+//Debug.Log("HI4");
+//yield return new WaitForSeconds(fireRate);
+//StartCoroutine(attackEnemy());
+
+//range = 5;
+//RaycastHit hit;
+//Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
+//if (Physics.SphereCast(castOrigin, range, Vector3.forward, out hit))
+//{
+//    if (hit.collider.gameObject != null) { 
+//        return true; 
+//    }
+//}
+//return false;
