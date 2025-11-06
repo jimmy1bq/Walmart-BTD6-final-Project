@@ -104,10 +104,10 @@ public class YellowBox : Box, IDamageTaken, IIndex
             Destroy(gameObject);
         }
     }
-    public void wayPointReciever(int fhjcs)
+    public void wayPointReciever(int index)
     {
-        Debug.Log("recieved index: " + fhjcs);
-        i = fhjcs;
+        Debug.Log("recieved index: " + index);
+        i = index;
     }
 }
 

@@ -17,7 +17,7 @@ public class seaGreenBoxScript : Box, IDamageTaken, IIndex
     int totalWayPoints;
 
 
-    private void Awake()
+    protected void Awake()
     {
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
