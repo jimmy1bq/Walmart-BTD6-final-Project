@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class boxSO : ScriptableObject {
         none, red, blue, green, yellow, pink, black, white, purple, lead, orange, seagreen,
         ceramic, moab, bfb, zomg, ddt, bad
     }
+
     public List<GameObject> objects;
     public boxSO.boxType[] boxArray = ((boxSO.boxType[])System.Enum.GetValues(typeof(boxSO.boxType)));
     public Dictionary<boxSO.boxType, GameObject> boxTypeToGO;

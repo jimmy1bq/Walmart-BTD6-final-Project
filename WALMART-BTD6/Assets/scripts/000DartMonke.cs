@@ -22,6 +22,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     float range = 5;
     int popCount;
+    string upgrades = "000";
     
     bool hoveringS;
     GameObject monkeyUI;
@@ -138,12 +139,14 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     /// </summary>
     public void towerSelected() { 
         rangeC.SetActive(true);
+        events.towerUpgrade.AddListener(towerUpgrade);
         monkeyUI = Instantiate(dMtowerUI);
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(965,550, 0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
         monkeyUI.SetActive(true);
     }
     public void towerUnSelected() {
+        events.towerUpgrade.RemoveListener(towerUpgrade);
         rangeC.SetActive(false);
         Destroy(monkeyUI);
     }
@@ -183,6 +186,10 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(castOrigin, range);
+    }
+    void towerUpgrade(GameObject nubbie, string upgradeNum) { 
+        
+    
     }
 }
 //unused code incase I somehow need it again
