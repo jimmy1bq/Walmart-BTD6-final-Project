@@ -22,16 +22,19 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     float range = 5;
     int popCount;
-    string upgrades = "000";
+    string upgrades = "999";
     
     bool hoveringS;
     GameObject monkeyUI;
     GameObject rangeC;
     Vector3 castOrigin;
 
+    towerUpgrades towerUpgradeInstance;
+
 
     private void Awake()
     {
+        towerUpgradeInstance = towerUpgrades.instance;
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
         rangeC.transform.parent = gameObject.transform;
@@ -187,9 +190,17 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(castOrigin, range);
     }
-    void towerUpgrade(GameObject nubbie, string upgradeNum) { 
-        
-    
+    //since unity doesn't like front 0s im replacing it with a 9
+    void towerUpgrade(string upgradeNum) {
+        int.Parse(upgradeNum);
+        for (int i = gameObject.transform.childCount - 1; i >= 0; i--)
+        {
+            Debug.Log(i);
+            Destroy(gameObject.transform.GetChild(i).gameObject);
+        }
+        GameObject newdartMonkey = Instantiate(towerUpgradeInstance.dartMonkeyPathToModel[int.Parse(upgrades)], gameObject.transform.position, Quaternion.identity);
+        newdartMonkey.transform.parent = gameObject.transform;
+
     }
 }
 //unused code incase I somehow need it again
