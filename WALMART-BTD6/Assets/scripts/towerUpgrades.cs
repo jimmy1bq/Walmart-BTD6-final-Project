@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class towerParentCS : MonoBehaviour
+public class towerUpgrades : MonoBehaviour
 {
-    public static towerParentCS instance;
-    Dictionary<int, GameObject> dartMonkeyPathToModel = new Dictionary<int, GameObject>();
+    public static towerUpgrades instance;
+    public  Dictionary<int, GameObject> dartMonkeyPathToModel = new Dictionary<int, GameObject>();
 
     [SerializeField] List<int> dartMonkeylistOfUpgrades;
     [SerializeField] List<GameObject> dartMonkeylistOfModels;
