@@ -22,19 +22,18 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     float range = 5;
     int popCount;
-    string upgrades = "999";
+    string upgrades = "000";
     
     bool hoveringS;
     GameObject monkeyUI;
     GameObject rangeC;
     Vector3 castOrigin;
 
-    towerUpgrades towerUpgradeInstance;
-
+  
 
     private void Awake()
     {
-        towerUpgradeInstance = towerUpgrades.instance;
+       
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
         rangeC.transform.parent = gameObject.transform;
@@ -142,11 +141,47 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     /// </summary>
     public void towerSelected() { 
         rangeC.SetActive(true);
+
         events.towerUpgrade.AddListener(towerUpgrade);
         monkeyUI = Instantiate(dMtowerUI);
+        GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(965,550, 0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
+        if (pathBlocked(upgrades) != 0)
+        {
+        //if theres a blocked path then instead of having the upgrade button on that path destroy the object and replace it with a imahge of blockpath
+            GameObject blockPath = upgradeGUI.transform.GetChild(pathBlocked(upgrades)).gameObject;
+            Vector3 ogPos = blockPath.transform.position;
+            Destroy(blockPath);
+          // Instantiate the  block path and the other 2 upgrade GUI by taking the monkeys cross path
+          //  Instantiate(blockPathGUI,ogPos,Quaternion.identity);
+            
+        }
+        //elseif theres no blocked path then instantaite the 3 path
         monkeyUI.SetActive(true);
+    }
+    int pathBlocked(string crossPath) {
+        string firstPath = crossPath.Substring(0);
+        string secondPath = crossPath.Substring(1);
+        string thirdPath = crossPath.Substring(3);
+   
+        if ((firstPath == "0" && secondPath == "0") || (firstPath == "0" && thirdPath == "0") || (thirdPath == "0" && secondPath == "0")) {
+            return 0;
+        } else {
+            if (firstPath == "0")
+            {
+                return 3;
+            }
+            else if (secondPath == "0") 
+            {
+                return 4;
+            }
+            else if (thirdPath == "0")
+            {
+                return 5;
+            }
+        }
+        return 0;
     }
     public void towerUnSelected() {
         events.towerUpgrade.RemoveListener(towerUpgrade);
@@ -192,14 +227,6 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     }
     //since unity doesn't like front 0s im replacing it with a 9
     void towerUpgrade(string upgradeNum) {
-        int.Parse(upgradeNum);
-        for (int i = gameObject.transform.childCount - 1; i >= 0; i--)
-        {
-            Debug.Log(i);
-            Destroy(gameObject.transform.GetChild(i).gameObject);
-        }
-        GameObject newdartMonkey = Instantiate(towerUpgradeInstance.dartMonkeyPathToModel[int.Parse(upgrades)], gameObject.transform.position, Quaternion.identity);
-        newdartMonkey.transform.parent = gameObject.transform;
 
     }
 }
@@ -324,3 +351,8 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 //    }
 //}
 //return false;
+
+//Grabs an asset by path.
+//string modelPath = "Assets/Resources/DartMonkey/" + upgradeName;
+//GameObject newModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+//Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity);

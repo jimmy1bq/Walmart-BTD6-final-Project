@@ -1,32 +1,16 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class towerUpgrades : MonoBehaviour
 {
-    public static towerUpgrades instance;
-    public  Dictionary<int, GameObject> dartMonkeyPathToModel = new Dictionary<int, GameObject>();
 
-    [SerializeField] List<int> dartMonkeylistOfUpgrades;
-    [SerializeField] List<GameObject> dartMonkeylistOfModels;
-
-    int index = 0;
+    Dictionary<string, int> blockCrossPath = new Dictionary<string, int>() {
+       
+    };
     //added this script for milestone 4:
-    //the serializefield list will map the upgradepath to model with 9=0 since i can't type in 010 so i have to settle for 910
-    private void Awake()
-    {
-        foreach (int crosspath in dartMonkeylistOfUpgrades) { 
-        dartMonkeyPathToModel.Add(crosspath, dartMonkeylistOfModels[index]);
-        index++;
-        }
-        foreach (var h in dartMonkeyPathToModel) {
-            Debug.Log(h.Key);
-            Debug.Log(h.Value);
-        }
-       
+   
     
-       
-        
-    }
 }
 //Code for updating tower model 
 //GameObject dartMonkey = Instantiate(dartMonkeyPathToModel[0], gameObject.transform.position, Quaternion.identity);

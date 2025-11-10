@@ -37,19 +37,19 @@ public class WaveManager : MonoBehaviour
     }
     void startWave1()
     {
-        Instantiate(pinkbox, spawnPoint.position, Quaternion.identity);
-        Instantiate(redbox, spawnPoint.position, Quaternion.identity);
-        Instantiate(greenBox, spawnPoint.position, Quaternion.identity);
-        Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
-        Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
-        Instantiate(whitebox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(pinkbox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(redbox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(greenBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(whitebox, spawnPoint.position, Quaternion.identity);
 
-        Instantiate(blackbox, spawnPoint.position, Quaternion.identity);
-        Instantiate(orangeBox, spawnPoint.position, Quaternion.identity);
-        Instantiate(purpleBox, spawnPoint.position, Quaternion.identity);
-        Instantiate(seaGreenBox, spawnPoint.position, Quaternion.identity);
-        Instantiate(metalBox, spawnPoint.position, Quaternion.identity);
-        Instantiate(ceramucBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(blackbox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(orangeBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(purpleBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(seaGreenBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(metalBox, spawnPoint.position, Quaternion.identity);
+        //Instantiate(ceramucBox, spawnPoint.position, Quaternion.identity);
     }
     IEnumerator spawnPink() {
 
