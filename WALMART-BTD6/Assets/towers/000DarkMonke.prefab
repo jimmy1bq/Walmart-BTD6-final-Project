@@ -1000,7 +1000,7 @@ MonoBehaviour:
   rangeCricle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
   projctileData: {fileID: 11400000, guid: 8ca519b3cafd5d14fb9258614228cafa, type: 2}
   boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
-  dMtowerUI: {fileID: 1734639873939646685, guid: 72b44264831e20548898fda28c5b43f9, type: 3}
+  dMtowerUI: {fileID: 4819491959156153005, guid: 1814169ea0f248246949ca28dbda055c, type: 3}
   rangeCircle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
   enemyOnly:
     serializedVersion: 2

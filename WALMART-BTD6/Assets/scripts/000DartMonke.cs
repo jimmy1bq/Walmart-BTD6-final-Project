@@ -153,7 +153,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         monkeyUI = Instantiate(dMtowerUI);
         //upgradeGUI frame
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
-        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300,550,0);
+        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250,1050,0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
 
         //Gets the unmodifded GUI to get swapped out later
@@ -204,10 +204,11 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
             Debug.Log(topPathGO.transform.localScale);
             Debug.Log(bottomPathGO.transform.localScale);
+            //use rect transform instead of regular transform.
 
-            topNewModelPrefabIG.gameObject.transform.localScale = topPathGO.transform.localScale;
-            middleNewModelPrefabIG.gameObject.transform.localScale = middlePathGO.transform.localScale;
-            bottomNewModelPrefabIG.gameObject.transform.localScale = bottomPathGO.transform.localScale;
+            topNewModelPrefabIG.gameObject.GetComponent<RectTransform>().sizeDelta = topPathGO.GetComponent<RectTransform>().sizeDelta;
+            middleNewModelPrefabIG.gameObject.GetComponent<RectTransform>().sizeDelta = middlePathGO.GetComponent<RectTransform>().sizeDelta;
+            bottomNewModelPrefabIG.gameObject.GetComponent<RectTransform>().sizeDelta = bottomPathGO.GetComponent<RectTransform>().sizeDelta;
 
             topNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
             middleNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
