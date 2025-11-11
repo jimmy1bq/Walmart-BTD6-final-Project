@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,8 +23,13 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     float range = 5;
     int popCount;
-    string upgrades = "000";
-    
+    string upgrades = "012";
+    string monkeyCrossPath = "000";
+
+    string monkeyModelPath = "Assets/Resources/DartMonkey/";
+    string monkeyGUIPath = "Assets/towerGUI/dartMonkeyGUi/";
+
+
     bool hoveringS;
     GameObject monkeyUI;
     GameObject rangeC;
@@ -128,7 +134,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         {
             gameObject.layer = LayerMask.NameToLayer("Tower");
             rangeC.SetActive(false);
-            Debug.Log("Starting Attack Coroutine");
+            
             StartCoroutine(spawnattackCD());
         }
         else
@@ -141,24 +147,59 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     /// </summary>
     public void towerSelected() { 
         rangeC.SetActive(true);
-
+      
         events.towerUpgrade.AddListener(towerUpgrade);
         monkeyUI = Instantiate(dMtowerUI);
+        //upgradeGUI frame
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
-        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(965,550, 0);
+        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300,550,0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
+
+        //Gets the unmodifded GUI to get swapped out later
+        GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
+        GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
+        GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
+        //I could store the blocked upgrade path beforehand in a variable avoid doing these checks everytime
         if (pathBlocked(upgrades) != 0)
         {
-        //if theres a blocked path then instead of having the upgrade button on that path destroy the object and replace it with a imahge of blockpath
+            Debug.Log("HI");
+            //if theres a blocked path then instead of having the upgrade button on that path destroy the object and replace it with a imahge of blockpath
             GameObject blockPath = upgradeGUI.transform.GetChild(pathBlocked(upgrades)).gameObject;
             Vector3 ogPos = blockPath.transform.position;
+            string GUIPath = monkeyGUIPath.Substring(0, 15) + "pathClosed";
+            GameObject newGUIPreFabPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(GUIPath);
+            GameObject newGUIPreFab = Instantiate(newGUIPreFabPath, ogPos, quaternion.identity);
+            newGUIPreFab.gameObject.transform.parent = upgradeGUI.transform;
+            newGUIPreFab.transform.position = ogPos;
             Destroy(blockPath);
-          // Instantiate the  block path and the other 2 upgrade GUI by taking the monkeys cross path
-          //  Instantiate(blockPathGUI,ogPos,Quaternion.identity);
-            
+
+            // Instantiate the  block path and the other 2 upgrade GUI by taking the monkeys cross path
+            //  Instantiate(blockPathGUI,ogPos,Quaternion.identity);
+
         }
-        //elseif theres no blocked path then instantaite the 3 path
-        monkeyUI.SetActive(true);
+        //if theres no
+        else {
+     //gets what tier is the monkey on for each path and using file path method gest the gui
+            string topPath = upgrades.Substring(0, 1) + "00";
+            string middlePath ="0"+ upgrades.Substring(1,1) + "0";
+            string bottomPath = "00" + upgrades.Substring(2,1);
+           
+          
+
+            GameObject topNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + topPath);
+            GameObject middleNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + middlePath);
+            GameObject bottomNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + bottomPath);
+            GameObject debbugModel = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyModelPath);
+            Debug.Log(topNewModelPrefab);
+            Debug.Log(middleNewModelPrefab);
+            Debug.Log(bottomNewModelPrefab);
+
+            Instantiate(topNewModelPrefab, topPathGO.gameObject.transform.position, Quaternion.identity);
+            Instantiate(middleNewModelPrefab, middlePathGO.gameObject.transform.position, Quaternion.identity);
+            Instantiate(bottomNewModelPrefab, bottomPathGO.gameObject.transform.position, Quaternion.identity);
+        }
+
+            monkeyUI.SetActive(true);
     }
     int pathBlocked(string crossPath) {
         string firstPath = crossPath.Substring(0);
@@ -348,7 +389,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 //{
 //    if (hit.collider.gameObject != null) { 
 //        return true; 
-//    }
+//    }s
 //}
 //return false;
 
