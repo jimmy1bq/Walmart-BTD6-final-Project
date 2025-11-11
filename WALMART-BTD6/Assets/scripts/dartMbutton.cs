@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class dartMbutton : MonoBehaviour
+public class towerButtons : MonoBehaviour
 {
     [SerializeField] GameObject DartMonkePrefab;
 

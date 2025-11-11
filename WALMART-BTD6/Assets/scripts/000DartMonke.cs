@@ -18,14 +18,6 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     [SerializeField] LayerMask enemyOnly;
 
-    [SerializeField] int fireRate;
-
-   
-    float range = 5;
-    int popCount;
-    string upgrades = "112";
-    string monkeyCrossPath = "000";
-
     string monkeyModelPath = "Assets/Resources/DartMonkey/";
     string monkeyGUIPath = "Assets/Resources/towerGUI/dartMonkeyGUi/";
 
@@ -35,11 +27,32 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     GameObject rangeC;
     Vector3 castOrigin;
 
-  
+
+    //added dicionary to stats and pathtotier to make my code way easier to work with when upgrading
+    Dictionary<string, int> pathToTier;
+    Dictionary<string, int> stats;
+
+
+
 
     private void Awake()
     {
-       
+        //instead of using strings I could of used enum to make safer and cleaner
+        //9 if a path is closed to maxing 
+        //8 if the path is blocked
+       pathToTier = new Dictionary<string, int>() {
+            {"top",0},
+            {"mid",0},
+            {"bot",0}
+       };
+
+        stats = new Dictionary<string, int>() {
+          {"Range", 5},
+          {"FireRate",3},
+          {"AddtionalDamage",0},
+          {"popCount",0}
+       };
+
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
         rangeC.transform.parent = gameObject.transform;
@@ -62,7 +75,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //as of right now corotuine only serves as a better way to yield a functoin.
     IEnumerator attackEnemy() {
             GameObject closestEnemy = null;
-            range = 5;
+            float tempRange = stats["Range"];
 
             foreach (var keyValuePair in boxData.boxsesOnMap)
             {
@@ -70,10 +83,10 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
                 {
 
                     float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-                    if (distance <= range)
+                    if (distance <= tempRange)
                     {
                         closestEnemy = keyValuePair.Value;
-                        range = distance;
+                        tempRange = distance;
                     }
                 }
             }
@@ -94,7 +107,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
                 yield return new WaitUntil(enemyInRange);
                 StartCoroutine(attackEnemy());
             }
-            yield return new WaitForSeconds(fireRate);
+            yield return new WaitForSeconds(stats["FireRate"]);
             StartCoroutine(attackEnemy());       
     }
 
@@ -114,7 +127,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             if (keyValuePair.Value != null)
             {
                 float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-                if (distance <= range) { return true; }
+                if (distance <= stats["Range"]) { return true; }
             }
         }
         return false;
@@ -162,11 +175,11 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
         GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
         //I could store the blocked upgrade path beforehand in a variable avoid doing these checks everytime
-        if (pathBlocked(upgrades) != 0)
+        if (pathBlocked() != 0)
         {
             Debug.Log("HI");
             //if theres a blocked path then instead of having the upgrade button on that path destroy the object and replace it with a imahge of blockpath
-            GameObject blockPath = upgradeGUI.transform.GetChild(pathBlocked(upgrades)).gameObject;
+            GameObject blockPath = upgradeGUI.transform.GetChild(pathBlocked()).gameObject;
             Vector3 ogPos = blockPath.transform.position;
             string GUIPath = monkeyGUIPath.Substring(0, 15) + "pathClosed";
             GameObject newGUIPreFabPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(GUIPath);
@@ -186,13 +199,15 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
          //yeah this tower select method is 100% becoming a method in the parent 
          //remind for milestone 4 to talk about adding the script for towerSelected and how the whole thing will turn into a method in the parent
          //gets what tier is the monkey on for each path and using file path method gest the gui
-            string topPath = upgrades.Substring(0, 1) + "00";
-            string middlePath ="0"+ upgrades.Substring(1,1) + "0";
-            string bottomPath = "00" + upgrades.Substring(2,1);
+         //this is going to get its own method since Im planning to reuse it for upgrade
+         //the upgrades starts at 100 not 000 and if it hits 
+            string topPathSF = (pathToTier["top"]+1) + "00";
+            string middlePathSF ="0"+ (pathToTier["mid"]+1) + "0";
+            string bottomPathSF = "00" + (pathToTier["bot"]+1);
 
-            GameObject topNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + topPath + ".prefab");
-            GameObject middleNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + middlePath + ".prefab");
-            GameObject bottomNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + bottomPath + ".prefab");
+            GameObject topNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + topPathSF + ".prefab");
+            GameObject middleNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + middlePathSF + ".prefab");
+            GameObject bottomNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + bottomPathSF + ".prefab");
             
             Debug.Log(topNewModelPrefab);
             Debug.Log(middleNewModelPrefab);
@@ -218,13 +233,13 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             Destroy(middlePathGO);
             Destroy(bottomPathGO);
         }
-
             monkeyUI.SetActive(true);
     }
-    int pathBlocked(string crossPath) {
-        string firstPath = crossPath.Substring(0);
-        string secondPath = crossPath.Substring(1);
-        string thirdPath = crossPath.Substring(3);
+    int pathBlocked() {
+      //this was done before the dictionary adding 8 and 9 in the place now I can just check if any numbers are 8 
+        string firstPath = pathToTier["top"].ToString();
+        string secondPath = pathToTier["mid"].ToString();
+        string thirdPath  = pathToTier["bot"].ToString(); 
    
         if ((firstPath == "0" && secondPath == "0") || (firstPath == "0" && thirdPath == "0") || (thirdPath == "0" && secondPath == "0")) {
             return 0;
@@ -249,14 +264,10 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         rangeC.SetActive(false);
         Destroy(monkeyUI);
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="popCounts">Recevies a damage(int) from the projctile it shot</param>
+    
     public void damageDealt(int popCounts)
     {
-        popCount += popCounts;
-
+        stats["popCount"] += popCounts;
         if (monkeyUI) {
           GameObject popText= monkeyUI.GetComponent<RectTransform>().GetChild(findFirstChild("popCount", monkeyUI)).gameObject;
           popText.GetComponent<TextMeshProUGUI>().text = popCounts.ToString();
@@ -284,11 +295,12 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     {
         Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(castOrigin, range);
+        Gizmos.DrawWireSphere(castOrigin, stats["Range"]);
     }
     //since unity doesn't like front 0s im replacing it with a 9
-    void towerUpgrade(string upgradeNum) {
-
+    void towerUpgrade(string upgradeTier) {
+        pathToTier[upgradeTier] += 1;
+        //change model and change GUi
     }
 }
 //unused code incase I somehow need it again
