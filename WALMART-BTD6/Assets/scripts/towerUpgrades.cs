@@ -9,8 +9,11 @@ public class towerUpgrades : MonoBehaviour
        
     };
     //added this script for milestone 4:
-   
-    
+    private void Awake()
+    {
+     
+    }
+
 }
 //Code for updating tower model 
 //GameObject dartMonkey = Instantiate(dartMonkeyPathToModel[0], gameObject.transform.position, Quaternion.identity);

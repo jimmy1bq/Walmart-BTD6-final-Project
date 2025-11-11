@@ -20,14 +20,14 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     [SerializeField] int fireRate;
 
-
+   
     float range = 5;
     int popCount;
-    string upgrades = "012";
+    string upgrades = "112";
     string monkeyCrossPath = "000";
 
     string monkeyModelPath = "Assets/Resources/DartMonkey/";
-    string monkeyGUIPath = "Assets/towerGUI/dartMonkeyGUi/";
+    string monkeyGUIPath = "Assets/Resources/towerGUI/dartMonkeyGUi/";
 
 
     bool hoveringS;
@@ -145,6 +145,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     /// <summary>
     /// Interface method for when the tower is selected
     /// </summary>
+    //when tower gets selected swap the gui and everything. Also add listener for it to upgrade
     public void towerSelected() { 
         rangeC.SetActive(true);
       
@@ -156,6 +157,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
 
         //Gets the unmodifded GUI to get swapped out later
+        //if we were not to hardcode these value we can use unity's method findchild or use the findfirstchild method that i've created.
         GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
         GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
         GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
@@ -177,26 +179,43 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             //  Instantiate(blockPathGUI,ogPos,Quaternion.identity);
 
         }
-        //if theres no
+        //if theres no blocked tiers then:
         else {
-     //gets what tier is the monkey on for each path and using file path method gest the gui
+         //maybe clean this up with an array of size 3 and a foreach loop(Definitly im repeating myself)?
+         //like store the string values into an array and using foreach loop locate the object in the file then instantiate it then change local scale then set parent. After the forloop destory everything
+         //yeah this tower select method is 100% becoming a method in the parent 
+         //remind for milestone 4 to talk about adding the script for towerSelected and how the whole thing will turn into a method in the parent
+         //gets what tier is the monkey on for each path and using file path method gest the gui
             string topPath = upgrades.Substring(0, 1) + "00";
             string middlePath ="0"+ upgrades.Substring(1,1) + "0";
             string bottomPath = "00" + upgrades.Substring(2,1);
-           
-          
 
-            GameObject topNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + topPath);
-            GameObject middleNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + middlePath);
-            GameObject bottomNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + bottomPath);
-            GameObject debbugModel = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyModelPath);
+            GameObject topNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + topPath + ".prefab");
+            GameObject middleNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + middlePath + ".prefab");
+            GameObject bottomNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + bottomPath + ".prefab");
+            
             Debug.Log(topNewModelPrefab);
             Debug.Log(middleNewModelPrefab);
             Debug.Log(bottomNewModelPrefab);
 
-            Instantiate(topNewModelPrefab, topPathGO.gameObject.transform.position, Quaternion.identity);
-            Instantiate(middleNewModelPrefab, middlePathGO.gameObject.transform.position, Quaternion.identity);
-            Instantiate(bottomNewModelPrefab, bottomPathGO.gameObject.transform.position, Quaternion.identity);
+            GameObject topNewModelPrefabIG = Instantiate(topNewModelPrefab, topPathGO.gameObject.transform.position, Quaternion.identity);
+            GameObject middleNewModelPrefabIG = Instantiate(middleNewModelPrefab, middlePathGO.gameObject.transform.position, Quaternion.identity);
+            GameObject bottomNewModelPrefabIG = Instantiate(bottomNewModelPrefab, bottomPathGO.gameObject.transform.position, Quaternion.identity);
+
+            Debug.Log(topPathGO.transform.localScale);
+            Debug.Log(bottomPathGO.transform.localScale);
+
+            topNewModelPrefabIG.gameObject.transform.localScale = topPathGO.transform.localScale;
+            middleNewModelPrefabIG.gameObject.transform.localScale = middlePathGO.transform.localScale;
+            bottomNewModelPrefabIG.gameObject.transform.localScale = bottomPathGO.transform.localScale;
+
+            topNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
+            middleNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
+            bottomNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
+
+            Destroy(topPathGO);
+            Destroy(middlePathGO);
+            Destroy(bottomPathGO);
         }
 
             monkeyUI.SetActive(true);
