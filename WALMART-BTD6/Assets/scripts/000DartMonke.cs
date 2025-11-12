@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
@@ -194,44 +195,14 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         }
         //if theres no blocked tiers then:
         else {
-         //maybe clean this up with an array of size 3 and a foreach loop(Definitly im repeating myself)?
-         //like store the string values into an array and using foreach loop locate the object in the file then instantiate it then change local scale then set parent. After the forloop destory everything
-         //yeah this tower select method is 100% becoming a method in the parent 
-         //remind for milestone 4 to talk about adding the script for towerSelected and how the whole thing will turn into a method in the parent
-         //gets what tier is the monkey on for each path and using file path method gest the gui
-         //this is going to get its own method since Im planning to reuse it for upgrade
-         //the upgrades starts at 100 not 000 and if it hits 
-            string topPathSF = (pathToTier["top"]+1) + "00";
-            string middlePathSF ="0"+ (pathToTier["mid"]+1) + "0";
-            string bottomPathSF = "00" + (pathToTier["bot"]+1);
-
-            GameObject topNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + topPathSF + ".prefab");
-            GameObject middleNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + middlePathSF + ".prefab");
-            GameObject bottomNewModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + bottomPathSF + ".prefab");
-            
-            Debug.Log(topNewModelPrefab);
-            Debug.Log(middleNewModelPrefab);
-            Debug.Log(bottomNewModelPrefab);
-
-            GameObject topNewModelPrefabIG = Instantiate(topNewModelPrefab, topPathGO.gameObject.transform.position, Quaternion.identity);
-            GameObject middleNewModelPrefabIG = Instantiate(middleNewModelPrefab, middlePathGO.gameObject.transform.position, Quaternion.identity);
-            GameObject bottomNewModelPrefabIG = Instantiate(bottomNewModelPrefab, bottomPathGO.gameObject.transform.position, Quaternion.identity);
-
-            Debug.Log(topPathGO.transform.localScale);
-            Debug.Log(bottomPathGO.transform.localScale);
-            //use rect transform instead of regular transform.
-
-            topNewModelPrefabIG.gameObject.GetComponent<RectTransform>().sizeDelta = topPathGO.GetComponent<RectTransform>().sizeDelta;
-            middleNewModelPrefabIG.gameObject.GetComponent<RectTransform>().sizeDelta = middlePathGO.GetComponent<RectTransform>().sizeDelta;
-            bottomNewModelPrefabIG.gameObject.GetComponent<RectTransform>().sizeDelta = bottomPathGO.GetComponent<RectTransform>().sizeDelta;
-
-            topNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
-            middleNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
-            bottomNewModelPrefabIG.gameObject.transform.SetParent(upgradeGUI.transform);
-
-            Destroy(topPathGO);
-            Destroy(middlePathGO);
-            Destroy(bottomPathGO);
+            //maybe clean this up with an array of size 3 and a foreach loop(Definitly im repeating myself)?
+            //like store the string values into an array and using foreach loop locate the object in the file then instantiate it then change local scale then set parent. After the forloop destory everything
+            //yeah this tower select method is 100% becoming a method in the parent 
+            //remind for milestone 4 to talk about adding the script for towerSelected and how the whole thing will turn into a method in the parent
+            //gets what tier is the monkey on for each path and using file path method gest the gui
+            //this is going to get its own method since Im planning to reuse it for upgrade
+            //the upgrades starts at 100 not 000 and if it hits 
+            updateGUI(string.Empty, false);
         }
             monkeyUI.SetActive(true);
     }
@@ -298,9 +269,45 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         Gizmos.DrawWireSphere(castOrigin, stats["Range"]);
     }
     //since unity doesn't like front 0s im replacing it with a 9
+    //upgradeTier is either top,mid,bot
     void towerUpgrade(string upgradeTier) {
         pathToTier[upgradeTier] += 1;
+        updateGUI(upgradeTier, true);
         //change model and change GUi
+    }
+    //only pass in true if only 1 path needs to be updates
+    //these events only happens with an active monkeyGUI so change the childern shouldn't throws errors
+    //onePathUpdate is either top,mid,bot
+    void updateGUI(string onePathUpdate, bool onePathUpdateBool) {
+        if (onePathUpdateBool)
+        {
+            GameObject upgradeTierGO = monkeyUI.transform.Find("upgradeGUI").gameObject.transform.Find(onePathUpdate).gameObject;
+            GameObject newUpgradeTierPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + pathToTier[onePathUpdate] + ".prefab");
+            GameObject newUpgradeTierGO = Instantiate(newUpgradeTierPath, upgradeTierGO.transform.position, quaternion.identity);
+            newUpgradeTierGO.transform.parent = monkeyUI.transform.Find("upgradeGUI");
+            newUpgradeTierGO.transform.name = onePathUpdate;
+            Destroy(upgradeTierGO);
+        }
+        else {
+            //stores each GUI string name to whether they are top mid or bo
+            //then loop through the dicionatry to update thes(later this would include the GUI next to the upgrade button.
+            Dictionary<string,string> tiersOnEachPath = new Dictionary<string,string>();
+            tiersOnEachPath.Add("top", (pathToTier["top"] + 1) + "00");
+            tiersOnEachPath.Add("mid", "0" + (pathToTier["mid"] + 1) + "0");
+            tiersOnEachPath.Add("bot", "0" + "00" + (pathToTier["bot"] + 1));
+            foreach (var h in tiersOnEachPath) {
+                //newPreFab is the prefab in assest to replace the old GUI
+                //childToDestroyGO(GO=gameobject) is old GUI to kill.
+                //key is the name of the old GUI and key is the upgrade tier button to show
+                GameObject newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + h.Value + ".prefab");
+                GameObject childToDestroyGO = monkeyUI.transform.Find(h.Key).gameObject;
+                GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, quaternion.identity);
+                newGO.transform.SetParent(monkeyUI.transform);
+                newGO.gameObject.GetComponent<RectTransform>().sizeDelta = childToDestroyGO.GetComponent<RectTransform>().sizeDelta;
+                newGO.name = h.Key;
+                Destroy(childToDestroyGO);
+            }
+        }
     }
 }
 //unused code incase I somehow need it again

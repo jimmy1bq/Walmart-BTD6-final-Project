@@ -4,6 +4,7 @@ public class dMUpgradeEvents : MonoBehaviour
 {
     //this script is soley to invoke the upgrade events
     GameManager gameManager;
+    
     private void Awake()
     {
         gameManager = GameManager.instance;

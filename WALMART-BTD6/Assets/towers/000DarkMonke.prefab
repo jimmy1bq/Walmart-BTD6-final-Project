@@ -1000,12 +1000,11 @@ MonoBehaviour:
   rangeCricle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
   projctileData: {fileID: 11400000, guid: 8ca519b3cafd5d14fb9258614228cafa, type: 2}
   boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
-  dMtowerUI: {fileID: 4819491959156153005, guid: 1814169ea0f248246949ca28dbda055c, type: 3}
+  dMtowerUI: {fileID: 2053768289805724053, guid: 4cf6fd2745e36364b8dfd7bfe9bc2a3d, type: 3}
   rangeCircle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
   enemyOnly:
     serializedVersion: 2
     m_Bits: 512
-  fireRate: 3
 --- !u!64 &1909807788983667701
 MeshCollider:
   m_ObjectHideFlags: 0
