@@ -20,9 +20,10 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     [SerializeField] LayerMask enemyOnly;
 
     string monkeyModelPath = "Assets/Resources/DartMonkey/";
+    string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
     string monkeyGUIPath = "Assets/Resources/towerGUI/dartMonkeyGUi/";
 
-
+    //I should Introduce a variable that spefically gets upgradeFrame for GUIS
     bool hoveringS;
     GameObject monkeyUI;
     GameObject rangeC;
@@ -169,67 +170,16 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250,1050,0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
-
         //Gets the unmodifded GUI to get swapped out later
         //if we were not to hardcode these value we can use unity's method findchild or use the findfirstchild method that i've created.
         GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
         GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
         GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
         //I could store the blocked upgrade path beforehand in a variable avoid doing these checks everytime
-        if (pathBlocked() != 0)
-        {
-            Debug.Log("HI");
-            //if theres a blocked path then instead of having the upgrade button on that path destroy the object and replace it with a imahge of blockpath
-            GameObject blockPath = upgradeGUI.transform.GetChild(pathBlocked()).gameObject;
-            Vector3 ogPos = blockPath.transform.position;
-            string GUIPath = monkeyGUIPath.Substring(0, 15) + "pathClosed";
-            GameObject newGUIPreFabPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(GUIPath);
-            GameObject newGUIPreFab = Instantiate(newGUIPreFabPath, ogPos, quaternion.identity);
-            newGUIPreFab.gameObject.transform.parent = upgradeGUI.transform;
-            newGUIPreFab.transform.position = ogPos;
-            Destroy(blockPath);
-
-            // Instantiate the  block path and the other 2 upgrade GUI by taking the monkeys cross path
-            //  Instantiate(blockPathGUI,ogPos,Quaternion.identity);
-
-        }
-        //if theres no blocked tiers then:
-        else {
-            //maybe clean this up with an array of size 3 and a foreach loop(Definitly im repeating myself)?
-            //like store the string values into an array and using foreach loop locate the object in the file then instantiate it then change local scale then set parent. After the forloop destory everything
-            //yeah this tower select method is 100% becoming a method in the parent 
-            //remind for milestone 4 to talk about adding the script for towerSelected and how the whole thing will turn into a method in the parent
-            //gets what tier is the monkey on for each path and using file path method gest the gui
-            //this is going to get its own method since Im planning to reuse it for upgrade
-            //the upgrades starts at 100 not 000 and if it hits 
-            updateGUI(string.Empty, false);
-        }
-            monkeyUI.SetActive(true);
+        updateGUI();
+        monkeyUI.SetActive(true);
     }
-    int pathBlocked() {
-      //this was done before the dictionary adding 8 and 9 in the place now I can just check if any numbers are 8 
-        string firstPath = pathToTier["top"].ToString();
-        string secondPath = pathToTier["mid"].ToString();
-        string thirdPath  = pathToTier["bot"].ToString(); 
    
-        if ((firstPath == "0" && secondPath == "0") || (firstPath == "0" && thirdPath == "0") || (thirdPath == "0" && secondPath == "0")) {
-            return 0;
-        } else {
-            if (firstPath == "0")
-            {
-                return 3;
-            }
-            else if (secondPath == "0") 
-            {
-                return 4;
-            }
-            else if (thirdPath == "0")
-            {
-                return 5;
-            }
-        }
-        return 0;
-    }
     public void towerUnSelected() {
         events.towerUpgrade.RemoveListener(towerUpgrade);
         rangeC.SetActive(false);
@@ -272,43 +222,144 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //upgradeTier is either top,mid,bot
     void towerUpgrade(string upgradeTier) {
         pathToTier[upgradeTier] += 1;
-        updateGUI(upgradeTier, true);
-        //change model and change GUi
+        updateGUI();
+        changeModel();
     }
     //only pass in true if only 1 path needs to be updates
     //these events only happens with an active monkeyGUI so change the childern shouldn't throws errors
     //onePathUpdate is either top,mid,bot
-    void updateGUI(string onePathUpdate, bool onePathUpdateBool) {
-        if (onePathUpdateBool)
+    void updateGUI()
+    {
+        //   if (onePathUpdateBool)
+        //  {
+        ////if this gets here means the bool is true andd we only have to upgrade 1 path(subject to change because of blocking and path restrcitions)
+        //GameObject upgradeTierGO = monkeyUI.transform.Find("upgradeGUI").gameObject.transform.Find(onePathUpdate).gameObject;
+        //GameObject newUpgradeTierPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + pathToTier[onePathUpdate] + ".prefab");
+        //GameObject newUpgradeTierGO = Instantiate(newUpgradeTierPath, upgradeTierGO.transform.position, quaternion.identity);
+        //newUpgradeTierGO.transform.parent = monkeyUI.transform.Find("upgradeGUI");
+        //newUpgradeTierGO.transform.name = onePathUpdate;
+        //Destroy(upgradeTierGO);
+        //   }
+        //holy mircale I manage to do a simple intergration of my check for bloacked path and addmax paths code
+        //stores each GUI string name to whether they are top mid or bo
+        //then loop through the dicionatry to update thes(later this would include the GUI next to the upgrade button.
+        Dictionary<string, string> tiersOnEachPath = new Dictionary<string, string>();
+        tiersOnEachPath.Add("top", (pathToTier["top"] + 1) + "00");
+        tiersOnEachPath.Add("mid", "0" + (pathToTier["mid"] + 1) + "0");
+        tiersOnEachPath.Add("bot", "0" + "0" + (pathToTier["bot"] + 1));
+        GameObject newPreFab;
+        foreach (var h in tiersOnEachPath)
         {
-            GameObject upgradeTierGO = monkeyUI.transform.Find("upgradeGUI").gameObject.transform.Find(onePathUpdate).gameObject;
-            GameObject newUpgradeTierPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + pathToTier[onePathUpdate] + ".prefab");
-            GameObject newUpgradeTierGO = Instantiate(newUpgradeTierPath, upgradeTierGO.transform.position, quaternion.identity);
-            newUpgradeTierGO.transform.parent = monkeyUI.transform.Find("upgradeGUI");
-            newUpgradeTierGO.transform.name = onePathUpdate;
-            Destroy(upgradeTierGO);
-        }
-        else {
-            //stores each GUI string name to whether they are top mid or bo
-            //then loop through the dicionatry to update thes(later this would include the GUI next to the upgrade button.
-            Dictionary<string,string> tiersOnEachPath = new Dictionary<string,string>();
-            tiersOnEachPath.Add("top", (pathToTier["top"] + 1) + "00");
-            tiersOnEachPath.Add("mid", "0" + (pathToTier["mid"] + 1) + "0");
-            tiersOnEachPath.Add("bot", "0" + "00" + (pathToTier["bot"] + 1));
-            foreach (var h in tiersOnEachPath) {
-                //newPreFab is the prefab in assest to replace the old GUI
-                //childToDestroyGO(GO=gameobject) is old GUI to kill.
-                //key is the name of the old GUI and key is the upgrade tier button to show
-                GameObject newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + h.Value + ".prefab");
-                GameObject childToDestroyGO = monkeyUI.transform.Find(h.Key).gameObject;
-                GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, quaternion.identity);
-                newGO.transform.SetParent(monkeyUI.transform);
-                newGO.gameObject.GetComponent<RectTransform>().sizeDelta = childToDestroyGO.GetComponent<RectTransform>().sizeDelta;
-                newGO.name = h.Key;
-                Destroy(childToDestroyGO);
+            //newPreFab is the prefab in assest to replace the old GUI
+            //childToDestroyGO(GO=gameobject) is old GUI to kill.
+            //key is the name of the old GUI and key is the upgrade tier button to show
+            if (h.Key == checkForBlockedPaths())
+            {
+                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "pathClosed" + ".prefab");
             }
+            if (h.Key == addmaxPaths())
+            {
+                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "maxUp" + ".prefab");
+            }
+            else
+            {
+                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + h.Key + ".prefab");
+            }
+            Debug.Log(tiersOnEachPath["top"]);
+            Debug.Log(tiersOnEachPath["mid"]);
+            Debug.Log(tiersOnEachPath["bot"]);
+            //the 0th child is the frame containnig everything 
+            GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
+            GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, quaternion.identity);
+            newGO.transform.SetParent(monkeyUI.transform);
+            newGO.gameObject.GetComponent<RectTransform>().sizeDelta = childToDestroyGO.GetComponent<RectTransform>().sizeDelta;
+            newGO.name = h.Key;
+            Destroy(childToDestroyGO);
         }
     }
+    
+    string addmaxPaths()
+    {
+        bool restricted = false;
+
+        foreach (var pTT in pathToTier) {
+            if (pTT.Value >= 3) {
+                restricted = true;
+            }
+            if (restricted && pTT.Value == 2)
+            {
+                return pTT.Key;
+            }
+        }
+        return null;
+    }
+    //loops through the dicionary if theres a value = 0 then its going to be the nonupgradedpath
+    //if there 2 upgrade paths that means we have to  restrict a path
+    string checkForBlockedPaths()
+    {
+        bool restricted = false;
+        string nonUpgradedPath = null;
+        int upgradedPaths = 0;
+
+        foreach (var pTT in pathToTier)
+        {
+            if (pTT.Value == 0) { 
+            nonUpgradedPath = pTT.Key;
+            }
+            else if (pTT.Value != 0) {
+                upgradedPaths++;
+                if (upgradedPaths == 2) {
+                    restricted=true;
+                }
+            }
+        }
+        if (restricted == true) {
+            return nonUpgradedPath;
+        }
+        return null;
+    }
+    void changeModel() {
+        string modelName = string.Empty;
+        foreach (var pTT in pathToTier) {
+          modelName = modelName + pTT.Value.ToString();
+        }
+        foreach (Transform h in gameObject.transform) { 
+            Destroy(h.gameObject);
+        }
+        string modelPath = "Assets/Resources/DartMonkey/" + modelName + ".prefab";
+        GameObject newModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+        Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity).transform.parent=gameObject.transform;
+    }
+
+    //yeah lmao this was the old path blocked script and its pretty bad compare to the new one
+    //int pathBlocked()
+    //{
+    //    //this was done before the dictionary adding 8 and 9 in the place now I can just check if any numbers are 8 
+    //    string firstPath = pathToTier["top"].ToString();
+    //    string secondPath = pathToTier["mid"].ToString();
+    //    string thirdPath = pathToTier["bot"].ToString();
+
+    //    if ((firstPath == "0" && secondPath == "0") || (firstPath == "0" && thirdPath == "0") || (thirdPath == "0" && secondPath == "0"))
+    //    {
+    //        return 0;
+    //    }
+    //    else
+    //    {
+    //        if (firstPath == "0")
+    //        {
+    //            return 3;
+    //        }
+    //        else if (secondPath == "0")
+    //        {
+    //            return 4;
+    //        }
+    //        else if (thirdPath == "0")
+    //        {
+    //            return 5;
+    //        }
+    //    }
+    //    return 0;
+    //}
 }
 //unused code incase I somehow need it again
 //also comparsion code to before
