@@ -12,6 +12,7 @@ TagManager:
   - path
   - placeableArea
   - friendlyProjctile
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -262,16 +262,13 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "maxUp" + ".prefab");
             }
             else
-            {
-                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + h.Key + ".prefab");
+            {    
+                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + h.Value + ".prefab");   
             }
-            Debug.Log(tiersOnEachPath["top"]);
-            Debug.Log(tiersOnEachPath["mid"]);
-            Debug.Log(tiersOnEachPath["bot"]);
             //the 0th child is the frame containnig everything 
             GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
             GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, quaternion.identity);
-            newGO.transform.SetParent(monkeyUI.transform);
+            newGO.transform.SetParent(monkeyUI.transform.GetChild(0).transform);
             newGO.gameObject.GetComponent<RectTransform>().sizeDelta = childToDestroyGO.GetComponent<RectTransform>().sizeDelta;
             newGO.name = h.Key;
             Destroy(childToDestroyGO);

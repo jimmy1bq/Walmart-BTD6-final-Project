@@ -40,17 +40,17 @@ public class RayCast : MonoBehaviour
         RaycastHit hit;
         if (towerOnMouse != null)
         {
-            if (Physics.Raycast(ray, out hit, 999999f,layerMaskTowerHover))
+            if (Physics.Raycast(ray, out hit, 999999f, layerMaskTowerHover))
             {
                 towerOnMouse.transform.position = hit.point;
-                
+
             }
             if (Input.GetKeyUp(KeyCode.P))
             {
-               
+
                 if (hit.collider.gameObject.tag == "placeableArea")
                 {
-                    
+
                     towerOnMouse.GetComponent<IHovering>().hoveringState(false);
                     towerOnMouse = null;
                 }
@@ -58,24 +58,26 @@ public class RayCast : MonoBehaviour
         }
         else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.gameObject.tag == "Tower")
-            {
-                Debug.Log("TowerClicked");
-                if (selectedTower)
+            if (hit.collider.gameObject.tag !=  "UI" ) {
+                if (hit.collider.gameObject.tag == "Tower")
                 {
-                    selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+                    Debug.Log("TowerClicked");
+                    if (selectedTower)
+                    {
+                        selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+                    }
+                    selectedTower = hit.collider.gameObject;
+                    selectedTower.GetComponent<IUNORSelected>().towerSelected();
                 }
-                selectedTower = hit.collider.gameObject;
-                selectedTower.GetComponent<IUNORSelected>().towerSelected();
-            }
-            else
-            {
-                if (selectedTower)
+                else
                 {
-                    selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
-                    selectedTower = null;
+                    if (selectedTower)
+                    {
+                        selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
+                        selectedTower = null;
+                    }
                 }
-            }
+            } 
         }
     }
 
