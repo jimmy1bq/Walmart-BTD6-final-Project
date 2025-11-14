@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 public class RayCast : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI cantPlaceErrorMessage;
@@ -56,12 +57,11 @@ public class RayCast : MonoBehaviour
                 }
             }
         }
-        else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
+        else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (hit.collider.gameObject.tag !=  "UI" ) {
                 if (hit.collider.gameObject.tag == "Tower")
                 {
-                    Debug.Log("TowerClicked");
+                  
                     if (selectedTower)
                     {
                         selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
@@ -76,8 +76,7 @@ public class RayCast : MonoBehaviour
                         selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
                         selectedTower = null;
                     }
-                }
-            } 
+            }
         }
     }
 

@@ -3,10 +3,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {//yes I could just make this into a scriptable object too 
    public static GameManager instance;
-   public int hp;
-   public int coins;
+   public  int hp;
+   public  int coins;
+   public  bool monkeyGUIActive= false;
 
-    private void Awake()
+   private void Awake()
     {
         instance = this;
         events.LoseLives.AddListener(loseLives);

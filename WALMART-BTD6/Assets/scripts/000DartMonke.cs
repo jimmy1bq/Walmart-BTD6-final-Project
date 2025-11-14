@@ -163,7 +163,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //when tower gets selected swap the gui and everything. Also add listener for it to upgrade
     public void towerSelected() { 
         rangeC.SetActive(true);
-      
+        GameManager.instance.monkeyGUIActive = true;
         events.towerUpgrade.AddListener(towerUpgrade);
         monkeyUI = Instantiate(dMtowerUI);
         //upgradeGUI frame
@@ -172,9 +172,9 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
         //Gets the unmodifded GUI to get swapped out later
         //if we were not to hardcode these value we can use unity's method findchild or use the findfirstchild method that i've created.
-        GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
-        GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
-        GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
+        //GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
+        //GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
+        //GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
         //I could store the blocked upgrade path beforehand in a variable avoid doing these checks everytime
         updateGUI();
         monkeyUI.SetActive(true);
@@ -182,6 +182,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
    
     public void towerUnSelected() {
         events.towerUpgrade.RemoveListener(towerUpgrade);
+        GameManager.instance.monkeyGUIActive = false;
         rangeC.SetActive(false);
         Destroy(monkeyUI);
     }
@@ -250,6 +251,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         GameObject newPreFab;
         foreach (var h in tiersOnEachPath)
         {
+            
             //newPreFab is the prefab in assest to replace the old GUI
             //childToDestroyGO(GO=gameobject) is old GUI to kill.
             //key is the name of the old GUI and key is the upgrade tier button to show
@@ -257,7 +259,8 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             {
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "pathClosed" + ".prefab");
             }
-            if (h.Key == addmaxPaths())
+
+            if (addmaxPaths().Contains(h.Key))
             {
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "maxUp" + ".prefab");
             }
@@ -269,26 +272,32 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
             GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, quaternion.identity);
             newGO.transform.SetParent(monkeyUI.transform.GetChild(0).transform);
-            newGO.gameObject.GetComponent<RectTransform>().sizeDelta = childToDestroyGO.GetComponent<RectTransform>().sizeDelta;
+            newGO.gameObject.GetComponent<RectTransform>().localScale = childToDestroyGO.GetComponent<RectTransform>().localScale;
             newGO.name = h.Key;
             Destroy(childToDestroyGO);
         }
     }
     
-    string addmaxPaths()
+   
+    List<string> addmaxPaths()
     {
+        List<string> paths = new List<string>();
         bool restricted = false;
-
+        Debug.Log("hi");
         foreach (var pTT in pathToTier) {
-            if (pTT.Value >= 3) {
+            if (pTT.Value >= 5) {
                 restricted = true;
+                paths.Add(pTT.Key);
             }
-            if (restricted && pTT.Value == 2)
-            {
-                return pTT.Key;
+            else if (pTT.Value >= 3) { 
+                restricted = true;
+                continue;
+            }
+            if (restricted && pTT.Value >= 2) {
+                paths.Add(pTT.Key);
             }
         }
-        return null;
+        return paths;
     }
     //loops through the dicionary if theres a value = 0 then its going to be the nonupgradedpath
     //if there 2 upgrade paths that means we have to  restrict a path
@@ -310,7 +319,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
                 }
             }
         }
-        if (restricted == true) {
+        if (restricted) {
             return nonUpgradedPath;
         }
         return null;
