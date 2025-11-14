@@ -335,7 +335,10 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         }
         string modelPath = "Assets/Resources/DartMonkey/" + modelName + ".prefab";
         GameObject newModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
-        Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity).transform.parent=gameObject.transform;
+        GameObject newModel = Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity);
+        newModel.transform.parent = gameObject.transform;
+        newModel.GetComponent<BoxCollider>().enabled = false;
+
     }
 
     //yeah lmao this was the old path blocked script and its pretty bad compare to the new one
