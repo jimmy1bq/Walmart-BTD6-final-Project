@@ -327,7 +327,10 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         foreach (var pTT in pathToTier) {
           modelName = modelName + pTT.Value.ToString();
         }
-        foreach (Transform h in gameObject.transform) { 
+        foreach (Transform h in gameObject.transform) {
+            if (h.gameObject.name == "RangeCircleThing(Clone)") {
+                continue;
+            }
             Destroy(h.gameObject);
         }
         string modelPath = "Assets/Resources/DartMonkey/" + modelName + ".prefab";
