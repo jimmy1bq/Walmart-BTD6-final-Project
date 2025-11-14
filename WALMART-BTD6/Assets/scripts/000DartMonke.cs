@@ -185,6 +185,8 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         GameManager.instance.monkeyGUIActive = false;
         rangeC.SetActive(false);
         Destroy(monkeyUI);
+      
+        
     }
     
     public void damageDealt(int popCounts)
@@ -231,40 +233,33 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //onePathUpdate is either top,mid,bot
     void updateGUI()
     {
-        //   if (onePathUpdateBool)
-        //  {
-        ////if this gets here means the bool is true andd we only have to upgrade 1 path(subject to change because of blocking and path restrcitions)
-        //GameObject upgradeTierGO = monkeyUI.transform.Find("upgradeGUI").gameObject.transform.Find(onePathUpdate).gameObject;
-        //GameObject newUpgradeTierPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + pathToTier[onePathUpdate] + ".prefab");
-        //GameObject newUpgradeTierGO = Instantiate(newUpgradeTierPath, upgradeTierGO.transform.position, quaternion.identity);
-        //newUpgradeTierGO.transform.parent = monkeyUI.transform.Find("upgradeGUI");
-        //newUpgradeTierGO.transform.name = onePathUpdate;
-        //Destroy(upgradeTierGO);
-        //   }
         //holy mircale I manage to do a simple intergration of my check for bloacked path and addmax paths code
         //stores each GUI string name to whether they are top mid or bo
         //then loop through the dicionatry to update thes(later this would include the GUI next to the upgrade button.
+        //var is a entry of the dictionary
         Dictionary<string, string> tiersOnEachPath = new Dictionary<string, string>();
         tiersOnEachPath.Add("top", (pathToTier["top"] + 1) + "00");
         tiersOnEachPath.Add("mid", "0" + (pathToTier["mid"] + 1) + "0");
         tiersOnEachPath.Add("bot", "0" + "0" + (pathToTier["bot"] + 1));
-        GameObject newPreFab;
+        GameObject newPreFab = null;  
+        string blockedPath = checkForBlockedPaths();
+        List<string> maxPaths = addmaxPaths();
         foreach (var h in tiersOnEachPath)
         {
-            
+
             //newPreFab is the prefab in assest to replace the old GUI
             //childToDestroyGO(GO=gameobject) is old GUI to kill.
             //key is the name of the old GUI and key is the upgrade tier button to show
-            if (h.Key == checkForBlockedPaths())
+
+            if (h.Key == blockedPath)
             {
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "pathClosed" + ".prefab");
             }
-
-            if (addmaxPaths().Contains(h.Key))
+            else if (maxPaths.Contains(h.Key))
             {
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "maxUp" + ".prefab");
             }
-            else
+            else if((h.Key != blockedPath) && !maxPaths.Contains(h.Key))
             {    
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + h.Value + ".prefab");   
             }
@@ -283,7 +278,6 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     {
         List<string> paths = new List<string>();
         bool restricted = false;
-        Debug.Log("hi");
         foreach (var pTT in pathToTier) {
             if (pTT.Value >= 5) {
                 restricted = true;
@@ -303,16 +297,20 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //if there 2 upgrade paths that means we have to  restrict a path
     string checkForBlockedPaths()
     {
+      
         bool restricted = false;
         string nonUpgradedPath = null;
         int upgradedPaths = 0;
 
         foreach (var pTT in pathToTier)
         {
-            if (pTT.Value == 0) { 
+           
+            if (pTT.Value == 0) {
+            Debug.Log(pTT.Key);
             nonUpgradedPath = pTT.Key;
             }
             else if (pTT.Value != 0) {
+               
                 upgradedPaths++;
                 if (upgradedPaths == 2) {
                     restricted=true;

@@ -3,8 +3,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {//yes I could just make this into a scriptable object too 
    public static GameManager instance;
-   public  int hp;
-   public  int coins;
+   public int hp;
+   public int coins;
    public  bool monkeyGUIActive= false;
 
    private void Awake()
@@ -27,9 +27,12 @@ public class GameManager : MonoBehaviour
     }
     void loseLives(int damage) { 
         hp -= damage;
+        events.LoseLivesUI.Invoke(hp);
     }
     void gainCoins(int cash)
     {
-       coins += cash;
+        Debug.Log("HI");
+        coins += cash;
+        events.GainCashUI.Invoke(coins);
     }
 }
