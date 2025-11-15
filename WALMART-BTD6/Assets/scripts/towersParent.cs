@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,7 +7,8 @@ using UnityEngine;
 
 public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount
 {
-   
+  
+
     protected string monkeyModelPath = "Assets/Resources/DartMonkey/";
     protected string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
     protected string monkeyGUIPath = "Assets/Resources/towerGUI/dartMonkeyGUi/";
@@ -18,7 +20,15 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
 
     protected Dictionary<string, int> pathToTier;
-    protected Dictionary<string, int> stats;
+    protected Dictionary<string, float> stats;
+    protected Dictionary<string, Coroutine> targetting = new Dictionary<string, Coroutine> {
+        {"close",  }
+    
+    
+    };
+    string currentProjctile;
+
+    [SerializeField] protected LayerMask enemy;
 
     bool hoveringS;
 
@@ -29,12 +39,40 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Vector3 rangePos = new Vector3(tower.transform.position.x, tower.transform.position.y, tower.transform.position.z) + new Vector3(0, 0.01f, 0);
         return rangePos;
     }
-    //doubley circular linked list 
+    //doubley circular linked list to change targetting later(kind of overkill)
+    //later its not going to take any gameobject but i would just create a path onto the gameObject to avoid Scriptable object
+    
 
-    protected IEnumerator closestTargetting(GameObject projctile) { 
+    protected IEnumerator closestTargetting(GameObject projctile)
+    {
+        GameObject closestEnemy = null;
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["range"], enemy);
+        float rangeClosest = stats["range"];
+        float distance;
+        foreach (var enemies in enemyCollider)
+        {
+            distance = Vector3.Magnitude(gameObject.transform.position - enemies.transform.position);
+            if (distance <= rangeClosest)
+            {
+                rangeClosest = distance;
+                closestEnemy = enemies.gameObject;
+            }
+        }
+        if (closestEnemy != null)
+        {
+            gameObject.transform.LookAt(closestEnemy.transform);
+            Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+            GameObject projctileGO = Instantiate(projctile, projctileSpawn, transform.GetChild(4).rotation);
+        }
+        else
+        {
+            yield return new WaitUntil(enemyInRange);
+            StartCoroutine(closestTargetting(projctile));
+        }
+        yield return new WaitForSeconds(stats["FireRate"]);
+        //later this is not going to be closesttargetting incase the player changes targetting
+        StartCoroutine(closestTargetting(projctile));
 
-
-        yield return null;
     }
     protected void firstTargetting() { }
     protected void lastTargettign() { }
@@ -244,5 +282,14 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Destroy(monkeyUI);
 
 
+    }
+    bool enemyInRange()
+    {
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["range"], enemy);
+        if (enemyCollider.Length != 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

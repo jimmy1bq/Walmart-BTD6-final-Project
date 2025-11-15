@@ -46,7 +46,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             {"bot",0}
        };
 
-        stats = new Dictionary<string, int>() {
+        stats = new Dictionary<string, float>() {
           {"Range", 5},
           {"FireRate",3},
           {"AddtionalDamage",0},
@@ -73,146 +73,143 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     // spherecast to check enemy in range if theres no enemy in range we can use the corotine to wait until there is one and insta attack the enemy
     //why use corotuine instead of update? because its cleaner so there isn't a gaint block of code. 
     //as of right now corotuine only serves as a better way to yield a functoin.
-    IEnumerator attackEnemy() {
-            GameObject closestEnemy = null;
-            float tempRange = stats["Range"];
+    //IEnumerator attackEnemy() {
+    //        GameObject closestEnemy = null;
+    //        float tempRange = stats["Range"];
 
-            foreach (var keyValuePair in boxData.boxsesOnMap)
-            {
-                if (keyValuePair.Value != null)
-                {
+    //        foreach (var keyValuePair in boxData.boxsesOnMap)
+    //        {
+    //            if (keyValuePair.Value != null)
+    //            {
 
-                    float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-                    if (distance <= tempRange)
-                    {
-                        closestEnemy = keyValuePair.Value;
-                        tempRange = distance;
-                    }
-                }
-            }
-            //transform.GetChild(4).position
-            if (closestEnemy != null)
-            {
-                //   Debug.Log("Throw");
-                gameObject.transform.LookAt(closestEnemy.transform);
-                Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-                //   Debug.Log(projctileData.dartProjctile);
-                GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
-                dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
-                dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
-            }
-            else if (closestEnemy == null)
-            {
-                //if theres no enemy in range waait until theres one in range
-                yield return new WaitUntil(enemyInRange);
-                StartCoroutine(attackEnemy());
-            }
-            yield return new WaitForSeconds(stats["FireRate"]);
-            StartCoroutine(attackEnemy());       
-    }
+    //                float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+    //                if (distance <= tempRange)
+    //                {
+    //                    closestEnemy = keyValuePair.Value;
+    //                    tempRange = distance;
+    //                }
+    //            }
+    //        }
+    //        //transform.GetChild(4).position
+    //        if (closestEnemy != null)
+    //        {
+    //            //   Debug.Log("Throw");
+    //            gameObject.transform.LookAt(closestEnemy.transform);
+    //            Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+    //            //   Debug.Log(projctileData.dartProjctile);
+    //            GameObject dart = Instantiate(projctileData.dartProjctile, projctileSpawn, transform.GetChild(4).rotation);
+    //            dart.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
+    //            dart.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+    //        }
+    //        else if (closestEnemy == null)
+    //        {
+    //            //if theres no enemy in range waait until theres one in range
+    //            yield return new WaitUntil(enemyInRange);
+    //            StartCoroutine(attackEnemy());
+    //        }
+    //        yield return new WaitForSeconds(stats["FireRate"]);
+    //        StartCoroutine(attackEnemy());       
+    //}
 
-    IEnumerator spawnattackCD()
-    {
-       yield return new WaitForSeconds(1);
-       StartCoroutine(attackEnemy());
-    }
+    //IEnumerator spawnattackCD()
+    //{
+    //   yield return new WaitForSeconds(1);
+    //   StartCoroutine(attackEnemy());
+    //}
     //milestone 4 
     //changed this to be much more cleaner and better. 
     //Also no more reliance on SOs. 
     //the nested if statment is to check if the hit acutally hit something
-    bool enemyInRange()
-    {
-        foreach (var keyValuePair in boxData.boxsesOnMap)
-        {
-            if (keyValuePair.Value != null)
-            {
-                float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
-                if (distance <= stats["Range"]) { return true; }
-            }
-        }
-        return false;
-    }
+    //bool enemyInRange()
+    //{
+    //    foreach (var keyValuePair in boxData.boxsesOnMap)
+    //    {
+    //        if (keyValuePair.Value != null)
+    //        {
+    //            float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+    //            if (distance <= stats["Range"]) { return true; }
+    //        }
+    //    }
+    //    return false;
+    //}
     /// <summary>
     /// If the tower is hovering show the range cicrle and if its not diisable the range circle and start the attack coroutine
     /// </summary>
     /// <param name="hovering">bool whether is the tower is selected and hovering over the mouse for placement </param>
-    public void hoveringState(bool hovering)
-    {
-        hoveringS = hovering;
-        checkHovering(hovering);
-    }
+   
     //changed added layer change remember to record this on milestone 4
-    void checkHovering(bool hovering) {
-        if (!hovering)
-        {
-            gameObject.layer = LayerMask.NameToLayer("Tower");
-            rangeC.SetActive(false);
+    //void checkHovering(bool hovering) {
+    //    if (!hovering)
+    //    {
+    //        gameObject.layer = LayerMask.NameToLayer("Tower");
+    //        rangeC.SetActive(false);
             
-            StartCoroutine(spawnattackCD());
-        }
-        else
-        {
-            rangeC.SetActive(true);
-        }
-    }
+    //        StartCoroutine(spawnattackCD());
+    //    }
+    //    else
+    //    {
+    //        rangeC.SetActive(true);
+    //    }
+    //}
+
     /// <summary>
     /// Interface method for when the tower is selected
     /// </summary>
     //when tower gets selected swap the gui and everything. Also add listener for it to upgrade
-    public void towerSelected() { 
-        rangeC.SetActive(true);
-        GameManager.instance.monkeyGUIActive = true;
-        events.towerUpgrade.AddListener(towerUpgrade);
-        monkeyUI = Instantiate(dMtowerUI);
-        //upgradeGUI frame
-        GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
-        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250,1050,0);
-        monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
-        //Gets the unmodifded GUI to get swapped out later
-        //if we were not to hardcode these value we can use unity's method findchild or use the findfirstchild method that i've created.
-        //GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
-        //GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
-        //GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
-        //I could store the blocked upgrade path beforehand in a variable avoid doing these checks everytime
-        updateGUI();
-        monkeyUI.SetActive(true);
-    }
    
-    public void towerUnSelected() {
-        events.towerUpgrade.RemoveListener(towerUpgrade);
-        GameManager.instance.monkeyGUIActive = false;
-        rangeC.SetActive(false);
-        Destroy(monkeyUI);
+    //    rangeC.SetActive(true);
+    //    GameManager.instance.monkeyGUIActive = true;
+    //    events.towerUpgrade.AddListener(towerUpgrade);
+    //    monkeyUI = Instantiate(dMtowerUI);
+    //    //upgradeGUI frame
+    //    GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
+    //    monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250,1050,0);
+    //    monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
+    //    //Gets the unmodifded GUI to get swapped out later
+    //    //if we were not to hardcode these value we can use unity's method findchild or use the findfirstchild method that i've created.
+    //    //GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
+    //    //GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
+    //    //GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
+    //    //I could store the blocked upgrade path beforehand in a variable avoid doing these checks everytime
+    //    updateGUI();
+    //    monkeyUI.SetActive(true);
+    //}
+   
+    //public void towerUnSelected() {
+    //    events.towerUpgrade.RemoveListener(towerUpgrade);
+    //    GameManager.instance.monkeyGUIActive = false;
+    //    rangeC.SetActive(false);
+    //    Destroy(monkeyUI);
       
         
-    }
+    //}
     
-    public void damageDealt(int popCounts)
-    {
-        stats["popCount"] += popCounts;
-        if (monkeyUI) {
-          GameObject popText= monkeyUI.GetComponent<RectTransform>().GetChild(findFirstChild("popCount", monkeyUI)).gameObject;
-          popText.GetComponent<TextMeshProUGUI>().text = popCounts.ToString();
-        }
-    }
-    int findFirstChild(string name, GameObject objectToSearch)
-    {
-        int i = 0;
-        foreach (Transform child in objectToSearch.transform)
-        {
+    //public void damageDealt(int popCounts)
+    //{
+    //    stats["popCount"] += popCounts;
+    //    if (monkeyUI) {
+    //      GameObject popText= monkeyUI.GetComponent<RectTransform>().GetChild(findFirstChild("popCount", monkeyUI)).gameObject;
+    //      popText.GetComponent<TextMeshProUGUI>().text = popCounts.ToString();
+    //    }
+    //}
+    //int findFirstChild(string name, GameObject objectToSearch)
+    //{
+    //    int i = 0;
+    //    foreach (Transform child in objectToSearch.transform)
+    //    {
            
-            if (child.name == name)
-            {
-                return i;
-            }
-            else
-            {
-                i++;
-            }
-        }
-        i++;
-        return -1;
-    }
+    //        if (child.name == name)
+    //        {
+    //            return i;
+    //        }
+    //        else
+    //        {
+    //            i++;
+    //        }
+    //    }
+    //    i++;
+    //    return -1;
+    //}
     private void OnDrawGizmosSelected()
     {
         Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
@@ -221,11 +218,11 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     }
     //since unity doesn't like front 0s im replacing it with a 9
     //upgradeTier is either top,mid,bot
-    void towerUpgrade(string upgradeTier) {
-        pathToTier[upgradeTier] += 1;
-        updateGUI();
-        changeModel();
-    } 
+    //void towerUpgrade(string upgradeTier) {
+    //    pathToTier[upgradeTier] += 1;
+    //    updateGUI();
+    //    changeModel();
+    //} 
 }
 //unused code incase I somehow need it again
 //also comparsion code to before

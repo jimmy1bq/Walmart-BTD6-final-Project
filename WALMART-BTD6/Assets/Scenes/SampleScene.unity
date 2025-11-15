@@ -3183,7 +3183,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!114 &1002222380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3768,6 +3768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   hp: 0
   coins: 0
+  monkeyGUIActive: 0
 --- !u!4 &1203566116
 Transform:
   m_ObjectHideFlags: 0
