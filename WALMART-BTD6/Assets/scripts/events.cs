@@ -8,5 +8,5 @@ public static class events {
     public static UnityEvent<GameObject> towerSelected = new UnityEvent<GameObject>();
     public static TowerUpgradeEvent towerUpgrade = new TowerUpgradeEvent();
 }
-public class TowerUpgradeEvent : UnityEvent<string, string> { }
+public class TowerUpgradeEvent : UnityEvent<string, string, float[]> { }
 

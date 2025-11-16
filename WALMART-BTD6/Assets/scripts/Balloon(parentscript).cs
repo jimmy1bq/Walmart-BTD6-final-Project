@@ -4,11 +4,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static boxSO;
 
-public class Box : MonoBehaviour
+public class Box : MonoBehaviour, IDamageTaken, IIndex
 
 {
+    [SerializeField] protected boxSO boxData;
+    protected Coroutine AdvanceIndex;
+    protected boxSO.boxType boxColor;
+    protected int layer;
+    protected int balloonSpeedValue;
+    protected int i = 0;
+    protected int hp;
+    protected int totalWayPoints;
 
-   protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
+    protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
     protected Dictionary<boxSO.boxType, int> balloonLayer =new Dictionary<boxSO.boxType, int>() {
             { boxSO.boxType.none, 0 },
             { boxSO.boxType.red, 1 },
@@ -53,10 +61,41 @@ public class Box : MonoBehaviour
             { boxSO.boxType.ceramic, 3 },
     };
 
-  
+    protected void Start()
+    {
+        AdvanceIndex = StartCoroutine(advanceIndex());
+    }
+    protected IEnumerator advanceIndex()
+    {
+        yield return new WaitUntil(onWayPoint);
+        i++;
+        if (!(i >= totalWayPoints + 1))
+        {
+            StartCoroutine(advanceIndex());
+        }
+        else
+        {
+            events.LoseLives.Invoke(layer);
+            Destroy(gameObject);
+        }
 
-  
-    
+    }
+    protected bool onWayPoint()
+    {
+        if (transform.position == WayPointManager.instance.wayPoints[i].position)
+        {
+            return true;
+        }
+        else
+        {
+            moveToWayPoint(WayPointManager.instance.wayPoints[i].position * Time.deltaTime);
+            return false;
+        }
+
+    }
+
+
+
     protected boxSO.boxType pop(int damage, boxSO.boxType box) {
         int damageTaken= balloonLayer[box]-damage;
        
@@ -66,7 +105,10 @@ public class Box : MonoBehaviour
         return layerToBalloon[damageTaken];
     }
 
-
+    protected void moveToWayPoint(Vector3 wayPointOn)
+    {
+        enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
+    }
     protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,int speed) { 
     this.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
@@ -77,9 +119,30 @@ public class Box : MonoBehaviour
         yield return new WaitForSeconds(1f);
         gameObject.GetComponent<Collider>().enabled = true;
     }
+   public void wayPointReciever(int index)
+    {
+        i = index;
+    }
 
+    public void damageTaken(int damage)
+    {
 
-   
+        boxSO.boxType downToLayer = pop(damage, boxColor);
+        if (downToLayer == boxSO.boxType.none)
+        {
+            Destroy(gameObject);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+        }
+        else
+        {
+            GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            IIndex boxIndex = box.GetComponent<IIndex>();
+            boxIndex.wayPointReciever(i);
+            boxData.boxsesOnMap.Remove(boxData.ID);
+            Destroy(gameObject);
+        }
+    }
+
 
 
 }

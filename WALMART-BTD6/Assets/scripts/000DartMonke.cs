@@ -41,6 +41,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
           {"Range", 5},
           {"FireRate",3},
           {"AddtionalDamage",0},
+          {"pierce",0},
           {"popCount",0}
        };
         pathToTier = new Dictionary<string, int>() {

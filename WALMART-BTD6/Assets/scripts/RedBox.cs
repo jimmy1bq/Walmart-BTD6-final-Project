@@ -5,79 +5,17 @@ using UnityEngine;
 
 public class RedBox : Box , IIndex, IDamageTaken
 {
-    [SerializeField] protected boxSO boxData;
-    Coroutine AdvanceIndex;
-    boxSO.boxType boxColor = boxSO.boxType.red;
-    int layer;
-    int balloonSpeedValue;
-    int i=0;
-    int totalWayPoints;
+   
 
 
     private void Awake()
     {
+        boxColor = boxSO.boxType.red;
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
-        //minus one because of index start @ 0 
-        
         totalWayPoints = WayPointManager.instance.wayPoints.Count-1;
         boxData.boxsesOnMap.Add(boxData.ID, gameObject);
         boxData.ID++;
         StartCoroutine(Iframes());
-
-    }
-    private void Start()
-    {
-        AdvanceIndex = StartCoroutine(advanceIndex());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
-
-    void moveToWayPoint(Vector3 wayPointOn)
-    {
-        enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
-    }
-    public void damageTaken(int damage)
-    {
-        Destroy(gameObject);
-    }
-    IEnumerator advanceIndex()
-    {
-      
-        yield return new WaitUntil(onWayPoint);
-        i++;
-        if (!(i >= totalWayPoints + 1))
-        {
-            StartCoroutine(advanceIndex());
-        }
-        else
-        {
-            events.LoseLives.Invoke(balloonLayer[boxColor]);
-            Destroy(gameObject);
-        }
-
-    }
-    bool onWayPoint()
-    {
-        if (transform.position == WayPointManager.instance.wayPoints[i].position)
-        {
-
-            return true;
-        }
-        else
-        {
-            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
-            return false;
-        }
-
-    }
-    public void wayPointReciever(int index)
-    {
-        i = index;
     }
 }

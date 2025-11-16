@@ -14,6 +14,8 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
 
     protected int damage;
     protected int pierce;
+
+    protected float projSpeed;
     protected void Start()
     {
         if (targetEnemy != null)
@@ -28,7 +30,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     {
         if (orgEnemyPosition != null)
         {
-            transform.Translate(new Vector3(0, orgEnemyPosition.y * 5 * Time.deltaTime, 0));
+            transform.Translate(new Vector3(0, orgEnemyPosition.y * 5 * Time.deltaTime * projSpeed, 0));
         }
 
     }
