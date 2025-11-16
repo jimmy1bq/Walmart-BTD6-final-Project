@@ -17,6 +17,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     protected GameObject monkeyUI;
     protected GameObject rangeC;
+    protected GameObject rangeCircle;
     protected string projctile;
     
     protected Dictionary<string, int> pathToTier;
@@ -29,6 +30,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     bool hoveringS;
 
 
+   
 
     protected Vector3 placeTowerRangeCircle(GameObject tower)
     {
@@ -58,10 +60,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         {
             gameObject.transform.LookAt(closestEnemy.transform);
             Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-            GameObject dartProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
-            GameObject projctileGO = Instantiate(dartProj, projctileSpawn, Quaternion.Euler(gameObject.transform.eulerAngles.x+90,gameObject.transform.eulerAngles.y,0));
-          //  projctileGO.transform.parent = gameObject.transform;
-            projctileGO.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
+            GameObject proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
+            GameObject projctileGO = Instantiate(proj, projctileSpawn, Quaternion.Euler(gameObject.transform.eulerAngles.x+90,gameObject.transform.eulerAngles.y,0));
+            projctileGO.GetComponent<IGiveEnemy>().setEnemy(closestEnemy);
             projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
             yield return new WaitForSeconds(stats["FireRate"]);
         }
@@ -71,8 +72,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             yield return new WaitUntil(enemyInRange);
         }
         //later this is not going to be closesttargetting incase the player changes targetting
-        Debug.Log(stats["FireRate"]);
-        Debug.Log("attacking");
         StartCoroutine(closestTargetting());
 
     }
@@ -111,10 +110,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
         foreach (var pTT in pathToTier)
         {
-
             if (pTT.Value == 0)
             {
-                Debug.Log(pTT.Key);
                 nonUpgradedPath = pTT.Key;
             }
             else if (pTT.Value != 0)
@@ -210,7 +207,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.SetActive(true);
         GameManager.instance.monkeyGUIActive = true;
         events.towerUpgrade.AddListener(towerUpgrade);
-        Debug.Log("hi");
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
         monkeyUI = Instantiate(genUI);
         //upgradeGUI frame
@@ -254,8 +250,13 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         yield return new WaitForSeconds(1);
         StartCoroutine(closestTargetting());
     }
-    protected void towerUpgrade(string upgradeTier)
+    protected void towerUpgrade(string upgradeTier,string projectile)
     {
+        if (projectile != "") {
+            projctile = projectile;
+            Debug.Log("changed proj");
+            Debug.Log(projectile);
+        }
         pathToTier[upgradeTier] += 1;
         updateGUI();
         changeModel();

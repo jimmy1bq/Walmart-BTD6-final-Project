@@ -19,7 +19,7 @@ public class dMUpgradeEvents : MonoBehaviour
         if (GameManager.instance.coins >= 170) {
             Debug.Log("hi");
             events.GainCash.Invoke(-170);
-            events.towerUpgrade.Invoke("top");
+            events.towerUpgrade.Invoke("top", "");
 
         }
       
@@ -30,7 +30,7 @@ public class dMUpgradeEvents : MonoBehaviour
         if (GameManager.instance.coins >= 120) {
             Debug.Log("hi");
             events.GainCash.Invoke(-110);
-            events.towerUpgrade.Invoke("mid");
+            events.towerUpgrade.Invoke("mid","");
         }
     }
 
@@ -40,7 +40,7 @@ public class dMUpgradeEvents : MonoBehaviour
         if (GameManager.instance.coins >= 110)
         {
             events.GainCash.Invoke(-110);
-            events.towerUpgrade.Invoke("bot");
+            events.towerUpgrade.Invoke("bot", "");
         }
     }
     public void upgrade200()
@@ -49,7 +49,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Debug.Log("hi");
             events.GainCash.Invoke(-200);
-            events.towerUpgrade.Invoke("top");
+            events.towerUpgrade.Invoke("top", "");
         }
     }
     public void upgrade020()
@@ -59,7 +59,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Debug.Log("hi");
             events.GainCash.Invoke(-190);
-            events.towerUpgrade.Invoke("mid");
+            events.towerUpgrade.Invoke("mid", "");
         }
     }
     public void upgrade002()
@@ -69,7 +69,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Debug.Log("hi");
             events.GainCash.Invoke(-150);
-            events.towerUpgrade.Invoke("bot");
+            events.towerUpgrade.Invoke("bot", "");
         }
     }
     public void upgrade003()
@@ -79,7 +79,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Debug.Log("hi");
             events.GainCash.Invoke(-650);
-            events.towerUpgrade.Invoke("bot");
+            events.towerUpgrade.Invoke("bot", "");
         }
     }
      public void upgrade030()
@@ -88,7 +88,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Debug.Log("hi");
             events.GainCash.Invoke(-250);
-            events.towerUpgrade.Invoke("mid");
+            events.towerUpgrade.Invoke("mid", "");
         }
     }
     public void upgrade300()
@@ -96,7 +96,7 @@ public class dMUpgradeEvents : MonoBehaviour
         if (GameManager.instance.coins >= 300)
         {
             events.GainCash.Invoke(-300);
-            events.towerUpgrade.Invoke("top");
+            events.towerUpgrade.Invoke("top", "cannonball");
         }
     }
 

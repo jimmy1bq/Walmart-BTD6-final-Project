@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 8113567125622840595}
   - component: {fileID: 8529502810746381946}
   - component: {fileID: 4641430710198112376}
-  - component: {fileID: 4296958177038038410}
+  - component: {fileID: 2823442524538917384}
+  - component: {fileID: -5505704611559668761}
+  - component: {fileID: -9051836977541623588}
   m_Layer: 0
   m_Name: cannonball
   m_TagString: Untagged
@@ -90,8 +92,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4296958177038038410
-MeshCollider:
+--- !u!114 &2823442524538917384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2795622268493106143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2385717215202249a492f772149f04d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::cannonBallScript
+--- !u!135 &-5505704611559668761
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,10 +119,36 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.32427222
+  m_Center: {x: 0.0034037232, y: 0.3292703, z: 0.0010389984}
+--- !u!54 &-9051836977541623588
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2795622268493106143}
   serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5293335269154574413, guid: b2779824aa194862a9c54fa7a4735673, type: 3}
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1

@@ -54,6 +54,8 @@ public class GreenBox : Box, IDamageTaken, IIndex
         }
         else
         {
+            Debug.Log(boxData.boxTypeToGO.Count);
+            Debug.Log(boxData.boxTypeToGO[boxSO.boxType.red]);
             GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
             IIndex boxIndex = box.GetComponent<IIndex>();
             boxIndex.wayPointReciever(i);

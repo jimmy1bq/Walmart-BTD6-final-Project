@@ -26,4 +26,11 @@ public interface IProjctileOwner
    public void setProjectileOwner(GameObject owner);
 }
 
+public interface IGiveEnemy {
+
+    public void setEnemy(GameObject enemy) 
+    { }
+
+}
+
 

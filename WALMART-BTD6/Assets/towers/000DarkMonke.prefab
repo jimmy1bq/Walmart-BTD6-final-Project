@@ -1006,7 +1006,7 @@ MonoBehaviour:
   enemyOnly:
     serializedVersion: 2
     m_Bits: 512
-  rangeCircle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
+  rangeCirclePF: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
 --- !u!64 &1909807788983667701
 MeshCollider:
   m_ObjectHideFlags: 0

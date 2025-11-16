@@ -16,7 +16,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     [SerializeField] GameObject dart;
 
     [SerializeField] LayerMask enemyOnly;
-    [SerializeField] GameObject rangeCircle;
+    [SerializeField] GameObject rangeCirclePF;
 
     //string monkeyModelPath = "Assets/Resources/DartMonkey/";
     //string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
@@ -36,32 +36,24 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     private void Awake()
     {
         projctile = "dartProjectile";
-        //instead of using strings I could of used enum to make safer and cleaner
-        //9 if a path is closed to maxing 
-        //8 if the path is blocked
-       pathToTier = new Dictionary<string, int>() {
-            {"top",0},
-            {"mid",0},
-            {"bot",0}
-       };
-
+        rangeCircle = rangeCirclePF;
         stats = new Dictionary<string, float>() {
           {"Range", 5},
           {"FireRate",3},
           {"AddtionalDamage",0},
           {"popCount",0}
        };
-
+        pathToTier = new Dictionary<string, int>() {
+            {"top",0},
+            {"mid",0},
+            {"bot",0}
+       };
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
         rangeC.transform.parent = gameObject.transform;
         rangeC.SetActive(false);
-
     }
-    void Start()
-    {
-        //StartCoroutine(closestTargetting("dartProjectile"));
-    }
+    
 
     // Update is called once per frame
     void Update()

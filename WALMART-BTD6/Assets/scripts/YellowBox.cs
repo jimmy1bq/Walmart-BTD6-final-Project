@@ -97,6 +97,7 @@ public class YellowBox : Box, IDamageTaken, IIndex
         }
         else
         {
+            Debug.Log(boxData.boxTypeToGO.Count);
             GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
             IIndex boxIndex = box.GetComponent<IIndex>();
             boxIndex.wayPointReciever(i);
