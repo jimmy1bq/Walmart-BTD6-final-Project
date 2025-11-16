@@ -997,14 +997,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad3b7b8604216e458ef56a6c9923313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DartMonke
-  rangeCricle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
+  enemy:
+    serializedVersion: 2
+    m_Bits: 0
   projctileData: {fileID: 11400000, guid: 8ca519b3cafd5d14fb9258614228cafa, type: 2}
   boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
-  dMtowerUI: {fileID: 322619695258955393, guid: 74c78c97e68f3fd48a8914b9de39d9c9, type: 3}
-  rangeCircle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
+  dart: {fileID: 2749526370460404350, guid: c98eb0492bb08fb479e66af664c1ae5f, type: 3}
   enemyOnly:
     serializedVersion: 2
     m_Bits: 512
+  rangeCircle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
 --- !u!64 &1909807788983667701
 MeshCollider:
   m_ObjectHideFlags: 0

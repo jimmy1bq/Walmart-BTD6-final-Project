@@ -6699,7 +6699,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3366540746566746670}
   - component: {fileID: 4048893761939394901}
-  - component: {fileID: 4734041329206327211}
   - component: {fileID: 9163641359066142218}
   - component: {fileID: 891020260128085307}
   m_Layer: 8
@@ -6752,27 +6751,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4734041329206327211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9148443690702687586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ad3b7b8604216e458ef56a6c9923313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DartMonke
-  rangeCricle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
-  projctileData: {fileID: 11400000, guid: 8ca519b3cafd5d14fb9258614228cafa, type: 2}
-  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
-  dMtowerUI: {fileID: 4175593760319342596, guid: 92cd7fce99301dc489d090a348eaae7a, type: 3}
-  rangeCircle: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
-  enemyOnly:
-    serializedVersion: 2
-    m_Bits: 512
-  fireRate: 3
 --- !u!64 &9163641359066142218
 MeshCollider:
   m_ObjectHideFlags: 0

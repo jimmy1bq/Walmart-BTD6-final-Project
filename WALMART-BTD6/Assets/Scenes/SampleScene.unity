@@ -3766,8 +3766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf66b93c2f3f3b4081c51a4a0474da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  hp: 0
-  coins: 0
+  hp: 1000000
+  coins: 1000000
   monkeyGUIActive: 0
 --- !u!4 &1203566116
 Transform:

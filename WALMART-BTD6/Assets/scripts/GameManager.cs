@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
         instance = this;
         events.LoseLives.AddListener(loseLives);
         events.GainCash.AddListener(gainCoins);
-        hp = 100;
-        coins = 650;
+        //hp = 100;
+        //coins = 650;
     }
     void Start()
     {
@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     }
     void gainCoins(int cash)
     {
-        Debug.Log("HI");
         coins += cash;
         events.GainCashUI.Invoke(coins);
     }

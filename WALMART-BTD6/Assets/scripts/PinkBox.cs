@@ -88,8 +88,7 @@ public class PinkBox : Box, IDamageTaken, IIndex
             boxData.boxsesOnMap.Remove(boxData.ID);
         }
         else
-        {
-          
+        {          
             GameObject box= Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
             IIndex boxIndex = box.GetComponent<IIndex>();
             boxIndex.wayPointReciever(i);

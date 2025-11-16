@@ -7,6 +7,11 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI cashText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        livesText.text = (GameManager.instance.hp).ToString();
+        cashText.text = (GameManager.instance.coins).ToString();
+    }
     void Start()
     {
         events.LoseLivesUI.AddListener(loseLife);

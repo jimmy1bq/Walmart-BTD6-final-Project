@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -12,21 +13,16 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected string monkeyModelPath = "Assets/Resources/DartMonkey/";
     protected string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
     protected string monkeyGUIPath = "Assets/Resources/towerGUI/dartMonkeyGUi/";
+    protected string projctilePath = "Assets/Resources/Projectile/";
 
     protected GameObject monkeyUI;
     protected GameObject rangeC;
-    protected GameObject projctile;
-    protected GameObject dMtowerUI;
-
-
+    protected string projctile;
+    
     protected Dictionary<string, int> pathToTier;
     protected Dictionary<string, float> stats;
-    protected Dictionary<string, Coroutine> targetting = new Dictionary<string, Coroutine> {
-        {"close",  }
+    //later put an array with function 
     
-    
-    };
-    string currentProjctile;
 
     [SerializeField] protected LayerMask enemy;
 
@@ -41,13 +37,13 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     //doubley circular linked list to change targetting later(kind of overkill)
     //later its not going to take any gameobject but i would just create a path onto the gameObject to avoid Scriptable object
-    
 
-    protected IEnumerator closestTargetting(GameObject projctile)
+
+    protected IEnumerator closestTargetting()
     {
         GameObject closestEnemy = null;
-        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["range"], enemy);
-        float rangeClosest = stats["range"];
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], 1 << 9);
+        float rangeClosest = stats["Range"];
         float distance;
         foreach (var enemies in enemyCollider)
         {
@@ -62,16 +58,22 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         {
             gameObject.transform.LookAt(closestEnemy.transform);
             Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-            GameObject projctileGO = Instantiate(projctile, projctileSpawn, transform.GetChild(4).rotation);
+            GameObject dartProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
+            GameObject projctileGO = Instantiate(dartProj, projctileSpawn, Quaternion.Euler(gameObject.transform.eulerAngles.x+90,gameObject.transform.eulerAngles.y,0));
+          //  projctileGO.transform.parent = gameObject.transform;
+            projctileGO.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
+            projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+            yield return new WaitForSeconds(stats["FireRate"]);
         }
-        else
+        else if (closestEnemy == null)
         {
+            //if theres no enemy in range waait until theres one in range
             yield return new WaitUntil(enemyInRange);
-            StartCoroutine(closestTargetting(projctile));
         }
-        yield return new WaitForSeconds(stats["FireRate"]);
         //later this is not going to be closesttargetting incase the player changes targetting
-        StartCoroutine(closestTargetting(projctile));
+        Debug.Log(stats["FireRate"]);
+        Debug.Log("attacking");
+        StartCoroutine(closestTargetting());
 
     }
     protected void firstTargetting() { }
@@ -208,7 +210,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.SetActive(true);
         GameManager.instance.monkeyGUIActive = true;
         events.towerUpgrade.AddListener(towerUpgrade);
-        monkeyUI = Instantiate(dMtowerUI);
+        Debug.Log("hi");
+        GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
+        monkeyUI = Instantiate(genUI);
         //upgradeGUI frame
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250, 1050, 0);
@@ -248,7 +252,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected IEnumerator spawnattackCD()
     {
         yield return new WaitForSeconds(1);
-        StartCoroutine(closestTargetting(projctile));
+        StartCoroutine(closestTargetting());
     }
     protected void towerUpgrade(string upgradeTier)
     {
@@ -285,7 +289,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     bool enemyInRange()
     {
-        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["range"], enemy);
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], 1 << 9);
         if (enemyCollider.Length != 0)
         {
             return true;
@@ -293,3 +297,43 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         return false;
     }
 }
+
+
+
+
+//IEnumerator closestTargetting()
+//{
+//    GameObject closestEnemy = null;
+//    float tempRange = stats["Range"];
+
+//    foreach (var keyValuePair in boxData.boxsesOnMap)
+//    {
+//        if (keyValuePair.Value != null)
+//        {
+
+//            float distance = Vector3.Magnitude(keyValuePair.Value.transform.position - transform.position);
+//            if (distance <= tempRange)
+//            {
+//                closestEnemy = keyValuePair.Value;
+//                tempRange = distance;
+//            }
+//        }
+//    }
+//    //transform.GetChild(4).position
+//    if (closestEnemy != null)
+//    {
+//        gameObject.transform.LookAt(closestEnemy.transform);
+//        Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+//        GameObject dartProj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
+//        GameObject projctileGO = Instantiate(dartProj, projctileSpawn, Quaternion.identity);
+//        projctileGO.GetComponent<dartProj>().setClosestEnemy(closestEnemy);
+//        projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+//    }
+//    else if (closestEnemy == null)
+//    {
+//        yield return new WaitUntil(enemyInRange);
+//        StartCoroutine(attackEnemy());
+//    }
+//    yield return new WaitForSeconds(stats["FireRate"]);
+//    StartCoroutine(attackEnemy());
+//}

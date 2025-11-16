@@ -13,8 +13,8 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 {
     [SerializeField] projectileSO projctileData;
     [SerializeField] boxSO boxData;
+    [SerializeField] GameObject dart;
 
-    [SerializeField] GameObject dMtowerUI;
     [SerializeField] LayerMask enemyOnly;
     [SerializeField] GameObject rangeCircle;
 
@@ -23,8 +23,6 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //string monkeyGUIPath = "Assets/Resources/towerGUI/dartMonkeyGUi/";
 
     //I should Introduce a variable that spefically gets upgradeFrame for GUIS
-    bool hoveringS;
-    GameObject rangeC;
     Vector3 castOrigin;
 
 
@@ -37,6 +35,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 
     private void Awake()
     {
+        projctile = "dartProjectile";
         //instead of using strings I could of used enum to make safer and cleaner
         //9 if a path is closed to maxing 
         //8 if the path is blocked
@@ -61,7 +60,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     }
     void Start()
     {
-       
+        //StartCoroutine(closestTargetting("dartProjectile"));
     }
 
     // Update is called once per frame
@@ -210,12 +209,12 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //    i++;
     //    return -1;
     //}
-    private void OnDrawGizmosSelected()
-    {
-        Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(castOrigin, stats["Range"]);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(castOrigin, stats["Range"]);
+    //}
     //since unity doesn't like front 0s im replacing it with a 9
     //upgradeTier is either top,mid,bot
     //void towerUpgrade(string upgradeTier) {

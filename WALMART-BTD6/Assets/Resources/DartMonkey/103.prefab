@@ -3359,7 +3359,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1674676602017868784, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
       propertyPath: m_Name
-      value: 103DarkMonke
+      value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 8727537742040641661, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3401,7 +3401,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2009081712479584887, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
     m_RemovedGameObjects:
     - {fileID: 2749526370460404350, guid: c55db6428e928cd4c9227f92ef8b9cc2, type: 3}
     m_AddedGameObjects:
