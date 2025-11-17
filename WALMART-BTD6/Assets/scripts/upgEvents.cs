@@ -144,7 +144,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-650);
-            events.towerUpgrade.Invoke("bot", "", stats);
+            events.towerUpgrade.Invoke("bot", "arrowProj", stats);
         }
     }
      public void upgrade030()

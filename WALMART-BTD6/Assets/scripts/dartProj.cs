@@ -9,7 +9,7 @@ public class dartProjs : projectileParentForStraightLinearProj
      void Awake()
     {
         damage = 1;
-        pierce = 1;
+        pierce = 2;
         projSpeed = 1;
     }
 }

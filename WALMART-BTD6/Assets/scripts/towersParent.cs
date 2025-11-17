@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount
@@ -101,6 +103,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         GameObject newModel = Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity);
         newModel.transform.parent = gameObject.transform;
         newModel.GetComponent<BoxCollider>().enabled = false;
+        rangeC.transform.parent = null;
+        rangeC.transform.localScale = new Vector3(stats["Range"]*2, .0001f, stats["Range"]*2);
+        rangeC.transform.parent = gameObject.transform;
 
     }
     protected string checkForBlockedPaths()
@@ -128,6 +133,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         if (restricted)
         {
+            
             return nonUpgradedPath;
         }
         return null;
@@ -135,6 +141,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected List<string> addmaxPaths()
     {
         List<string> paths = new List<string>();
+        string pathToBlock = null;
         bool restricted = false;
         foreach (var pTT in pathToTier)
         {
@@ -148,10 +155,12 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
                 restricted = true;
                 continue;
             }
-            if (restricted && pTT.Value >= 2)
-            {
-                paths.Add(pTT.Key);
+            if (pTT.Value == 2) {
+                pathToBlock= pTT.Key;
             }
+        }
+        if (restricted) { 
+        paths.Add(pathToBlock);
         }
         return paths;
     }
@@ -215,12 +224,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250, 1050, 0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
-        //Gets the unmodifded GUI to get swapped out later
-        //if we were not to hardcode these value we can use unity's method findchild or use the findfirstchild method that i've created.
-        //GameObject topPathGO = upgradeGUI.transform.GetChild(3).gameObject;
-        //GameObject middlePathGO = upgradeGUI.transform.GetChild(4).gameObject;
-        //GameObject bottomPathGO = upgradeGUI.transform.GetChild(5).gameObject;
-        //I could store the blocked upgrade path beforehand in a variable avoid doing these checks everytime
         updateGUI();
         monkeyUI.SetActive(true);
     }
@@ -235,6 +238,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         else
         {
+           
             rangeC.SetActive(true);
         }
     }
@@ -257,12 +261,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         foreach (var statBuff in statsUpgrade)
         {
             stats[statBuff.Key] *= statBuff.Value;
-            Debug.Log(stats[statBuff.Key]);
         }
         if (projectile != "") {
             projctile = projectile;
-            Debug.Log("changed proj");
-            Debug.Log(projectile);
         }
         pathToTier[upgradeTier] += 1;
         updateGUI();

@@ -48,6 +48,8 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
        };
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);
+        rangeC.transform.parent = null;
+        rangeC.transform.localScale = new Vector3(stats["Range"]*2, 0, stats["Range"]*2);
         rangeC.transform.parent = gameObject.transform;
         rangeC.SetActive(false);
     }
@@ -58,6 +60,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     {
 
     }
+
     //changed this to not use SOs anymore milestone 4
     // spherecast to check enemy in range if theres no enemy in range we can use the corotine to wait until there is one and insta attack the enemy
     //why use corotuine instead of update? because its cleaner so there isn't a gaint block of code. 
@@ -125,14 +128,14 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     /// If the tower is hovering show the range cicrle and if its not diisable the range circle and start the attack coroutine
     /// </summary>
     /// <param name="hovering">bool whether is the tower is selected and hovering over the mouse for placement </param>
-   
+
     //changed added layer change remember to record this on milestone 4
     //void checkHovering(bool hovering) {
     //    if (!hovering)
     //    {
     //        gameObject.layer = LayerMask.NameToLayer("Tower");
     //        rangeC.SetActive(false);
-            
+
     //        StartCoroutine(spawnattackCD());
     //    }
     //    else
@@ -145,7 +148,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     /// Interface method for when the tower is selected
     /// </summary>
     //when tower gets selected swap the gui and everything. Also add listener for it to upgrade
-   
+
     //    rangeC.SetActive(true);
     //    GameManager.instance.monkeyGUIActive = true;
     //    events.towerUpgrade.AddListener(towerUpgrade);
@@ -163,16 +166,16 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //    updateGUI();
     //    monkeyUI.SetActive(true);
     //}
-   
+
     //public void towerUnSelected() {
     //    events.towerUpgrade.RemoveListener(towerUpgrade);
     //    GameManager.instance.monkeyGUIActive = false;
     //    rangeC.SetActive(false);
     //    Destroy(monkeyUI);
-      
-        
+
+
     //}
-    
+
     //public void damageDealt(int popCounts)
     //{
     //    stats["popCount"] += popCounts;
@@ -186,7 +189,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //    int i = 0;
     //    foreach (Transform child in objectToSearch.transform)
     //    {
-           
+
     //        if (child.name == name)
     //        {
     //            return i;
@@ -199,12 +202,13 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //    i++;
     //    return -1;
     //}
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Vector3 castOrigin = gameObject.transform.position + new Vector3(0, 0.8f, 0);
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(castOrigin, stats["Range"]);
-    //}
+    private void OnDrawGizmosSelected()
+    {
+        Vector3 castOrigin = gameObject.transform.position;
+        Gizmos.color = Color.red;
+        Debug.Log(stats["Range"]);
+        Gizmos.DrawWireSphere(castOrigin, stats["Range"]);
+    }
     //since unity doesn't like front 0s im replacing it with a 9
     //upgradeTier is either top,mid,bot
     //void towerUpgrade(string upgradeTier) {

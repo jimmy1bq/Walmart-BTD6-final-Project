@@ -100,7 +100,10 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
         if (damageTaken <=0 ) {
             downToLayer = boxType.none;
         }
-        downToLayer = layerToBalloon[damageTaken];
+        else { 
+            downToLayer = layerToBalloon[damageTaken]; 
+        }
+           
         int moneyEarned = balloonLayer[box] - balloonLayer[downToLayer];
         events.GainCash.Invoke(moneyEarned);
         return downToLayer;

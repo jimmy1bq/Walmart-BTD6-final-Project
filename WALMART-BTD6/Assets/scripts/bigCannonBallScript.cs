@@ -1,16 +1,11 @@
 using UnityEngine;
 
-public class bigCannonBallScript : MonoBehaviour
+public class bigCannonBallScript : projectileParentForStraightLinearProj
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        damage = 5;
+        pierce = 20;
+        projSpeed = 0.8f;
     }
 }

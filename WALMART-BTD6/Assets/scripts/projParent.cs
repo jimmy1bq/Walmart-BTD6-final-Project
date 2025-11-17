@@ -41,7 +41,6 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         {
             transform.Translate(new Vector3(0, orgEnemyPosition.y * 5 * Time.deltaTime * projSpeed, 0));
         }
-        Debug.Log(mutipleOverLappingCollider);
         if (mutipleOverLappingCollider && !isDead) {
             for (int i = 0; i < pierce; i++) {
                 listOfGO[i].GetComponent<IDamageTaken>().damageTaken(damage);
@@ -59,6 +58,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
 
     protected void OnTriggerEnter(Collider other)
     {
+        listOfGO = new List<GameObject>();
         IDamageTaken enemyDamage = other.GetComponent<IDamageTaken>();
         if (enemyDamage != null && other.gameObject.tag == "enemy")
         {
@@ -68,6 +68,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             listOfGO.Add(other.gameObject);
            
             //isDead is here because destory only gets rid of the GameObject at end of frame
+            //this works lmao
             if (listOfGO.Count>pierce)
             {
                 mutipleOverLappingCollider = true;
@@ -81,7 +82,6 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
 
             if (pierce == 0)
             {
-                Debug.Log("HI");
                 isDead = true;
                 Destroy(gameObject);
             }

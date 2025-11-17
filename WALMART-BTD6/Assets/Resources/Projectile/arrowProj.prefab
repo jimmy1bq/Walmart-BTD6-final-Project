@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7148445523410767480}
   - component: {fileID: 3357856978745712552}
   - component: {fileID: 7515018125403055316}
-  - component: {fileID: 6284627959197480837}
   - component: {fileID: 6965418179260029416}
   - component: {fileID: 1320315818867061229}
+  - component: {fileID: 7311754558045978110}
   m_Layer: 0
   m_Name: arrowProj
   m_TagString: friendlyProjctile
@@ -92,18 +92,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6284627959197480837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6891858428342968362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb582d35d24986e498c738a4f4f1023c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::dartProj
 --- !u!136 &6965418179260029416
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -154,3 +142,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7311754558045978110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6891858428342968362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b465076ccf84fa4f991058acf2fcda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::arrowProjctile
