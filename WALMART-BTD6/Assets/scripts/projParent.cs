@@ -67,7 +67,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             
             listOfGO.Add(other.gameObject);
            
-            
+            //isDead is here because destory only gets rid of the GameObject at end of frame
             if (listOfGO.Count>pierce)
             {
                 mutipleOverLappingCollider = true;
