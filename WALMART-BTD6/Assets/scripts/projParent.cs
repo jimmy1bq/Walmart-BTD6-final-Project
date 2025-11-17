@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOwner, IGiveEnemy
+public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOwner, IGiveEnemy, IStatChange
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected GameObject owner;
@@ -13,9 +13,10 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     protected Vector3 orgEnemyPosition;
 
     protected int damage;
-    protected int pierce;
 
+    protected float pierce;
     protected float projSpeed;
+
     protected void Start()
     {
         if (targetEnemy != null)
@@ -40,18 +41,21 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
+
     protected void OnTriggerEnter(Collider other)
     {
+        Debug.Log("COLLIDED");
         IDamageTaken enemyDamage = other.GetComponent<IDamageTaken>();
         if (enemyDamage != null && other.gameObject.tag == "enemy")
         {
-            enemyDamage.damageTaken(damage);
-            owner.GetComponent<IPopToPopCount>().damageDealt(1);
-            pierce--;
             if (pierce <= 0)
             {
                 Destroy(gameObject);
             }
+            enemyDamage.damageTaken(damage);
+            owner.GetComponent<IPopToPopCount>().damageDealt(1);
+            pierce--;
+            
         }
     }
     public void setProjectileOwner(GameObject trackstar)
@@ -61,5 +65,12 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     public void setEnemy(GameObject enemy) {
        
         targetEnemy = enemy;
+    }
+    public void statChangePierce(float addedpierce) {
+        pierce *= addedpierce;
+        math.floor(pierce);
+    }
+    public void statChangeProjSpeed(float speed) {
+       projSpeed *= speed;
     }
 }

@@ -33,4 +33,11 @@ public interface IGiveEnemy {
 
 }
 
+public interface IStatChange { 
+
+    public void statChangePierce(float pierce);
+    public void statChangeProjSpeed(float speed);
+
+}
+
 

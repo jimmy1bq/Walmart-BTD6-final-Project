@@ -29,19 +29,16 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //added dicionary to stats and pathtotier to make my code way easier to work with when upgrading
     //protected Dictionary<string, int> pathToTier;
     //protected Dictionary<string, int> stats;
-
-
-
-
     private void Awake()
     {
         projctile = "dartProjectile";
         rangeCircle = rangeCirclePF;
         stats = new Dictionary<string, float>() {
           {"Range", 5},
-          {"FireRate",3},
-          {"AddtionalDamage",0},
-          {"pierce",0},
+          {"FireRate",2},
+          {"ProjctileSpeed",1},
+          {"AddtionalDamage",1},
+          {"pierce",1},
           {"popCount",0}
        };
         pathToTier = new Dictionary<string, int>() {

@@ -42,6 +42,9 @@ public class WaveManager : MonoBehaviour
         Instantiate(greenBox, spawnPoint.position, Quaternion.identity);
         Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
         Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
+        Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
         //Instantiate(whitebox, spawnPoint.position, Quaternion.identity);
 
         //Instantiate(blackbox, spawnPoint.position, Quaternion.identity);

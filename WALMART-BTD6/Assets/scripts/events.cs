@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 public static class events {
@@ -8,5 +9,5 @@ public static class events {
     public static UnityEvent<GameObject> towerSelected = new UnityEvent<GameObject>();
     public static TowerUpgradeEvent towerUpgrade = new TowerUpgradeEvent();
 }
-public class TowerUpgradeEvent : UnityEvent<string, string, float[]> { }
+public class TowerUpgradeEvent : UnityEvent<string, string, Dictionary<string,float>> { }
 

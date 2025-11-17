@@ -62,6 +62,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
             GameObject proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
             GameObject projctileGO = Instantiate(proj, projctileSpawn, Quaternion.Euler(gameObject.transform.eulerAngles.x+90,gameObject.transform.eulerAngles.y,0));
+            projctileGO.GetComponent<IStatChange>().statChangePierce(stats["pierce"]);
+            projctileGO.GetComponent<IStatChange>().statChangeProjSpeed(stats["ProjctileSpeed"]);
             projctileGO.GetComponent<IGiveEnemy>().setEnemy(closestEnemy);
             projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
             yield return new WaitForSeconds(stats["FireRate"]);
@@ -250,8 +252,13 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         yield return new WaitForSeconds(1);
         StartCoroutine(closestTargetting());
     }
-    protected void towerUpgrade(string upgradeTier,string projectile)
+    protected void towerUpgrade(string upgradeTier,string projectile, Dictionary<string,float> statsUpgrade)
     {
+        foreach (var statBuff in statsUpgrade)
+        {
+            stats[statBuff.Key] *= statBuff.Value;
+            Debug.Log(stats[statBuff.Key]);
+        }
         if (projectile != "") {
             projctile = projectile;
             Debug.Log("changed proj");

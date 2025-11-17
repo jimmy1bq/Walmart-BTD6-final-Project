@@ -84,11 +84,13 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
     {
         if (transform.position == WayPointManager.instance.wayPoints[i].position)
         {
+            Debug.Log(WayPointManager.instance.wayPoints[i].position);
             return true;
         }
         else
         {
-            moveToWayPoint(WayPointManager.instance.wayPoints[i].position * Time.deltaTime);
+            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
+         
             return false;
         }
 
@@ -98,11 +100,14 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
 
     protected boxSO.boxType pop(int damage, boxSO.boxType box) {
         int damageTaken= balloonLayer[box]-damage;
-       
+        boxSO.boxType downToLayer;
         if (damageTaken <=0 ) {
-            return boxSO.boxType.none;
+            downToLayer = boxType.none;
         }
-        return layerToBalloon[damageTaken];
+        downToLayer = layerToBalloon[damageTaken];
+        int moneyEarned = balloonLayer[box] - balloonLayer[downToLayer];
+        events.GainCash.Invoke(moneyEarned);
+        return downToLayer;
     }
 
     protected void moveToWayPoint(Vector3 wayPointOn)
@@ -110,7 +115,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
     protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,int speed) { 
-    this.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
+    gameObject.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
     protected IEnumerator Iframes()
     {
