@@ -28,7 +28,7 @@ public class WaveManager : MonoBehaviour
     {  
         waveOnGoing = true;
         startWave1();
-     //   StartCoroutine(spawnPink());
+        StartCoroutine(spawnPink());
     }
 
     // Update is called once per frame
@@ -57,7 +57,7 @@ public class WaveManager : MonoBehaviour
     IEnumerator spawnPink() {
 
         yield return new WaitForSeconds(1);
-        Instantiate(pinkbox, spawnPoint.position, Quaternion.identity);
+        Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
         StartCoroutine(spawnPink());
        
     }

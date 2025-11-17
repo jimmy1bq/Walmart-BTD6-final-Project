@@ -84,7 +84,6 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
     {
         if (transform.position == WayPointManager.instance.wayPoints[i].position)
         {
-            Debug.Log(WayPointManager.instance.wayPoints[i].position);
             return true;
         }
         else
@@ -95,9 +94,6 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
         }
 
     }
-
-
-
     protected boxSO.boxType pop(int damage, boxSO.boxType box) {
         int damageTaken= balloonLayer[box]-damage;
         boxSO.boxType downToLayer;
