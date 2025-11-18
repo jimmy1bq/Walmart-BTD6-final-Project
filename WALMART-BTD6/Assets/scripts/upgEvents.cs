@@ -40,7 +40,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",2},
                
             };
-            Debug.Log("hi");
+           
             events.GainCash.Invoke(-170);
             events.towerUpgrade.Invoke("top", "",stats);
 
@@ -65,7 +65,6 @@ public class dMUpgradeEvents : MonoBehaviour
 
     public void upgrade001()
     {
-        Debug.Log("hi1");
         if (GameManager.instance.coins >= 110)
         {
             Dictionary<string,float> stats = new Dictionary<string,float> {
@@ -179,4 +178,95 @@ public class dMUpgradeEvents : MonoBehaviour
         }
     }
 
+    public void upgrade400()
+    {
+        if (GameManager.instance.coins >= 1800)
+        {
+            Dictionary<string, float> stats = new Dictionary<string, float> {
+                    {"Range", 1f},
+                    { "FireRate",1f},
+                    { "ProjctileSpeed",1},
+                    { "AddtionalDamage",1},
+                    { "pierce",1},
+            };
+            events.GainCash.Invoke(-1800);
+            events.towerUpgrade.Invoke("top", "bigCannonBall", stats);
+        }
+    }
+    public void upgrade040()
+    {
+        if (GameManager.instance.coins >= 7385)
+        {
+            Dictionary<string, float> stats = new Dictionary<string, float> {
+                    {"Range", 1f},
+                    { "FireRate",0.83f},
+                    { "ProjctileSpeed",1},
+                    { "AddtionalDamage",1},
+                    { "pierce",1},
+            };
+            events.GainCash.Invoke(-7385);
+            events.towerUpgrade.Invoke("mid", "", stats);
+        }
+    }
+    public void upgrade004()
+    {
+        if (GameManager.instance.coins >= 2750)
+        {
+            Dictionary<string, float> stats = new Dictionary<string, float> {
+                    {"Range", 1.1f},
+                    { "FireRate",0.83f},
+                    { "ProjctileSpeed",1},
+                    { "AddtionalDamage",1},
+                    { "pierce",1},
+            };
+            events.GainCash.Invoke(-2750);
+            events.towerUpgrade.Invoke("bot", "upgradedBolt", stats);
+         
+        }
+    }
+    public void upgrade500()
+    {
+        if (GameManager.instance.coins >= 15000)
+        {
+            Dictionary<string, float> stats = new Dictionary<string, float> {
+                    {"Range", 1f},
+                    { "FireRate",1f},
+                    { "ProjctileSpeed",1},
+                    { "AddtionalDamage",1},
+                    { "pierce",1},
+            };
+            events.GainCash.Invoke(-15000);
+            events.towerUpgrade.Invoke("top", "Voidball", stats);
+        }
+    }
+    public void upgrade050()
+    {
+        if (GameManager.instance.coins >= 46000)
+        {
+            Dictionary<string, float> stats = new Dictionary<string, float> {
+                    {"Range", 1f},
+                    { "FireRate",.73f},
+                    { "ProjctileSpeed",1},
+                    { "AddtionalDamage",1},
+                    { "pierce",1},
+            };
+            events.GainCash.Invoke(-46000);
+            events.towerUpgrade.Invoke("mid", "", stats);
+        }
+    }
+    public void upgrade005()
+    {
+        if (GameManager.instance.coins >= 22060)
+        {
+            Dictionary<string, float> stats = new Dictionary<string, float> {
+                    {"Range", 1.3f},
+                    { "FireRate",.50f},
+                    { "ProjctileSpeed",1},
+                    { "AddtionalDamage",1},
+                    { "pierce",1},
+            };
+            events.GainCash.Invoke(-22060);
+            events.towerUpgrade.Invoke("bot", "strongestBolt", stats);
+        }
+    }
 }

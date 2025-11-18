@@ -10,7 +10,8 @@ using UnityEngine.SceneManagement;
 
 public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount
 {
-  
+
+    [SerializeField] protected LayerMask enemy;
 
     protected string monkeyModelPath = "Assets/Resources/DartMonkey/";
     protected string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
@@ -27,7 +28,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     //later put an array with function 
     
 
-    [SerializeField] protected LayerMask enemy;
 
     bool hoveringS;
 
@@ -39,10 +39,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Vector3 rangePos = new Vector3(tower.transform.position.x, tower.transform.position.y, tower.transform.position.z) + new Vector3(0, 0.01f, 0);
         return rangePos;
     }
-    //doubley circular linked list to change targetting later(kind of overkill)
-    //later its not going to take any gameobject but i would just create a path onto the gameObject to avoid Scriptable object
-
-
     protected IEnumerator closestTargetting()
     {
         GameObject closestEnemy = null;
@@ -83,6 +79,15 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected void lastTargettign() { }
     protected void strongestTargettign() { }
     protected void weakestTargettign() { }
+    bool enemyInRange()
+    {
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], 1 << 9);
+        if (enemyCollider.Length != 0)
+        {
+            return true;
+        }
+        return false;
+    }
     protected void changeModel()
     {
         string modelName = string.Empty;
@@ -108,62 +113,24 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.transform.parent = gameObject.transform;
 
     }
-    protected string checkForBlockedPaths()
+    protected void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade)
     {
-
-        bool restricted = false;
-        string nonUpgradedPath = null;
-        int upgradedPaths = 0;
-
-        foreach (var pTT in pathToTier)
+        Debug.Log(upgradeTier);
+        foreach (var statBuff in statsUpgrade)
         {
-            if (pTT.Value == 0)
-            {
-                nonUpgradedPath = pTT.Key;
-            }
-            else if (pTT.Value != 0)
-            {
-
-                upgradedPaths++;
-                if (upgradedPaths == 2)
-                {
-                    restricted = true;
-                }
-            }
+            stats[statBuff.Key] *= statBuff.Value;
         }
-        if (restricted)
+        if (projectile != "")
         {
-            
-            return nonUpgradedPath;
+            projctile = projectile;
+            Debug.Log(projctile);
         }
-        return null;
+        pathToTier[upgradeTier] += 1;
+        Debug.Log(pathToTier[upgradeTier]);
+        updateGUI();
+        changeModel();
     }
-    protected List<string> addmaxPaths()
-    {
-        List<string> paths = new List<string>();
-        string pathToBlock = null;
-        bool restricted = false;
-        foreach (var pTT in pathToTier)
-        {
-            if (pTT.Value >= 5)
-            {
-                restricted = true;
-                paths.Add(pTT.Key);
-            }
-            else if (pTT.Value >= 3)
-            {
-                restricted = true;
-                continue;
-            }
-            if (pTT.Value == 2) {
-                pathToBlock= pTT.Key;
-            }
-        }
-        if (restricted) { 
-        paths.Add(pathToBlock);
-        }
-        return paths;
-    }
+
 
     protected void updateGUI()
     {
@@ -206,39 +173,78 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             Destroy(childToDestroyGO);
         }
     }
-    public void hoveringState(bool hovering)
+    protected string checkForBlockedPaths()
     {
-        hoveringS = hovering;
-        checkHovering(hovering);
+
+        bool restricted = false;
+        string nonUpgradedPath = null;
+        int upgradedPaths = 0;
+
+        foreach (var pTT in pathToTier)
+        {
+            if (pTT.Value == 0)
+            {
+                nonUpgradedPath = pTT.Key;
+            }
+            else if (pTT.Value != 0)
+            {
+
+                upgradedPaths++;
+                if (upgradedPaths == 2)
+                {
+                    restricted = true;
+                }
+            }
+        }
+        if (restricted)
+        {
+
+            return nonUpgradedPath;
+        }
+        return null;
     }
+    protected List<string> addmaxPaths()
+    {
+        List<string> paths = new List<string>();
+        string pathToBlock = null;
+        bool restricted = false;
+        foreach (var pTT in pathToTier)
+        {
+            if (pTT.Value >= 5)
+            {
+                restricted = true;
+                paths.Add(pTT.Key);
+            }
+            else if (pTT.Value >= 3)
+            {
+                restricted = true;
+                continue;
+            }
+            if (pTT.Value == 2)
+            {
+                pathToBlock = pTT.Key;
+            }
+        }
+        if (restricted)
+        {
+            paths.Add(pathToBlock);
+        }
+        return paths;
+    }
+   
 
 
-    public void towerSelected()
-    {
-        rangeC.SetActive(true);
-        GameManager.instance.monkeyGUIActive = true;
-        events.towerUpgrade.AddListener(towerUpgrade);
-        GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
-        monkeyUI = Instantiate(genUI);
-        //upgradeGUI frame
-        GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
-        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250, 1050, 0);
-        monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
-        updateGUI();
-        monkeyUI.SetActive(true);
-    }
+    
     protected void checkHovering(bool hovering)
     {
         if (!hovering)
         {
             gameObject.layer = LayerMask.NameToLayer("Tower");
             rangeC.SetActive(false);
-
             StartCoroutine(spawnattackCD());
         }
         else
-        {
-           
+        {          
             rangeC.SetActive(true);
         }
     }
@@ -256,19 +262,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         yield return new WaitForSeconds(1);
         StartCoroutine(closestTargetting());
     }
-    protected void towerUpgrade(string upgradeTier,string projectile, Dictionary<string,float> statsUpgrade)
-    {
-        foreach (var statBuff in statsUpgrade)
-        {
-            stats[statBuff.Key] *= statBuff.Value;
-        }
-        if (projectile != "") {
-            projctile = projectile;
-        }
-        pathToTier[upgradeTier] += 1;
-        updateGUI();
-        changeModel();
-    }
+    
     protected int findFirstChild(string name, GameObject objectToSearch)
     {
         int i = 0;
@@ -287,24 +281,33 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         i++;
         return -1;
     }
+    public void hoveringState(bool hovering)
+    {
+        hoveringS = hovering;
+        checkHovering(hovering);
+    }
+    public void towerSelected()
+    {
+        rangeC.SetActive(true);
+        GameManager.instance.monkeyGUIActive = true;
+        events.towerUpgrade.AddListener(towerUpgrade);
+        GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
+        monkeyUI = Instantiate(genUI);
+        //upgradeGUI frame
+        GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
+        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250, 1050, 0);
+        monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
+        updateGUI();
+        monkeyUI.SetActive(true);
+    }
     public void towerUnSelected()
     {
         events.towerUpgrade.RemoveListener(towerUpgrade);
         GameManager.instance.monkeyGUIActive = false;
         rangeC.SetActive(false);
         Destroy(monkeyUI);
-
-
     }
-    bool enemyInRange()
-    {
-        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], 1 << 9);
-        if (enemyCollider.Length != 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    
 }
 
 

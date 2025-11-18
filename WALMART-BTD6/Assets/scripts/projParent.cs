@@ -19,6 +19,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
 
     protected float pierce;
     protected float projSpeed;
+    protected float lifespan = 3;
 
     protected bool mutipleOverLappingCollider = false;
     protected bool isDead =false;
@@ -39,6 +40,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         
         if (orgEnemyPosition != null)
         {
+            //cast a ray up to the future position and if it collides with anything do stuff ig
             transform.Translate(new Vector3(0, orgEnemyPosition.y * 5 * Time.deltaTime * projSpeed, 0));
         }
         if (mutipleOverLappingCollider && !isDead) {
@@ -52,7 +54,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
 
     protected IEnumerator selfDest()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(lifespan);
         Destroy(gameObject);
     }
 
