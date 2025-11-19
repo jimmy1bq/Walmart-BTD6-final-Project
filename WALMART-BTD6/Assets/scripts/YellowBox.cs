@@ -13,6 +13,7 @@ public class YellowBox : Box, IDamageTaken, IIndex
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         boxData.boxsesOnMap.Add(boxData.ID, gameObject);
+        id = boxData.ID;
         boxData.ID++;
         StartCoroutine(Iframes());
     }

@@ -1202,7 +1202,7 @@ GameObject:
   - component: {fileID: 2440312388314784302}
   - component: {fileID: 647878942724790487}
   - component: {fileID: 8239652237815955961}
-  - component: {fileID: 7390105674286306898}
+  - component: {fileID: 3785865996557246334}
   m_Layer: 8
   m_Name: 502
   m_TagString: Tower
@@ -1276,7 +1276,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!65 &7390105674286306898
+--- !u!65 &3785865996557246334
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1295,8 +1295,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.4, y: 1.9, z: 0.3}
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Size: {x: 2, y: 3, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1225946042350156010
 GameObject:
   m_ObjectHideFlags: 0

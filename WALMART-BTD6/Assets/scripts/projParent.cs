@@ -26,6 +26,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     protected bool mutipleOverLappingCollider = false;
     protected bool isDead =false;
     protected List<GameObject> listOfGO = new List<GameObject>();
+    protected List<int> idOfNotToDamage = new List<int>();
 
     protected Vector3 lastPoistion;
 
@@ -96,20 +97,22 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     //        }
     //    }
     //}
+    //basically use raycast to detect collision by shooting a ray forward and backwards by using the difference of position and normalizing the position to get direction. Backward shoots a raybackwards from the current to last position to check if it missed anything
+
     protected void safetyCheckForCollisionBackWards() {
         RaycastHit[] hit;
         if (lastPoistion != null) {
             Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple,0.5f);
-            Debug.Log(-gameObject.transform.forward);
-            Debug.Log(Vector3.Normalize(gameObject.transform.position - lastPoistion));
             hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion),1<<9);
             if (hit.Length > 0) {
                 for (int i = 0; i < (int)pierce; i++)
                 {
-                    if (isDead == false && i<hit.Length)
-                    {
-                        Debug.Log(hit[i].collider.gameObject);
+                    int idGO= hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
+                    if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO))
+                    {                
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage);
+                        Debug.Log(idGO);
+                        idOfNotToDamage.Add(idGO);
                         pierce--;
                     }
                     if (pierce == 0)
@@ -127,15 +130,16 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         if (!isDead)
         {
             Debug.DrawRay(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple, 0.5f);
-            hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y, 1 << 9);
+            hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y*.75f, 1 << 9);
             if (hit.Length > 0)
             {
                 for (int i = 0; i < (int)pierce; i++)
                 {
-                    if (isDead == false && i < hit.Length)
+                    int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
+                    if (isDead == false && i < hit.Length && !idOfNotToDamage.Contains(idGO))
                     {
-                        Debug.Log(hit[i].collider.gameObject);
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage);
+                        idOfNotToDamage.Add(idGO);
                         pierce--;
                     }
                     if (pierce == 0)

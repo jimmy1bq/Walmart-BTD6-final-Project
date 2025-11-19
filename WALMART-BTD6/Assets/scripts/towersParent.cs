@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount
+public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount, ICollidingWithTowers
 {
 
     [SerializeField] protected LayerMask enemy;
@@ -22,6 +22,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected GameObject rangeC;
     protected GameObject rangeCircle;
     protected string projctile;
+    protected bool colliding;
     
     protected Dictionary<string, int> pathToTier;
     protected Dictionary<string, float> stats;
@@ -32,8 +33,11 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     bool hoveringS;
 
 
-   
 
+    protected void Update()
+    {
+        
+    }
     protected Vector3 placeTowerRangeCircle(GameObject tower)
     {
         Vector3 rangePos = new Vector3(tower.transform.position.x, tower.transform.position.y, tower.transform.position.z) + new Vector3(0, 0.01f, 0);
@@ -308,6 +312,11 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Destroy(monkeyUI);
     }
     
+    public bool collidingwithOtherObject() {
+        return colliding; 
+    }
+
+
 }
 
 

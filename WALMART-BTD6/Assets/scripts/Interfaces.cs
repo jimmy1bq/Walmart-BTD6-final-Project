@@ -39,5 +39,15 @@ public interface IStatChange {
     public void statChangeProjSpeed(float speed);
 
 }
+public interface ICollidingWithTowers {
+    public bool collidingwithOtherObject();
+
+}
+public interface IGetSetID
+{
+    public void setID(int ID);
+    public int GetID();
+
+}
 
 

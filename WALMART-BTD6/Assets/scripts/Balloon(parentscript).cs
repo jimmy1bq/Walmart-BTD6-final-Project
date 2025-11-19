@@ -1,20 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static boxSO;
 
-public class Box : MonoBehaviour, IDamageTaken, IIndex
+public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
 
 {
     [SerializeField] protected boxSO boxData;
     protected Coroutine AdvanceIndex;
     protected boxSO.boxType boxColor;
+
     protected int layer;
     protected int balloonSpeedValue;
     protected int i = 0;
-    protected int hp;
+    protected float hp;
     protected int totalWayPoints;
+    protected int id = -1;
+
+    protected string enemyModelPath = "Assets/Resources/boxEnemies";
 
     protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
     protected Dictionary<boxSO.boxType, int> balloonLayer =new Dictionary<boxSO.boxType, int>() {
@@ -88,8 +93,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
         }
         else
         {
-            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);
-         
+            moveToWayPoint(WayPointManager.instance.wayPoints[i].position);         
             return false;
         }
 
@@ -140,13 +144,20 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex
         else
         {
             GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+            IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
             IIndex boxIndex = box.GetComponent<IIndex>();
             boxIndex.wayPointReciever(i);
+            boxidenfication.setID(id); 
             boxData.boxsesOnMap.Remove(boxData.ID);
             Destroy(gameObject);
         }
     }
 
-
+    public void setID(int IDs) { 
+        id = IDs;
+    }
+    public int GetID() {
+        return id;  
+    }
 
 }
