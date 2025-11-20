@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class RayCast : MonoBehaviour
@@ -44,15 +45,17 @@ public class RayCast : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 999999f, layerMaskTowerHover))
             {
                 towerOnMouse.transform.position = hit.point;
-
             }
             if (Input.GetKeyUp(KeyCode.P))
             {
-                if (hit.collider.gameObject.tag == "placeableArea" && !towerOnMouse.GetComponent<ICollidingWithTowers>().collidingwithOtherObject())
+                if (hit.collider.gameObject.tag == "placeableArea" && !towerOnMouse.GetComponent<ICollidingWithTowers>().collidingwithOtherObject() && !EventSystem.current.IsPointerOverGameObject())
                 {
                     towerOnMouse.GetComponent<IHovering>().hoveringState(false);
                     towerOnMouse = null;
                 }
+            }
+            if (EventSystem.current.IsPointerOverGameObject() && towerOnMouse != null) {
+                towerOnMouse.transform.position = new Vector3(-24.65f, 6.99f, -5.67959f);
             }
         }
         else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit) && !EventSystem.current.IsPointerOverGameObject())

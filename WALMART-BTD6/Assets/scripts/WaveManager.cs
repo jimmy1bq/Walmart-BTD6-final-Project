@@ -1,64 +1,48 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] GameObject redbox;
-    [SerializeField] GameObject pinkbox;
-    [SerializeField] GameObject blueBox;
-    [SerializeField] GameObject greenBox;
-    [SerializeField] GameObject yellowBox;
-
-    [SerializeField] GameObject blackbox;
-    [SerializeField] GameObject whitebox;
-    [SerializeField] GameObject metalBox;
-    [SerializeField] GameObject purpleBox;
-    [SerializeField] GameObject orangeBox;
-    [SerializeField] GameObject seaGreenBox;
-    [SerializeField] GameObject ceramucBox;
-
+    string enemiesFolder = "Assets/Resources/boxEnemiesWScript/";
+    
+    Dictionary<string, GameObject> boxTypeToString = new Dictionary<string, GameObject>() {
+    };
+    List<string> boxName = new List<string>() { 
+    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic"
+    };
+   
 
     [SerializeField] Transform spawnPoint;
 
-
     bool waveOnGoing = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {  
-        waveOnGoing = true;
-        startWave1();
-       // StartCoroutine(spawnPink());
-    }
 
-    // Update is called once per frame
-    void Update()
-    { 
-    }
-    void startWave1()
+    private void Awake()
     {
-        //Instantiate(pinkbox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(redbox, spawnPoint.position, Quaternion.identity);
-        Instantiate(greenBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(yellowBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(whitebox, spawnPoint.position, Quaternion.identity);
-
-        //Instantiate(blackbox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(orangeBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(purpleBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(seaGreenBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(metalBox, spawnPoint.position, Quaternion.identity);
-        //Instantiate(ceramucBox, spawnPoint.position, Quaternion.identity);
+        foreach (string bn in boxName) {
+            GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
+            boxTypeToString.Add(bn,boxToInsert);
+        }
     }
-    IEnumerator spawnPink() {
 
-        yield return new WaitForSeconds(1);
-        Instantiate(blueBox, spawnPoint.position, Quaternion.identity);
-        StartCoroutine(spawnPink());
-       
+    void Start()
+    {
+        startWave1();
+    }
+    void startWave1() {
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
+    }
+
+   
+    IEnumerator spawnTimeInbetween(GameObject boxsToSpawn, int amountToSpawn,float seconds) {
+    if(amountToSpawn != 0) 
+        {
+            Instantiate(boxsToSpawn, spawnPoint.position,Quaternion.identity);
+            yield return new WaitForSeconds(seconds);
+            StartCoroutine(spawnTimeInbetween(boxsToSpawn, amountToSpawn - 1, seconds));
+        }      
     }
 }

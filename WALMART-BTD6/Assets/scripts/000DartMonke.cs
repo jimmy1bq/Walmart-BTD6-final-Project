@@ -48,6 +48,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         rangeC.transform.localScale = new Vector3(stats["Range"]*2, 0, stats["Range"]*2);
         rangeC.transform.parent = gameObject.transform;
         rangeC.SetActive(false);
+        price = 200;
     }
 
     //changed this to not use SOs anymore milestone 4

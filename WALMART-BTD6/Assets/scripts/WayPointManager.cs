@@ -6,6 +6,7 @@ public class WayPointManager : MonoBehaviour
     public List<Transform> wayPoints = new List<Transform>();
     private void Awake()
     {   instance = this;
+
         foreach (GameObject h in GameObject.FindGameObjectsWithTag("WayPoints"))
         {  
             wayPoints.Add(h.transform);

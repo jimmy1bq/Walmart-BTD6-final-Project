@@ -111,7 +111,6 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
                     if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO))
                     {                
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage);
-                        Debug.Log(idGO);
                         idOfNotToDamage.Add(idGO);
                         pierce--;
                     }

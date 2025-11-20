@@ -24,6 +24,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected GameObject rangeCircle;
     protected string projctile;
     protected bool colliding;
+
+    protected int price;
     
     protected Dictionary<string, int> pathToTier;
     protected Dictionary<string, float> stats;
@@ -37,7 +39,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected void Update()
     {
         if (hoveringS) {
-            Debug.Log(checkForCollisionWithTower());
             if (checkForCollisionWithTower())
             {
                 rangeC.GetComponent<Renderer>().material.color = new Color(255/255,0/255,0/255,0.3f);
@@ -52,7 +53,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected bool checkForCollisionWithTower() {
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z)*.75f,quaternion.identity,(1<<8 | 1<<10));
         if (colliders.Length > 0) {
-            Debug.Log(colliders[0]);
+       
             return true;
         }
         return false;
@@ -266,6 +267,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             rangeC.SetActive(false);
             rangeC.GetComponent<Renderer>().material.color = new Color(255 / 255, 255 / 255, 255 / 255, 0.3f);
             gameObject.GetComponent<BoxCollider>().enabled = true;
+            events.GainCash.Invoke(-price);
             StartCoroutine(spawnattackCD());
         }
         else

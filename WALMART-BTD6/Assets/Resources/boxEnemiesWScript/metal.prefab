@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7047913557849679968}
   - component: {fileID: 6315107040357674452}
   m_Layer: 9
-  m_Name: metalBox
+  m_Name: metal
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
