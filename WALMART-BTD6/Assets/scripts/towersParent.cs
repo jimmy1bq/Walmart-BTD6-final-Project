@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -30,11 +31,32 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     
 
 
-    bool hoveringS;
+    bool hoveringS = false;
 
 
-
-   
+    protected void Update()
+    {
+        if (hoveringS) {
+            Debug.Log(checkForCollisionWithTower());
+            if (checkForCollisionWithTower())
+            {
+                rangeC.GetComponent<Renderer>().material.color = new Color(255/255,0/255,0/255,0.3f);
+                colliding = true;
+            }
+            else {
+                rangeC.GetComponent<Renderer>().material.color = new Color(255/255, 255/255,255/255, 0.3f);
+                colliding = false;     
+            }
+        }
+    }
+    protected bool checkForCollisionWithTower() {
+        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z)*.75f,quaternion.identity,(1<<8 | 1<<10));
+        if (colliders.Length > 0) {
+            Debug.Log(colliders[0]);
+            return true;
+        }
+        return false;
+    }
     protected Vector3 placeTowerRangeCircle(GameObject tower)
     {
         Vector3 rangePos = new Vector3(tower.transform.position.x, tower.transform.position.y, tower.transform.position.z) + new Vector3(0, 0.01f, 0);
@@ -242,10 +264,13 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         {
             gameObject.layer = LayerMask.NameToLayer("Tower");
             rangeC.SetActive(false);
+            rangeC.GetComponent<Renderer>().material.color = new Color(255 / 255, 255 / 255, 255 / 255, 0.3f);
+            gameObject.GetComponent<BoxCollider>().enabled = true;
             StartCoroutine(spawnattackCD());
         }
         else
-        {          
+        {
+            gameObject.GetComponent<BoxCollider>().enabled = false;
             rangeC.SetActive(true);
         }
     }

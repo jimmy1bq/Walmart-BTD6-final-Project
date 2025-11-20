@@ -11,10 +11,6 @@ using static UnityEngine.UI.Image;
 
 public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 {
-    [SerializeField] projectileSO projctileData;
-    [SerializeField] boxSO boxData;
-    [SerializeField] GameObject dart;
-
     [SerializeField] LayerMask enemyOnly;
     [SerializeField] GameObject rangeCirclePF;
 
@@ -52,13 +48,6 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         rangeC.transform.localScale = new Vector3(stats["Range"]*2, 0, stats["Range"]*2);
         rangeC.transform.parent = gameObject.transform;
         rangeC.SetActive(false);
-    }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     //changed this to not use SOs anymore milestone 4

@@ -48,7 +48,7 @@ public class RayCast : MonoBehaviour
             }
             if (Input.GetKeyUp(KeyCode.P))
             {
-                if (hit.collider.gameObject.tag == "placeableArea")
+                if (hit.collider.gameObject.tag == "placeableArea" && !towerOnMouse.GetComponent<ICollidingWithTowers>().collidingwithOtherObject())
                 {
                     towerOnMouse.GetComponent<IHovering>().hoveringState(false);
                     towerOnMouse = null;
