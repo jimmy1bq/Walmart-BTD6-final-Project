@@ -13,6 +13,7 @@ public class RayCast : MonoBehaviour
 
 
     public LayerMask layerMaskTowerHover;
+    bool hasGoneOutsideOfGUI = false;
 
     Camera cam;
 
@@ -44,19 +45,37 @@ public class RayCast : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 999999f, layerMaskTowerHover))
             {
-                towerOnMouse.transform.position = hit.point;
+                if (EventSystem.current.IsPointerOverGameObject() && towerOnMouse != null && hasGoneOutsideOfGUI)
+                {
+                    Destroy(towerOnMouse);
+                    towerOnMouse = null;
+                    hasGoneOutsideOfGUI = false;
+                }
+                if (EventSystem.current.IsPointerOverGameObject() && !hasGoneOutsideOfGUI && towerOnMouse != null)
+                {
+                    towerOnMouse.transform.position = new Vector3(100, 100, 100);
+                }
+
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    towerOnMouse.transform.position = hit.point;
+                }
+               
             }
+          
             if (Input.GetKeyUp(KeyCode.P))
             {
                 if (hit.collider.gameObject.tag == "placeableArea" && !towerOnMouse.GetComponent<ICollidingWithTowers>().collidingwithOtherObject() && !EventSystem.current.IsPointerOverGameObject())
                 {
                     towerOnMouse.GetComponent<IHovering>().hoveringState(false);
                     towerOnMouse = null;
+                    hasGoneOutsideOfGUI = false;
                 }
             }
-            if (EventSystem.current.IsPointerOverGameObject() && towerOnMouse != null) {
-                towerOnMouse.transform.position = new Vector3(-24.65f, 6.99f, -5.67959f);
+            if (!hasGoneOutsideOfGUI && !EventSystem.current.IsPointerOverGameObject() && towerOnMouse != null) {
+                hasGoneOutsideOfGUI = true;
             }
+           
         }
         else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit) && !EventSystem.current.IsPointerOverGameObject())
         {
