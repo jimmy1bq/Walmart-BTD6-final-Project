@@ -42,7 +42,7 @@ public class dMUpgradeEvents : MonoBehaviour
             };
            
             events.GainCash.Invoke(-170);
-            events.towerUpgrade.Invoke("top", "",stats);
+            events.towerUpgrade.Invoke("top","",stats);
 
         }
       

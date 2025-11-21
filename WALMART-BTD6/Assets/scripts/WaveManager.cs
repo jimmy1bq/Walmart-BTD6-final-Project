@@ -45,10 +45,11 @@ public class WaveManager : MonoBehaviour
         listOfWaves.Add(startWave3);
         listOfWaves.Add(startWave4);
         listOfWaves.Add(startWave5);
+        listOfWaves.Add(startWave6);
     }
     void startWave1() {
         waveOnGoing = true;
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
     void startWave2()
@@ -56,7 +57,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 35, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blue"], 5, 2f),10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 55f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 25f));
     }
     void startWave3()
     {
@@ -82,6 +83,14 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 27.5f));
     }
+    void startWave6()
+    {
+
+        waveOnGoing = true;
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 15, 0.5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 27.5f));
+    }
 
 
 
@@ -100,6 +109,7 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator spawnTimeInbetween(GameObject boxsToSpawn, int amountToSpawn,float seconds) {
     if(amountToSpawn != 0) 
+
         {
             Instantiate(boxsToSpawn, spawnPoint.position,Quaternion.identity);
             yield return new WaitForSeconds(seconds);
