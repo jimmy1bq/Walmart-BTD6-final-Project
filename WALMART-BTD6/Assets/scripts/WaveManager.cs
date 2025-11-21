@@ -24,6 +24,8 @@ public class WaveManager : MonoBehaviour
     int index = 0;
 
     bool waveOnGoing = false;
+    string pathToGUIs = "Assets/Resources/MiscellaniousGUI/";
+
     public delegate void waves();
     public static waveStart waveDelegate;
 
@@ -47,21 +49,21 @@ public class WaveManager : MonoBehaviour
     void startWave1() {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
-        StartCoroutine(onGoingWaveCheck());
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
     void startWave2()
     {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 35, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blue"], 5, 2f),10f));
-        StartCoroutine(onGoingWaveCheck());
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 55f));
     }
     void startWave3()
     {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 5, 2f), 10f));
-        StartCoroutine(onGoingWaveCheck());
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
     }
 
     void startWave4()
@@ -69,7 +71,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 10, 2f), 10f));
-        StartCoroutine(onGoingWaveCheck());
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
     }
 
     void startWave5()
@@ -78,8 +80,15 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 15, 0.5f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
-        StartCoroutine(onGoingWaveCheck());
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 27.5f));
     }
+
+
+
+
+
+
+
 
 
 
@@ -103,17 +112,26 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(coroutine);
     }
     IEnumerator onGoingWaveCheck() {
+        Debug.Log("Checking");
         if (waveOnGoing) {
             Collider[] balloonsOnMap = Physics.OverlapSphere(gameObject.transform.position, 1000, (1 << 9));
-            if (!(balloonsOnMap.Length > 0)) { 
+            if (balloonsOnMap.Length == 0) {
                 waveOnGoing = false;
             }
         }
         if (waveOnGoing)
         {
             yield return new WaitForSeconds(0.1f);
-            onGoingWaveCheck();
-        } 
+            StartCoroutine(onGoingWaveCheck());
+        }
+        else {
+            Canvas canvasGUI=FindFirstObjectByType<Canvas>();
+            int cc = canvasGUI.transform.childCount;
+            GameObject startWaveButtonThing = canvasGUI.transform.GetChild(cc-1).gameObject;
+            GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "WaveStartButton" + ".prefab"), startWaveButtonThing.transform.position, Quaternion.identity);
+            speedUpButton.transform.parent = canvasGUI.transform;
+            Destroy(startWaveButtonThing);
+        }
     }
     bool nextWave() {
         if ((index <= listOfWaves.Count - 1) && !waveOnGoing)

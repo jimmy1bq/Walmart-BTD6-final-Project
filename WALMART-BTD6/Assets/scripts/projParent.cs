@@ -100,14 +100,16 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     //basically use raycast to detect collision by shooting a ray forward and backwards by using the difference of position and normalizing the position to get direction. Backward shoots a raybackwards from the current to last position to check if it missed anything
 
     protected void safetyCheckForCollisionBackWards() {
-        RaycastHit[] hit;
+        RaycastHit[] hit = new RaycastHit[(int)pierce];
         if (lastPoistion != null) {
-            Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple,0.5f);
-            hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion),1<<9);
+            Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple,999f);
+            hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion)*1.5f,1<<9);
             if (hit.Length > 0) {
-                for (int i = 0; i < (int)pierce; i++)
+        
+                for (int i = 0; i < hit.Length; i++)
                 {
-                    int idGO= hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
+                    
+                    int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
                     if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO))
                     {                
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage);
@@ -125,15 +127,17 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     }
     protected void safetyCheckForCollisionForward()
     {
-        RaycastHit[] hit;
+        RaycastHit[] hit = new RaycastHit[(int)pierce];
         if (!isDead)
         {
             Debug.DrawRay(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple, 0.5f);
             hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y*.75f, 1 << 9);
             if (hit.Length > 0)
             {
-                for (int i = 0; i < (int)pierce; i++)
+               
+                for (int i = 0; i < hit.Length; i++)
                 {
+                  
                     int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
                     if (isDead == false && i < hit.Length && !idOfNotToDamage.Contains(idGO))
                     {

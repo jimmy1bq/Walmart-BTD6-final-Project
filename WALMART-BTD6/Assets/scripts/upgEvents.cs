@@ -50,7 +50,6 @@ public class dMUpgradeEvents : MonoBehaviour
     public void upgrade010()
     {       
         if (GameManager.instance.coins >= 120) {
-            Debug.Log("hi");
             Dictionary<string,float> stats = new Dictionary<string,float> {
                     {"Range", 1},
                     { "FireRate",0.8f},
@@ -82,7 +81,6 @@ public class dMUpgradeEvents : MonoBehaviour
     {
         if (GameManager.instance.coins >= 200)
         {
-            Debug.Log("hi");
             Dictionary<string,float> stats = new Dictionary<string,float> {
                     {"Range", 1},
                     { "FireRate",1},
@@ -99,7 +97,6 @@ public class dMUpgradeEvents : MonoBehaviour
         
         if (GameManager.instance.coins >= 190)
         {
-            Debug.Log("hi");
             Dictionary<string,float> stats = new Dictionary<string,float> {
                     {"Range", 1},
                     { "FireRate",0.83f},
@@ -117,7 +114,7 @@ public class dMUpgradeEvents : MonoBehaviour
         //later add camo detc 
         if (GameManager.instance.coins >= 150)
         {
-            Debug.Log("hi");
+            
             Dictionary<string,float> stats = new Dictionary<string,float> {
                     {"Range", 1.17f},
                     { "FireRate",0.83f},
@@ -134,7 +131,7 @@ public class dMUpgradeEvents : MonoBehaviour
        
         if (GameManager.instance.coins >= 650)
         {
-            Debug.Log("hi");
+            
             Dictionary<string,float> stats = new Dictionary<string,float> {
                     {"Range", 1.12f},
                     { "FireRate",1},
@@ -150,7 +147,7 @@ public class dMUpgradeEvents : MonoBehaviour
     {
         if (GameManager.instance.coins >= 250)
         {
-            Debug.Log("hi");
+           
             Dictionary<string,float> stats = new Dictionary<string,float> {
                     {"Range", 1},
                     { "FireRate",0.66f},

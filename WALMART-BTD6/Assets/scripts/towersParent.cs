@@ -139,7 +139,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     protected void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade)
     {
-        Debug.Log(upgradeTier);
+        
         foreach (var statBuff in statsUpgrade)
         {
             stats[statBuff.Key] *= statBuff.Value;
@@ -147,10 +147,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         if (projectile != "")
         {
             projctile = projectile;
-            Debug.Log(projctile);
         }
         pathToTier[upgradeTier] += 1;
-        Debug.Log(pathToTier[upgradeTier]);
         updateGUI();
         changeModel();
     }
