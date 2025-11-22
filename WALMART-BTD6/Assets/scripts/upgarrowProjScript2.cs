@@ -7,5 +7,6 @@ public class upgradedarrowProjctile : projectileParentForStraightLinearProj
         pierce = 5;
         damage = 5;
         projSpeed = 2;
+        canHitLead = false;
     }
 }

@@ -132,7 +132,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
         i = index;
     }
 
-    public void damageTaken(int damage)
+    public virtual void damageTaken(int damage, GameObject p)
     {
 
         boxSO.boxType downToLayer = pop(damage, boxColor);

@@ -42,7 +42,7 @@ public class dMUpgradeEvents : MonoBehaviour
             };
            
             events.GainCash.Invoke(-170);
-            events.towerUpgrade.Invoke("top","",stats);
+            events.towerUpgrade.Invoke("top","",stats,false);
 
         }
       
@@ -58,7 +58,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1}
             };
             events.GainCash.Invoke(-110);
-            events.towerUpgrade.Invoke("mid","",stats);
+            events.towerUpgrade.Invoke("mid","",stats, false);
         }
     }
 
@@ -74,7 +74,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-110);
-            events.towerUpgrade.Invoke("bot", "", stats);
+            events.towerUpgrade.Invoke("bot", "", stats, false);
         }
     }
     public void upgrade200()
@@ -89,7 +89,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",2},
             };
             events.GainCash.Invoke(-200);
-            events.towerUpgrade.Invoke("top", "", stats);
+            events.towerUpgrade.Invoke("top", "", stats, false);
         }
     }
     public void upgrade020()
@@ -106,7 +106,7 @@ public class dMUpgradeEvents : MonoBehaviour
              
             };
             events.GainCash.Invoke(-190);
-            events.towerUpgrade.Invoke("mid", "", stats);
+            events.towerUpgrade.Invoke("mid", "", stats, false);
         }
     }
     public void upgrade002()
@@ -123,7 +123,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-150);
-            events.towerUpgrade.Invoke("bot", "", stats);
+            events.towerUpgrade.Invoke("bot", "", stats,true);
         }
     }
     public void upgrade003()
@@ -140,7 +140,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-650);
-            events.towerUpgrade.Invoke("bot", "arrowProj", stats);
+            events.towerUpgrade.Invoke("bot", "arrowProj", stats, false);
         }
     }
      public void upgrade030()
@@ -156,7 +156,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-250);
-            events.towerUpgrade.Invoke("mid", "", stats);
+            events.towerUpgrade.Invoke("mid", "", stats, false);
         }
     }
     public void upgrade300()
@@ -171,7 +171,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-300);
-            events.towerUpgrade.Invoke("top", "cannonball", stats);
+            events.towerUpgrade.Invoke("top", "cannonball", stats, false);
         }
     }
 
@@ -187,7 +187,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-1800);
-            events.towerUpgrade.Invoke("top", "bigCannonBall", stats);
+            events.towerUpgrade.Invoke("top", "bigCannonBall", stats, false);
         }
     }
     public void upgrade040()
@@ -202,7 +202,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-7385);
-            events.towerUpgrade.Invoke("mid", "", stats);
+            events.towerUpgrade.Invoke("mid", "", stats, false);
         }
     }
     public void upgrade004()
@@ -217,7 +217,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-2750);
-            events.towerUpgrade.Invoke("bot", "upgradedBolt", stats);
+            events.towerUpgrade.Invoke("bot", "upgradedBolt", stats, false);
          
         }
     }
@@ -233,7 +233,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-15000);
-            events.towerUpgrade.Invoke("top", "Voidball", stats);
+            events.towerUpgrade.Invoke("top", "Voidball", stats, false);
         }
     }
     public void upgrade050()
@@ -248,7 +248,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-46000);
-            events.towerUpgrade.Invoke("mid", "", stats);
+            events.towerUpgrade.Invoke("mid", "", stats, false);
         }
     }
     public void upgrade005()
@@ -263,7 +263,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-22060);
-            events.towerUpgrade.Invoke("bot", "strongestBolt", stats);
+            events.towerUpgrade.Invoke("bot", "strongestBolt", stats, false);
         }
     }
 }

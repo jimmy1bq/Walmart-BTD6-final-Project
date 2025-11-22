@@ -7,5 +7,6 @@ public class cannonBallScript : projectileParentForStraightLinearProj
         damage = 2;
         pierce = 10;
         projSpeed = 2;
+        canHitLead = false;
     }
 }

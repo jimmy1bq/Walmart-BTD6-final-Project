@@ -8,5 +8,6 @@ public class bigCannonBallScript : projectileParentForStraightLinearProj
         pierce = 20;
         projSpeed = 0.8f;
         lifespan = 5;
+        canHitLead = true;
     }
 }

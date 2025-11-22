@@ -16,7 +16,11 @@ public class WaveManager : MonoBehaviour
     List<string> boxName = new List<string>() { 
     "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic"
     };
-    
+
+    List<string> camoBoxName = new List<string>() {
+    "camoRed","camoBlue","camoGreen","camoYellow","camoPink","camoBlack","camoWhite","camoPurple","camoMetal","camoOrange","camoSeaGreen","camoCeramic"
+    };
+
     List<waves> listOfWaves = new List<waves>();
 
     [SerializeField] Transform spawnPoint;
@@ -37,6 +41,11 @@ public class WaveManager : MonoBehaviour
             GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
             boxTypeToString.Add(bn, boxToInsert);
         }
+        foreach (string bn in camoBoxName)
+        {
+            GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
+            boxTypeToString.Add(bn, boxToInsert);
+        }
     }
     void Start()
     {
@@ -50,6 +59,7 @@ public class WaveManager : MonoBehaviour
     void startWave1() {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoMetal"], 20, 1f), 10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
     void startWave2()

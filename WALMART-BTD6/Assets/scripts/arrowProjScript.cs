@@ -7,5 +7,6 @@ public class arrowProjctile : projectileParentForStraightLinearProj
         pierce = 5;
         damage = 3;
         projSpeed = 2;
+        canHitLead = false;
     }
 }

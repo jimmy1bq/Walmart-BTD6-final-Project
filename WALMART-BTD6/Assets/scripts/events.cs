@@ -12,7 +12,7 @@ public static class events {
     public static TowerUpgradeEvent towerUpgrade = new TowerUpgradeEvent();
  
 }
-public class TowerUpgradeEvent : UnityEvent<string, string, Dictionary<string,float>> { }
+public class TowerUpgradeEvent : UnityEvent<string, string, Dictionary<string,float>,bool >{ }
 
 public delegate bool waveStart();
 

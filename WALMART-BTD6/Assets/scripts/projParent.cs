@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 using System;
 using Unity.Mathematics.Geometry;
 
-public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOwner, IGiveEnemy, IStatChange
+public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOwner, IGiveEnemy, IStatChange, IGiveProptieres
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected GameObject owner;
@@ -21,14 +21,17 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     protected float projSpeed;
     protected float lifespan = 3;
 
-    
 
+    protected bool canHitLead;
     protected bool mutipleOverLappingCollider = false;
     protected bool isDead =false;
     protected List<GameObject> listOfGO = new List<GameObject>();
     protected List<int> idOfNotToDamage = new List<int>();
 
     protected Vector3 lastPoistion;
+
+    protected LayerMask boxLayerToHit = 1 << 9;
+
 
 
     protected void Start()
@@ -103,17 +106,17 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         RaycastHit[] hit = new RaycastHit[(int)pierce];
         if (lastPoistion != null) {
             Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple,999f);
-            hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion)*1.5f,1<<9);
+            hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion)*1.5f,boxLayerToHit);
             if (hit.Length > 0) {
         
                 for (int i = 0; i < hit.Length; i++)
-                {
-                    
+                {                    
                     int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
                     if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO))
                     {                
-                        hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage);
+                        hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
                         idOfNotToDamage.Add(idGO);
+                        owner.GetComponent<IPopToPopCount>().damageDealt(damage);
                         pierce--;
                     }
                     if (pierce == 0)
@@ -131,7 +134,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         if (!isDead)
         {
             Debug.DrawRay(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple, 0.5f);
-            hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y*.75f, 1 << 9);
+            hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y*.75f, boxLayerToHit);
             if (hit.Length > 0)
             {
                
@@ -141,8 +144,9 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
                     int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
                     if (isDead == false && i < hit.Length && !idOfNotToDamage.Contains(idGO))
                     {
-                        hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage);
+                        hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
                         idOfNotToDamage.Add(idGO);
+                        owner.GetComponent<IPopToPopCount>().damageDealt(damage);
                         pierce--;
                     }
                     if (pierce == 0)
@@ -159,8 +163,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     {
         owner = trackstar;
     }
-    public void setEnemy(GameObject enemy) {
-       
+    public void setEnemy(GameObject enemy) {       
         targetEnemy = enemy;
     }
     public void statChangePierce(float addedpierce) {
@@ -170,4 +173,12 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     public void statChangeProjSpeed(float speed) {
        projSpeed *= speed;
     }
+    public void getParentLayerMask(LayerMask layerToHit) {
+        boxLayerToHit = layerToHit;    
+    }
+    public bool returnCanHitLead() {
+        return canHitLead;
+    
+    }
+    
 }

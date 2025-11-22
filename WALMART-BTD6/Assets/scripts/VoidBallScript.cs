@@ -8,5 +8,6 @@ public class VoidBallScript : projectileParentForStraightLinearProj
         pierce = 30;
         projSpeed = 3;
         lifespan = 10;
+        canHitLead = true;
     }
 }

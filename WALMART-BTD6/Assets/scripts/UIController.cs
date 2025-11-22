@@ -1,7 +1,5 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor.PackageManager;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
@@ -12,16 +10,10 @@ public class UIController : MonoBehaviour
 
     string pathToGUIs = "Assets/Resources/MiscellaniousGUI/";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Awake()
-    {
-        livesText.text = (GameManager.instance.hp).ToString();
-        cashText.text = (GameManager.instance.coins).ToString();
-    }
     void Start()
     {
-
-        events.LoseLivesUI.AddListener(loseLife);
-        events.GainCashUI.AddListener(gainCoins);
+        events.LoseLives.AddListener(loseLife);
+        events.GainCash.AddListener(gainCoins);
     }
 
     // Update is called once per frame
@@ -30,12 +22,13 @@ public class UIController : MonoBehaviour
         
     }
      void loseLife(int damage) {
-        livesText.text =(damage).ToString();
+        livesText.text =(GameManager.instance.hp - damage).ToString();
     }
     void gainCoins(int Cash)
     {
-        cashText.text = (Cash).ToString();
+        cashText.text = (GameManager.instance.coins - Cash).ToString();
     }
+
     public void StartWaveEvent() {
         bool buh = WaveManager.waveDelegate.Invoke();
         if (buh)
@@ -49,8 +42,9 @@ public class UIController : MonoBehaviour
  
     public void speedUp() {
         Time.timeScale = 2.0f;
-        GameObject speedWaveButtonThing = canvasGUI.transform.Find("speedUpButton(Clone)").gameObject;       
-        GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedDownButton" + ".prefab"), speedWaveButtonThing.transform.position, Quaternion.identity);      
+        canvasGUI = FindFirstObjectByType<Canvas>();
+        GameObject speedWaveButtonThing = canvasGUI.transform.Find("speedUpButton(Clone)").gameObject;
+        GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedDownButton" + ".prefab"), speedWaveButtonThing.transform.position, Quaternion.identity);
         speedUpButton.transform.parent = canvasGUI.transform;
         Destroy(speedWaveButtonThing);
     }
@@ -61,5 +55,6 @@ public class UIController : MonoBehaviour
         speedUpButton.transform.parent = canvasGUI.transform;
         Destroy(slowWaveButtonThing);
     }
+
 
 }

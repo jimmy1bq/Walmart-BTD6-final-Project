@@ -7,5 +7,6 @@ public class strongestarrowProjctile : projectileParentForStraightLinearProj
         pierce = 10;
         damage = 10;
         projSpeed = 5;
+        canHitLead = true;
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public interface IDamageTaken { 
-    void damageTaken(int damageAmount);
+    void damageTaken(int damageAmount, GameObject projectileThatDamageIt);
 }
 
 public interface IIndex {
@@ -49,5 +49,13 @@ public interface IGetSetID
     public int GetID();
 
 }
+public interface IGiveProptieres 
+{
+    public bool returnCanHitLead();
+
+    public void getParentLayerMask(LayerMask layerToHit);
+
+}
+
 
 

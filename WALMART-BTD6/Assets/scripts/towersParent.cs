@@ -23,7 +23,10 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected GameObject rangeC;
     protected GameObject rangeCircle;
     protected string projctile;
-    protected bool colliding;
+    protected bool colliding;  
+    protected bool hiddenDec;
+
+    protected LayerMask boxLayerToHit = 1 << 9;
 
     protected int price;
     
@@ -88,6 +91,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             projctileGO.GetComponent<IStatChange>().statChangeProjSpeed(stats["ProjctileSpeed"]);
             projctileGO.GetComponent<IGiveEnemy>().setEnemy(closestEnemy);
             projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+            projctileGO.GetComponent<IGiveProptieres>().getParentLayerMask(boxLayerToHit);
             yield return new WaitForSeconds(stats["FireRate"]);
         }
         else if (closestEnemy == null)
@@ -137,7 +141,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.transform.parent = gameObject.transform;
 
     }
-    protected void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade)
+    protected void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade,bool hiddenDec)
     {
         
         foreach (var statBuff in statsUpgrade)
@@ -147,6 +151,10 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         if (projectile != "")
         {
             projctile = projectile;
+        }
+        if (hiddenDec) {
+            boxLayerToHit = (1 << 9 | 1 << 11);
+        
         }
         pathToTier[upgradeTier] += 1;
         updateGUI();
@@ -189,9 +197,11 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             //the 0th child is the frame containnig everything 
             GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
             GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, Quaternion.identity);
+            GameObject popCountGO = monkeyUI.transform.Find("popCount").gameObject;
             newGO.transform.SetParent(monkeyUI.transform.GetChild(0).transform);
             newGO.gameObject.GetComponent<RectTransform>().localScale = childToDestroyGO.GetComponent<RectTransform>().localScale;
             newGO.name = h.Key;
+            popCountGO.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
             Destroy(childToDestroyGO);
         }
     }
@@ -276,11 +286,12 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     public void damageDealt(int popCounts)
     {
+
         stats["popCount"] += popCounts;
         if (monkeyUI)
         {
-            GameObject popText = monkeyUI.GetComponent<RectTransform>().GetChild(findFirstChild("popCount", monkeyUI)).gameObject;
-            popText.GetComponent<TextMeshProUGUI>().text = popCounts.ToString();
+            GameObject popText = monkeyUI.GetComponent<RectTransform>().Find("popCount").gameObject;
+            popText.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
         }
     }
     protected IEnumerator spawnattackCD()
