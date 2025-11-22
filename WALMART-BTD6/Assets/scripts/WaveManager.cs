@@ -41,11 +41,11 @@ public class WaveManager : MonoBehaviour
             GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
             boxTypeToString.Add(bn, boxToInsert);
         }
-        foreach (string bn in camoBoxName)
-        {
-            GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
-            boxTypeToString.Add(bn, boxToInsert);
-        }
+        //foreach (string bn in camoBoxName)
+        //{
+        //    GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
+        //    boxTypeToString.Add(bn, boxToInsert);
+        //}
     }
     void Start()
     {
