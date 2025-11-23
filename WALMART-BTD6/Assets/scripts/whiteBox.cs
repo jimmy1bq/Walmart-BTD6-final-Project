@@ -15,13 +15,13 @@ public class whiteBoxScript : Box, IDamageTaken, IIndex
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
-        if (!damaged)
+
+        if (id == -1)
         {
             id = boxData.ID;
-            boxData.ID++;
         }
-        Debug.Log("whiteBox: " + id);
-        
+        boxData.ID++;
+
     }
     public override void damageTaken(int damage, GameObject p)
     {

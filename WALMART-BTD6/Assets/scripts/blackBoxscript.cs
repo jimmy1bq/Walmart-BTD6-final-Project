@@ -15,16 +15,16 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
     {
         boxColor = boxType.black;
         layer = balloonLayer[boxColor];
-        balloonSpeedValue = balloonSpeed[boxColor];   
-        totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;             
-        if (!damaged)
+        balloonSpeedValue = balloonSpeed[boxColor];
+        totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
+
+        if (id == -1)
         {
             id = boxData.ID;
-            boxData.ID++;
         }
-        Debug.Log("blackBox: "+id);
-       
+        boxData.ID++;
     }
+      
     public override void damageTaken(int damage, GameObject p)
     {
       

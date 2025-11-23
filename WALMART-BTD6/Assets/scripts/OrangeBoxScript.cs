@@ -16,9 +16,9 @@ public class OrangeBox : Box, IDamageTaken, IIndex
         if (id == -1)
         {
             id = boxData.ID;
+            boxData.ID++;
         }
-        boxData.ID++;
-        Debug.Log("orangebox: "+id);
+       
     }
     public override void damageTaken(int damage, GameObject p)
     {
@@ -51,9 +51,6 @@ public class OrangeBox : Box, IDamageTaken, IIndex
                     blackBoxIndex.wayPointReciever(i);
                    
                     whiteBoxIndex.wayPointReciever(i);
-                   
-                    
-
                     Destroy(gameObject);
 
                 }
@@ -63,23 +60,21 @@ public class OrangeBox : Box, IDamageTaken, IIndex
                     GameObject black = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "black" + ".prefab");
 
                     Instantiate(white, gameObject.transform.position, Quaternion.identity);
-                    Instantiate(black, gameObject.transform.position, Quaternion.identity);
-
                     IGetSetID whiteBoxidenfication = white.GetComponent<IGetSetID>();
                     whiteBoxidenfication.setID(id);
-                   
-                    IIndex whiteBoxIndex = white.GetComponent<IIndex>();
 
+                    Instantiate(black, gameObject.transform.position, Quaternion.identity);
                     IGetSetID blackBoxidenfication = black.GetComponent<IGetSetID>();
                     blackBoxidenfication.setID(id);
-                  
+
+                    IIndex whiteBoxIndex = white.GetComponent<IIndex>();
                     IIndex blackBoxIndex = black.GetComponent<IIndex>();
 
                     blackBoxIndex.wayPointReciever(i);
-                    whiteBoxIndex.wayPointReciever(i);
-                 
 
+                    whiteBoxIndex.wayPointReciever(i);
                     Destroy(gameObject);
+
                 }
 
             }

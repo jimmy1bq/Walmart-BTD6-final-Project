@@ -11,6 +11,6 @@ public class dartProjs : projectileParentForStraightLinearProj
         damage = 1;
         pierce = 2;
         projSpeed = 1;
-        canHitLead = false;
+        canHitLead = true;
     }
 }
