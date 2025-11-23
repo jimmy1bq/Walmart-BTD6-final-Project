@@ -20,6 +20,7 @@ public class OrangeBox : Box, IDamageTaken, IIndex
         }
        
     }
+    //milestone 7
     public override void damageTaken(int damage, GameObject p)
     {
         boxType downToLayer = pop(damage, boxColor);
@@ -88,16 +89,7 @@ public class OrangeBox : Box, IDamageTaken, IIndex
                     boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
                     
                 }
-                List<GameObject> boxs = spawnEnemiesAmount(boxToMake, 4);
-                foreach (GameObject box in boxs)
-                {
-
-                    IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
-                    IIndex boxIndex = box.GetComponent<IIndex>();
-                    boxIndex.wayPointReciever(i);
-                    boxidenfication.setID(id);
-
-                }
+                spawnEnemiesAmount(boxToMake, 4);               
                 Destroy(gameObject);
             }
         }

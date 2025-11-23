@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static boxSO;
 
 public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
@@ -41,8 +42,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             {boxType.black, 6 },
             {boxType.white, 6 },
             {boxType.purple, 6 },
-            {boxType.lead, 7 },
             {boxType.orange, 7 },
+            {boxType.lead, 7 },
             {boxType.seagreen, 8 },
             {boxType.ceramic, 9 },
 
@@ -69,8 +70,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             {boxType.black, 3},
             {boxType.white, 3 },
             {boxType.purple, 6 },
-            {boxType.lead, 2 },
-            {boxType.orange, 3 },
+            {boxType.orange, 2 },
+            {boxType.lead, 3 },
             {boxType.seagreen, 3},
             {boxType.ceramic, 3 },
     };
@@ -85,8 +86,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             {boxType.black, "black"},
             {boxType.white, "white"},
             {boxType.purple, "purple"},
-            {boxType.lead, "metal"},
             {boxType.orange, "orange"},
+            {boxType.lead, "metal"},
             {boxType.seagreen, "seaGreen"},
             {boxType.ceramic, "ceramic"},
     };
@@ -100,8 +101,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             {boxType.black, "camoBlack"},
             {boxType.white, "camoWhite"},
             {boxType.purple, "camoPurple"},
-            {boxType.lead, "camoMetal"},
             {boxType.orange, "camoOrange"},
+            {boxType.lead, "camoMetal"},
             {boxType.seagreen, "camoSeaGreen"},
             {boxType.ceramic, "camoCeramic"},
     };
@@ -195,31 +196,32 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             {
                 boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
             }
-
-            List<GameObject> boxs = spawnEnemiesAmount(boxToMake, 1);
-            foreach (GameObject box in boxs)
-            {
-                IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
-                IIndex boxIndex = box.GetComponent<IIndex>();
-                boxIndex.wayPointReciever(i);
-                boxidenfication.setID(id);
-            }
+            spawnEnemiesAmount(boxToMake, 1);        
             Destroy(gameObject);
         }
     }
-    protected List<GameObject> spawnEnemiesAmount(GameObject enemyToSpawn, int amount) {
+    protected void spawnEnemiesAmount(GameObject enemyToSpawn, int amount) {
         List<GameObject> boxList = new List<GameObject>();
         for (int i = amount; i > 0; i--) {
             GameObject boxToAddOntoList = Instantiate(enemyToSpawn,transform.position,Quaternion.identity);   
             boxList.Add(boxToAddOntoList);
-        } 
-        return boxList;
+        }
+
+        foreach (GameObject box in boxList)
+        {
+            IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
+            IIndex boxIndex = box.GetComponent<IIndex>();
+            boxIndex.wayPointReciever(i);
+            boxidenfication.setID(id);
+        }
+
     }
 
     public void setID(int IDs) {
         Debug.Log(gameObject.name + IDs);
         id = IDs;
     }
+    
     public int GetID() {
         return id;  
     }

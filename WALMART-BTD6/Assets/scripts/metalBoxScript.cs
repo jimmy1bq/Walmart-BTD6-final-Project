@@ -25,7 +25,7 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
     //milestone 7 added this script
     public override void damageTaken(int damage, GameObject p)
     {
-
+        GameObject boxToMake;
         boxType downToLayer = pop(damage, boxColor);
         bool canHitLeadq = p.GetComponent<IGiveProptieres>().returnCanHitLead();
         if (!canHitLeadq)
@@ -36,20 +36,21 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
         {
             if (downToLayer == boxType.none)
             {
-                Destroy(gameObject);
-              
+                Destroy(gameObject);              
             }
             else
             {
-                GameObject boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
-                GameObject box = Instantiate(boxToMake, transform.position, Quaternion.identity);
-                IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
-                IIndex boxIndex = box.GetComponent<IIndex>();
-                boxIndex.wayPointReciever(i);
-                boxidenfication.setID(id);
-                
+                if (camo)
+                {
+                    boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringCamo[downToLayer] + ".prefab");
+                }
+                else
+                {
+                    boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
+                }
+                spawnEnemiesAmount(boxToMake, 1);
                 Destroy(gameObject);
-            }
+            }         
         }
     }
 }

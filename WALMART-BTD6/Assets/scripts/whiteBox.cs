@@ -44,16 +44,7 @@ public class whiteBoxScript : Box, IDamageTaken, IIndex
                 {
                     boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
                 }
-                List<GameObject> boxs = spawnEnemiesAmount(boxToMake, 2);
-                foreach (GameObject box in boxs)
-                {
-
-                    IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
-                    IIndex boxIndex = box.GetComponent<IIndex>();
-                    boxIndex.wayPointReciever(i);
-                    boxidenfication.setID(id);
-
-                }
+                spawnEnemiesAmount(boxToMake, 2);
                 Destroy(gameObject);
             }
         }
