@@ -48,6 +48,8 @@ public interface IGetSetID
     public void setID(int ID);
     public int GetID();
 
+    
+
 }
 public interface IGiveProptieres 
 {

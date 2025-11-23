@@ -8,9 +8,15 @@ using static boxSO;
 public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
 
 {
+    protected enum boxType
+    {
+        none, red, blue, green, yellow, pink, black, white, purple, lead, orange, seagreen,
+        ceramic, moab, bfb, zomg, ddt, bad
+    }
+
     [SerializeField] protected boxSO boxData;
     protected Coroutine AdvanceIndex;
-    protected boxSO.boxType boxColor;
+    protected boxType boxColor;
 
     protected int layer;
     protected int balloonSpeedValue;
@@ -18,56 +24,95 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     protected float hp;
     protected int totalWayPoints;
     protected int id = -1;
+    protected bool damaged = false;
 
-    protected string enemyModelPath = "Assets/Resources/boxEnemies";
+    protected bool camo = false;
 
-    protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
-    protected Dictionary<boxSO.boxType, int> balloonLayer =new Dictionary<boxSO.boxType, int>() {
-            { boxSO.boxType.none, 0 },
-            { boxSO.boxType.red, 1 },
-            { boxSO.boxType.blue, 2 },
-            { boxSO.boxType.green, 3 },
-            { boxSO.boxType.yellow, 4 },
-            { boxSO.boxType.pink, 5 },
-            { boxSO.boxType.black, 6 },
-            { boxSO.boxType.white, 6 },
-            { boxSO.boxType.purple, 6 },
-            { boxSO.boxType.lead, 7 },
-            { boxSO.boxType.orange, 7 },
-            { boxSO.boxType.seagreen, 8 },
-            { boxSO.boxType.ceramic, 9 },
+    protected string enemyModelPath = "Assets/Resources/boxEnemiesWScript/";
+
+//  protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
+    protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
+            {boxType.none, 0 },
+            {boxType.red, 1 },
+            {boxType.blue, 2 },
+            {boxType.green, 3 },
+            {boxType.yellow, 4 },
+            {boxType.pink, 5 },
+            {boxType.black, 6 },
+            {boxType.white, 6 },
+            {boxType.purple, 6 },
+            {boxType.lead, 7 },
+            {boxType.orange, 7 },
+            {boxType.seagreen, 8 },
+            {boxType.ceramic, 9 },
 
     };
    
     //this dictionary is used to get the balloon based on layer boxSO I don't have to loop through the top dictionary to match the hp
-    protected Dictionary<int, boxSO.boxType> layerToBalloon = new Dictionary<int, boxSO.boxType>() {
-            { 1, boxSO.boxType.red },
-            { 2, boxSO.boxType.blue },
-            { 3, boxSO.boxType.green },
-            { 4, boxSO.boxType.yellow },
-            { 5, boxSO.boxType.pink },
-            { 6, boxSO.boxType.black },
-            { 7, boxSO.boxType.lead },
-            { 8, boxSO.boxType.seagreen },
+    protected Dictionary<int,boxType> layerToBalloon = new Dictionary<int,boxType>() {
+            { 1,boxType.red },
+            { 2,boxType.blue },
+            { 3,boxType.green },
+            { 4,boxType.yellow },
+            { 5,boxType.pink },
+            { 6,boxType.black },
+            { 7,boxType.lead },
+            { 8,boxType.seagreen },
     };
     //balloon speed
-    protected Dictionary<boxSO.boxType, int> balloonSpeed = new Dictionary<boxSO.boxType, int>() {
-            { boxSO.boxType.red, 1 },
-            { boxSO.boxType.blue, 2},
-            { boxSO.boxType.green, 3 },
-            { boxSO.boxType.yellow, 4},
-            { boxSO.boxType.pink, 5 },
-            { boxSO.boxType.black, 3},
-            { boxSO.boxType.white, 3 },
-            { boxSO.boxType.purple, 6 },
-            { boxSO.boxType.lead, 2 },
-            { boxSO.boxType.orange, 3 },
-            { boxSO.boxType.seagreen, 3},
-            { boxSO.boxType.ceramic, 3 },
+    protected Dictionary<boxType, int> balloonSpeed = new Dictionary<boxType, int>() {
+            {boxType.red, 1 },
+            {boxType.blue, 2},
+            {boxType.green, 3 },
+            {boxType.yellow, 4},
+            {boxType.pink, 5 },
+            {boxType.black, 3},
+            {boxType.white, 3 },
+            {boxType.purple, 6 },
+            {boxType.lead, 2 },
+            {boxType.orange, 3 },
+            {boxType.seagreen, 3},
+            {boxType.ceramic, 3 },
+    };
+    //milestone7
+    protected Dictionary<boxType, string> boxTypeToStringNonCamo = new Dictionary<boxType, string>()
+    {
+            {boxType.red, "red" },
+            {boxType.blue, "blue"},
+            {boxType.green, "green" },
+            {boxType.yellow, "yellow"},
+            {boxType.pink, "pink"},
+            {boxType.black, "black"},
+            {boxType.white, "white"},
+            {boxType.purple, "purple"},
+            {boxType.lead, "metal"},
+            {boxType.orange, "orange"},
+            {boxType.seagreen, "seaGreen"},
+            {boxType.ceramic, "ceramic"},
+    };
+    protected Dictionary<boxType, string> boxTypeToStringCamo = new Dictionary<boxType, string>()
+    {
+            {boxType.red, "camoRed" },
+            {boxType.blue, "camoBlue"},
+            {boxType.green, "camoGreen" },
+            {boxType.yellow, "camoYellow"},
+            {boxType.pink, "camoPink"},
+            {boxType.black, "camoBlack"},
+            {boxType.white, "camoWhite"},
+            {boxType.purple, "camoPurple"},
+            {boxType.lead, "camoMetal"},
+            {boxType.orange, "camoOrange"},
+            {boxType.seagreen, "camoSeaGreen"},
+            {boxType.ceramic, "camoCeramic"},
     };
 
     protected void Start()
     {
+        //milestone 7
+        Debug.Log(id);
+        if (gameObject.layer == 11) {
+            camo = true;        
+        }
         AdvanceIndex = StartCoroutine(advanceIndex());
     }
     protected IEnumerator advanceIndex()
@@ -98,9 +143,9 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
         }
 
     }
-    protected boxSO.boxType pop(int damage, boxSO.boxType box) {
+    protected boxType pop(int damage,boxType box) {
         int damageTaken= balloonLayer[box]-damage;
-        boxSO.boxType downToLayer;
+        boxType downToLayer;
         if (damageTaken <=0 ) {
             downToLayer = boxType.none;
         }
@@ -131,33 +176,53 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     {
         i = index;
     }
-
+    //mileestone 7 changed this to use assestdatabase to load my prefbs now
     public virtual void damageTaken(int damage, GameObject p)
     {
-
-        boxSO.boxType downToLayer = pop(damage, boxColor);
-        if (downToLayer == boxSO.boxType.none)
+        GameObject boxToMake;
+       boxType downToLayer = pop(damage, boxColor);
+        if (downToLayer ==boxType.none)
         {
             Destroy(gameObject);
-            boxData.boxsesOnMap.Remove(boxData.ID);
         }
         else
         {
-            GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
-            IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
-            IIndex boxIndex = box.GetComponent<IIndex>();
-            boxIndex.wayPointReciever(i);
-            boxidenfication.setID(id); 
-            boxData.boxsesOnMap.Remove(boxData.ID);
+            if (camo)
+            {
+                boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringCamo[downToLayer] + ".prefab");
+            }
+            else 
+            {
+                boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
+            }
+
+            List<GameObject> boxs = spawnEnemiesAmount(boxToMake, 1);
+            foreach (GameObject box in boxs)
+            {
+                IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
+                IIndex boxIndex = box.GetComponent<IIndex>();
+                boxIndex.wayPointReciever(i);
+                boxidenfication.setID(id);
+            }
             Destroy(gameObject);
         }
     }
+    protected List<GameObject> spawnEnemiesAmount(GameObject enemyToSpawn, int amount) {
+        List<GameObject> boxList = new List<GameObject>();
+        for (int i = amount; i > 0; i--) {
+            GameObject boxToAddOntoList = Instantiate(enemyToSpawn,transform.position,Quaternion.identity);   
+            boxList.Add(boxToAddOntoList);
+        } 
+        return boxList;
+    }
 
-    public void setID(int IDs) { 
+    public void setID(int IDs) {
+        Debug.Log(gameObject.name + IDs);
         id = IDs;
     }
     public int GetID() {
         return id;  
     }
+    
 
 }

@@ -49,7 +49,7 @@ public class UIController : MonoBehaviour
         Destroy(speedWaveButtonThing);
     }
     public void speedDown() {
-        Time.timeScale = 0.5f;
+        Time.timeScale = 1f;
         GameObject slowWaveButtonThing = canvasGUI.transform.Find("speedDownButton(Clone)").gameObject;
         GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedUpButton" + ".prefab"), slowWaveButtonThing.transform.position, Quaternion.identity);
         speedUpButton.transform.parent = canvasGUI.transform;

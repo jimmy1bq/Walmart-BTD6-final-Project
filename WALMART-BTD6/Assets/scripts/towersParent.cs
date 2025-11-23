@@ -26,6 +26,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected bool colliding;  
     protected bool hiddenDec;
 
+    //milestone 7
     protected LayerMask boxLayerToHit = 1 << 9;
 
     protected int price;
@@ -66,10 +67,13 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Vector3 rangePos = new Vector3(tower.transform.position.x, tower.transform.position.y, tower.transform.position.z) + new Vector3(0, 0.01f, 0);
         return rangePos;
     }
+  
     protected IEnumerator closestTargetting()
     {
+      
         GameObject closestEnemy = null;
-        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], 1 << 9);
+        //milestone 7 layermask change
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
         float rangeClosest = stats["Range"];
         float distance;
         foreach (var enemies in enemyCollider)
@@ -97,19 +101,25 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         else if (closestEnemy == null)
         {
             //if theres no enemy in range waait until theres one in range
+            Debug.Log("NOTARGETSINRANGE");
             yield return new WaitUntil(enemyInRange);
         }
         //later this is not going to be closesttargetting incase the player changes targetting
         StartCoroutine(closestTargetting());
 
     }
+    //milestone 7
     protected void firstTargetting() { }
+    //milestone 7
     protected void lastTargettign() { }
+    //milestone 7
     protected void strongestTargettign() { }
+    //milestone 7
     protected void weakestTargettign() { }
     bool enemyInRange()
     {
-        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], 1 << 9);
+        //milestone 7 layer mask
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
         if (enemyCollider.Length != 0)
         {
             return true;
@@ -141,6 +151,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.transform.parent = gameObject.transform;
 
     }
+    //milestone 7
     protected void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade,bool hiddenDec)
     {
         
@@ -201,6 +212,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             newGO.transform.SetParent(monkeyUI.transform.GetChild(0).transform);
             newGO.gameObject.GetComponent<RectTransform>().localScale = childToDestroyGO.GetComponent<RectTransform>().localScale;
             newGO.name = h.Key;
+            //milestone 7
             popCountGO.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
             Destroy(childToDestroyGO);
         }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//milestone 7 
 public class dMUpgradeEvents : MonoBehaviour
 {
     //this script is soley to invoke the upgrade events
@@ -171,7 +172,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-300);
-            events.towerUpgrade.Invoke("top", "cannonball", stats, false);
+            events.towerUpgrade.Invoke("top", "cannonball", stats, true);
         }
     }
 
@@ -217,7 +218,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-2750);
-            events.towerUpgrade.Invoke("bot", "upgradedBolt", stats, false);
+            events.towerUpgrade.Invoke("bot", "upgradedBolt", stats, true);
          
         }
     }
@@ -263,7 +264,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-22060);
-            events.towerUpgrade.Invoke("bot", "strongestBolt", stats, false);
+            events.towerUpgrade.Invoke("bot", "strongestBolt", stats, true);
         }
     }
 }

@@ -8,11 +8,11 @@ public class seaGreenBoxScript : Box, IDamageTaken, IIndex
 {
     protected void Awake()
     {
-        boxColor = boxSO.boxType.seagreen;
+        boxColor = boxType.seagreen;
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
-        boxData.boxsesOnMap.Add(boxData.ID, gameObject);
+      
         if(id == -1) {
             id = boxData.ID;
         }    

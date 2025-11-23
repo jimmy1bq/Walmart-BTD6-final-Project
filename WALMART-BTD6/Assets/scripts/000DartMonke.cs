@@ -196,7 +196,6 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     {
         Vector3 castOrigin = gameObject.transform.position;
         Gizmos.color = Color.red;
-        Debug.Log(stats["Range"]);
         Gizmos.DrawWireSphere(castOrigin, stats["Range"]);
     }
     //since unity doesn't like front 0s im replacing it with a 9

@@ -27,6 +27,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     protected bool isDead =false;
     protected List<GameObject> listOfGO = new List<GameObject>();
     protected List<int> idOfNotToDamage = new List<int>();
+    protected int collisioncounter = 0;
 
     protected Vector3 lastPoistion;
 
@@ -112,6 +113,8 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
                 for (int i = 0; i < hit.Length; i++)
                 {                    
                     int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
+                    Debug.Log(idGO);
+                    Debug.Log(hit[i].collider.gameObject.name.ToString() + idGO);
                     if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO))
                     {                
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
@@ -139,9 +142,9 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             {
                
                 for (int i = 0; i < hit.Length; i++)
-                {
-                  
+                {                 
                     int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
+                    Debug.Log(hit[i].collider.gameObject.name.ToString() + idGO);
                     if (isDead == false && i < hit.Length && !idOfNotToDamage.Contains(idGO))
                     {
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);

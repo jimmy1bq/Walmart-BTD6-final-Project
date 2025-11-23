@@ -16,7 +16,7 @@ public class WaveManager : MonoBehaviour
     List<string> boxName = new List<string>() { 
     "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic"
     };
-
+    //milestone 7 don't forget to say layer mask change
     List<string> camoBoxName = new List<string>() {
     "camoRed","camoBlue","camoGreen","camoYellow","camoPink","camoBlack","camoWhite","camoPurple","camoMetal","camoOrange","camoSeaGreen","camoCeramic"
     };
@@ -41,11 +41,11 @@ public class WaveManager : MonoBehaviour
             GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
             boxTypeToString.Add(bn, boxToInsert);
         }
-        //foreach (string bn in camoBoxName)
-        //{
-        //    GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
-        //    boxTypeToString.Add(bn, boxToInsert);
-        //}
+        foreach (string bn in camoBoxName)
+        {
+            GameObject boxToInsert = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemiesFolder + bn + ".prefab");
+            boxTypeToString.Add(bn, boxToInsert);
+        }
     }
     void Start()
     {
@@ -58,23 +58,25 @@ public class WaveManager : MonoBehaviour
     }
     void startWave1() {
         waveOnGoing = true;
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoMetal"], 20, 1f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
+        Debug.Log("summoning");
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["orange"], 1, 1f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["pink"], 1, 1f),5f));
+        //   StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 20, 1f), 2f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
     }
     void startWave2()
     {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 35, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blue"], 5, 2f),10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 25f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 35f));
     }
     void startWave3()
     {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 5, 2f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 40f));
     }
 
     void startWave4()
@@ -82,7 +84,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 10, 2f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 40f));
     }
 
     void startWave5()
@@ -91,7 +93,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 15, 0.5f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 27.5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 37.5f));
     }
     void startWave6()
     {
@@ -132,7 +134,6 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(coroutine);
     }
     IEnumerator onGoingWaveCheck() {
-        Debug.Log("Checking");
         if (waveOnGoing) {
             Collider[] balloonsOnMap = Physics.OverlapSphere(gameObject.transform.position, 1000, (1 << 9));
             if (balloonsOnMap.Length == 0) {

@@ -10,11 +10,11 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
    
     private void Awake()
     {
-        boxColor = boxSO.boxType.lead;
+        boxColor =boxType.lead;
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
-        boxData.boxsesOnMap.Add(boxData.ID, gameObject);
+       
         if (id == -1)
         {
             id = boxData.ID;
@@ -22,10 +22,11 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
         boxData.ID++;
         StartCoroutine(Iframes());
     }
+    //milestone 7 added this script
     public override void damageTaken(int damage, GameObject p)
     {
 
-        boxSO.boxType downToLayer = pop(damage, boxColor);
+        boxType downToLayer = pop(damage, boxColor);
         bool canHitLeadq = p.GetComponent<IGiveProptieres>().returnCanHitLead();
         if (!canHitLeadq)
         {
@@ -33,19 +34,20 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
         }
         else
         {
-            if (downToLayer == boxSO.boxType.none)
+            if (downToLayer == boxType.none)
             {
                 Destroy(gameObject);
-                boxData.boxsesOnMap.Remove(boxData.ID);
+              
             }
             else
             {
-                GameObject box = Instantiate(boxData.boxTypeToGO[downToLayer], transform.position, Quaternion.identity);
+                GameObject boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
+                GameObject box = Instantiate(boxToMake, transform.position, Quaternion.identity);
                 IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
                 IIndex boxIndex = box.GetComponent<IIndex>();
                 boxIndex.wayPointReciever(i);
                 boxidenfication.setID(id);
-                boxData.boxsesOnMap.Remove(boxData.ID);
+                
                 Destroy(gameObject);
             }
         }
