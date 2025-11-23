@@ -27,13 +27,11 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
       
     public override void damageTaken(int damage, GameObject p)
     {
-      
             GameObject boxToMake;
             boxType downToLayer = pop(damage, boxType.black);
             if (downToLayer == boxType.none)
             {
                 Destroy(gameObject);
-
             }
             else
             {

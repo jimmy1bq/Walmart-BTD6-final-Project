@@ -36,17 +36,17 @@ public class OrangeBox : Box, IDamageTaken, IIndex
 
                     GameObject white = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoWhite" + ".prefab");
                     GameObject black = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoBlack" + ".prefab");
-                    Instantiate(white, gameObject.transform.position*1.1f, Quaternion.identity);
-                   
-                    IGetSetID whiteBoxidenfication = white.GetComponent<IGetSetID>();
+
+                    GameObject whiteGO = Instantiate(white, gameObject.transform.position*1.1f, Quaternion.identity);                   
+                    IGetSetID whiteBoxidenfication = whiteGO.GetComponent<IGetSetID>();
                     whiteBoxidenfication.setID(id);
 
-                    Instantiate(black, gameObject.transform.position, Quaternion.identity);
-                    IGetSetID blackBoxidenfication = black.GetComponent<IGetSetID>();
+                    GameObject blackGO = Instantiate(black, gameObject.transform.position, Quaternion.identity);
+                    IGetSetID blackBoxidenfication = blackGO.GetComponent<IGetSetID>();
                     blackBoxidenfication.setID(id);
 
-                    IIndex whiteBoxIndex = white.GetComponent<IIndex>();
-                    IIndex blackBoxIndex = black.GetComponent<IIndex>();
+                    IIndex whiteBoxIndex = whiteGO.GetComponent<IIndex>();
+                    IIndex blackBoxIndex = blackGO.GetComponent<IIndex>();
 
                     blackBoxIndex.wayPointReciever(i);                   
                     whiteBoxIndex.wayPointReciever(i);
@@ -56,19 +56,21 @@ public class OrangeBox : Box, IDamageTaken, IIndex
                 else
                 {
                     GameObject white = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "white" + ".prefab");
-                    Instantiate(white, gameObject.transform.position * 1.1f, Quaternion.identity);
-                    IGetSetID whiteBoxidenfication = white.GetComponent<IGetSetID>();
-                    IIndex whiteBoxIndex = white.GetComponent<IIndex>();
-                    whiteBoxIndex.wayPointReciever(i);
-                    whiteBoxidenfication.setID(id);
                     GameObject black = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "black" + ".prefab");
-                    Instantiate(black, gameObject.transform.position, Quaternion.identity);
-                    IGetSetID blackBoxidenfication = black.GetComponent<IGetSetID>();
-                    blackBoxidenfication.setID(id);
-                    IIndex blackBoxIndex = black.GetComponent<IIndex>();
-                    blackBoxIndex.wayPointReciever(i);
 
-                   
+                    GameObject whiteGO = Instantiate(white, gameObject.transform.position * 1.1f, Quaternion.identity);
+                    IGetSetID whiteBoxidenfication = whiteGO.GetComponent<IGetSetID>();
+                    whiteBoxidenfication.setID(id);
+
+                    GameObject blackGO = Instantiate(black, gameObject.transform.position, Quaternion.identity);
+                    IGetSetID blackBoxidenfication = blackGO.GetComponent<IGetSetID>();
+                    blackBoxidenfication.setID(id);
+
+                    IIndex whiteBoxIndex = whiteGO.GetComponent<IIndex>();
+                    IIndex blackBoxIndex = blackGO.GetComponent<IIndex>();
+
+                    blackBoxIndex.wayPointReciever(i);
+                    whiteBoxIndex.wayPointReciever(i);
                     Destroy(gameObject);
 
                 }
