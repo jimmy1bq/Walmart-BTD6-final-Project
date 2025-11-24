@@ -164,8 +164,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             projctile = projectile;
         }
         if (hiddenDec) {
-            boxLayerToHit = (1 << 9 | 1 << 11);
-        
+            boxLayerToHit = (1 << 9 | 1 << 11);        
         }
         pathToTier[upgradeTier] += 1;
         updateGUI();

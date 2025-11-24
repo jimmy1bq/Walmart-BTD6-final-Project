@@ -59,7 +59,7 @@ public class WaveManager : MonoBehaviour
     void startWave1() {
         waveOnGoing = true;
         Debug.Log("summoning");
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["yellow"], 1, 1f));
+        //StartCoroutine(spawnTimeInbetween(boxTypeToString["ceramic"], 20, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
         //   StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 20, 1f), 2f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));

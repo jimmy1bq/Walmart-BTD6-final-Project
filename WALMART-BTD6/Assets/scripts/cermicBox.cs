@@ -34,7 +34,12 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
             }
             if (camo)
             {
-                if (damage - outerProtectiveLayer == 1)
+                if (damage - outerProtectiveLayer == 0) {
+                    GameObject seaGreenBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoSeaGreen" + ".prefab");
+                    spawnEnemiesAmount(seaGreenBox, 2);
+
+                }
+                else if (damage - outerProtectiveLayer == 1)
                 {
                     GameObject orangeBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoOrange" + ".prefab");
                     spawnEnemiesAmount(orangeBox, 8);
@@ -55,7 +60,13 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
             }
             if (!camo)
             {
-                Debug.Log(outerProtectiveLayer);
+                Debug.Log(damage - outerProtectiveLayer);
+                if (damage - outerProtectiveLayer == 0)
+                {
+                    GameObject seaGreenBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "seaGreen" + ".prefab");
+                    spawnEnemiesAmount(seaGreenBox, 2);
+
+                }
                 if (damage - outerProtectiveLayer == 1)
                 {
                     GameObject orangeBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "orange" + ".prefab");

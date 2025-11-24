@@ -138,8 +138,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             Debug.DrawRay(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple, 0.5f);
             hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y*.75f, boxLayerToHit);
             if (hit.Length > 0)
-            {
-               
+            {               
                 for (int i = 0; i < hit.Length; i++)
                 {                    
                     int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().parentGetID();

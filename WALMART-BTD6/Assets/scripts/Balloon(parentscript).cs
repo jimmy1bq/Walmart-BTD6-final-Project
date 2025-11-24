@@ -60,8 +60,9 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             { 4,boxType.yellow },
             { 5,boxType.pink },
             { 6,boxType.black },
-            { 7,boxType.lead },
-            { 8,boxType.seagreen },
+            { 7,boxType.orange},
+            { 8,boxType.seagreen},
+            { 9,boxType.ceramic}
     };
     //balloon speed
     protected Dictionary<boxType, int> balloonSpeed = new Dictionary<boxType, int>() {
@@ -155,8 +156,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
         }
         else { 
             downToLayer = layerToBalloon[damageTaken]; 
-        }
-           
+        }           
         int moneyEarned = balloonLayer[box] - balloonLayer[downToLayer];
         events.GainCash.Invoke(moneyEarned);
         return downToLayer;
