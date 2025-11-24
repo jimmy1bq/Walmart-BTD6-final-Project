@@ -57,6 +57,11 @@ public class WaveManager : MonoBehaviour
         listOfWaves.Add(startWave6);
         listOfWaves.Add(startWave7);
         listOfWaves.Add(startWave8);
+        listOfWaves.Add(startWave9);
+        listOfWaves.Add(startWave10);
+        listOfWaves.Add(startWave11);
+        listOfWaves.Add(startWave12);
+        listOfWaves.Add(startWave13);
     }
     void startWave1() {
         waveOnGoing = true;
@@ -99,7 +104,7 @@ public class WaveManager : MonoBehaviour
     void startWave6()
     {
         waveOnGoing = true;
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 3, 0.5f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["green"], 3, 0.5f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 24f));
     }
@@ -127,6 +132,38 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 12, 2f), 5f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["red"], 12, 2f), 8f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 12, 2f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+
+    void startWave10()
+    {
+        waveOnGoing = true;
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["green"], 5, 0.5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 12, 2f), 5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["red"], 12, 2f), 8f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 12, 2f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+
+    void startWave11()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 12, 2f), 5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blue"], 40, 1f), 8f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 15, 2f), 15f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 48f));
+    }
+    void startWave12()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 30, 3f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 100f));
+    }
+
+    void startWave13()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
     }
 
@@ -173,12 +210,17 @@ public class WaveManager : MonoBehaviour
             StartCoroutine(onGoingWaveCheck());
         }
         else {
+            Transform startWaveButtonThing = null;
             Canvas canvasGUI=FindFirstObjectByType<Canvas>();
             int cc = canvasGUI.transform.childCount;
-            GameObject startWaveButtonThing = canvasGUI.transform.GetChild(cc-1).gameObject;
+            startWaveButtonThing = canvasGUI.transform.Find("speedUpButton(Clone)");
+           
+            if (startWaveButtonThing == null) {
+                startWaveButtonThing = canvasGUI.transform.Find("speedDownButton(Clone)");
+            }
             GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "WaveStartButton" + ".prefab"), startWaveButtonThing.transform.position, Quaternion.identity);
             speedUpButton.transform.parent = canvasGUI.transform;
-            Destroy(startWaveButtonThing);
+            Destroy(startWaveButtonThing.gameObject);
         }
     }
     bool nextWave() {

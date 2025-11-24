@@ -100,14 +100,15 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     //            Destroy(gameObject);
     //        }
     //    }
-    //}
+    //
     //basically use raycast to detect collision by shooting a ray forward and backwards by using the difference of position and normalizing the position to get direction. Backward shoots a raybackwards from the current to last position to check if it missed anything
 
     protected void safetyCheckForCollisionBackWards() {
         RaycastHit[] hit = new RaycastHit[(int)pierce];
         if (lastPoistion != null) {
-            Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple,999f);
-            hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion)*1.5f,boxLayerToHit);
+            Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion)* Vector3.Magnitude(gameObject.transform.position - lastPoistion) , Color.rebeccaPurple,0.01f);
+            hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion),boxLayerToHit);
+            Debug.Log(hit.Length);
             if (hit.Length > 0) {
         
                 for (int i = 0; i < hit.Length; i++)
@@ -135,8 +136,8 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         RaycastHit[] hit = new RaycastHit[(int)pierce];
         if (!isDead)
         {
-            Debug.DrawRay(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), Color.rebeccaPurple, 0.5f);
-            hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y*.75f, boxLayerToHit);
+            Debug.DrawRay(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion)* gameObject.transform.localScale.y * .5f, Color.rebeccaPurple,0.01f);
+            hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y*.5f, boxLayerToHit);
             if (hit.Length > 0)
             {               
                 for (int i = 0; i < hit.Length; i++)

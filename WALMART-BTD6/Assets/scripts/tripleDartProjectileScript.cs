@@ -10,11 +10,12 @@ public class tripleDartProjectileScript : projectileParentForStraightLinearProj
         projSpeed = 1;
         canHitLead = false;
     }
+    //milestone 7
     protected override void Start()
     {
         base.Start();
-        GameObject leftDartGO = Instantiate(dartProjctile, transform.position, Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 0));
-        GameObject rightDartGO = Instantiate(dartProjctile, transform.position, Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 0));
+        GameObject leftDartGO = Instantiate(dartProjctile, transform.position, Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y+15f, 0));
+        GameObject rightDartGO = Instantiate(dartProjctile, transform.position, Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y-15f, 0));
         leftDartGO.GetComponent<IGiveEnemy>().setEnemy(targetEnemy);
         rightDartGO.GetComponent<IGiveEnemy>().setEnemy(targetEnemy);
     }
