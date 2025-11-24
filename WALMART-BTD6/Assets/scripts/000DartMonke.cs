@@ -64,21 +64,23 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             critsShot4 = false;
             critsShot5 = true;
         }
+        Debug.Log(critsShot5);
+        Debug.Log(critsShot4);
     }
     protected override void attackEnemy(GameObject closestEnemy)
     {
         Debug.Log(ithShot);
-        Debug.Log("HI");
         GameObject proj;
-        if (critsShot4 == true && ithShot == 4)
+        if (critsShot4 == true && ithShot == 9)
         {
             proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "critUpgradedBolt" + ".prefab");
             ithShot = 0;
         }
-        else if (critsShot5 == true && ithShot == 9)
+        else if (critsShot5 == true && ithShot == 4)
         {
-            proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "critUpgradedBolt" + ".prefab");
+            proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "strongestBolt" + ".prefab");
             ithShot = 0;
+            Debug.Log("WOINEFSKL");
         }
         else {
             proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");

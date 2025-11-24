@@ -108,7 +108,6 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         if (lastPoistion != null) {
             Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion)* Vector3.Magnitude(gameObject.transform.position - lastPoistion) , Color.rebeccaPurple,0.01f);
             hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion),boxLayerToHit);
-            Debug.Log(hit.Length);
             if (hit.Length > 0) {
         
                 for (int i = 0; i < hit.Length; i++)
