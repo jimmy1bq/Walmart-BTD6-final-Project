@@ -13,6 +13,9 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
 {
     [SerializeField] LayerMask enemyOnly;
     [SerializeField] GameObject rangeCirclePF;
+    bool critsShot4 = false;
+    bool critsShot5 = false;
+    int ithShot = 0;
 
     //string monkeyModelPath = "Assets/Resources/DartMonkey/";
     //string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
@@ -49,6 +52,48 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         rangeC.transform.parent = gameObject.transform;
         rangeC.SetActive(false);
         price = 200;
+    }
+    protected override void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade, bool hiddenDec)
+    {
+        base.towerUpgrade(upgradeTier, projectile, statsUpgrade, hiddenDec);
+        if (pathToTier["bot"] >= 4) {
+            critsShot4 = true;      
+        }
+        if (pathToTier["bot"] >= 5)
+        {
+            critsShot4 = false;
+            critsShot5 = true;
+        }
+    }
+    protected override void attackEnemy(GameObject closestEnemy)
+    {
+        Debug.Log(ithShot);
+        Debug.Log("HI");
+        GameObject proj;
+        if (critsShot4 == true && ithShot == 4)
+        {
+            proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "critUpgradedBolt" + ".prefab");
+            ithShot = 0;
+        }
+        else if (critsShot5 == true && ithShot == 9)
+        {
+            proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "critUpgradedBolt" + ".prefab");
+            ithShot = 0;
+        }
+        else {
+            proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
+            ithShot++;
+        }
+        gameObject.transform.LookAt(closestEnemy.transform);
+        Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);        
+        GameObject projctileGO = Instantiate(proj, projctileSpawn, Quaternion.Euler(gameObject.transform.eulerAngles.x + 90, gameObject.transform.eulerAngles.y, 0));
+        projctileGO.GetComponent<IStatChange>().statChangePierce(stats["pierce"]);
+        projctileGO.GetComponent<IStatChange>().statChangeProjSpeed(stats["ProjctileSpeed"]);
+        projctileGO.GetComponent<IGiveEnemy>().setEnemy(closestEnemy);
+        projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+        projctileGO.GetComponent<IGiveProptieres>().getParentLayerMask(boxLayerToHit);
+       
+
     }
   
 

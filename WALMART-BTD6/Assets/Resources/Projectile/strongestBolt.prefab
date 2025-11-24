@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7515018125403055316}
   - component: {fileID: 6965418179260029416}
   - component: {fileID: 1320315818867061229}
-  - component: {fileID: -6115115848161024111}
+  - component: {fileID: 2003864970014077196}
   m_Layer: 0
   m_Name: strongestBolt
   m_TagString: friendlyProjctile
@@ -142,7 +142,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!114 &-6115115848161024111
+--- !u!114 &2003864970014077196
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,6 +151,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6891858428342968362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b2f32133d9c75348ba65644f9ba6f69, type: 3}
+  m_Script: {fileID: 11500000, guid: 974b5fa39e391f240a179ec4db2ece4c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::strongestarrowProjctile
+  m_EditorClassIdentifier: Assembly-CSharp::critStrongestarrowProjctile

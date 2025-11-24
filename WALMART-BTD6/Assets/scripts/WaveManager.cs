@@ -14,7 +14,7 @@ public class WaveManager : MonoBehaviour
     Dictionary<string, GameObject> boxTypeToString = new Dictionary<string, GameObject>() {
     };
     List<string> boxName = new List<string>() { 
-    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic"
+    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic","blueTank"
     };
     //milestone 7 don't forget to say layer mask change
     List<string> camoBoxName = new List<string>() {
@@ -65,8 +65,7 @@ public class WaveManager : MonoBehaviour
     }
     void startWave1() {
         waveOnGoing = true;
-        Debug.Log("summoning");
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f));
         //StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
         //   StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 20, 1f), 2f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));

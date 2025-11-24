@@ -120,12 +120,15 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
         }
         AdvanceIndex = StartCoroutine(advanceIndex());
     }
-    protected IEnumerator advanceIndex()
+    protected virtual IEnumerator advanceIndex()
     {
+        Debug.Log("hi");
+        gameObject.transform.LookAt(WayPointManager.instance.wayPoints[i].transform);
         yield return new WaitUntil(onWayPoint);
         i++;
         if (!(i >= totalWayPoints + 1))
         {
+            
             StartCoroutine(advanceIndex());
         }
         else

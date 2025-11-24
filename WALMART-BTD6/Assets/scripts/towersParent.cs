@@ -69,8 +69,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
   
     protected IEnumerator closestTargetting()
-    {
-      
+    {      
         GameObject closestEnemy = null;
         //milestone 7 layermask change
         Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
@@ -87,15 +86,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         if (closestEnemy != null)
         {
-            gameObject.transform.LookAt(closestEnemy.transform);
-            Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
-            GameObject proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
-            GameObject projctileGO = Instantiate(proj, projctileSpawn, Quaternion.Euler(gameObject.transform.eulerAngles.x+90,gameObject.transform.eulerAngles.y,0));
-            projctileGO.GetComponent<IStatChange>().statChangePierce(stats["pierce"]);
-            projctileGO.GetComponent<IStatChange>().statChangeProjSpeed(stats["ProjctileSpeed"]);
-            projctileGO.GetComponent<IGiveEnemy>().setEnemy(closestEnemy);
-            projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
-            projctileGO.GetComponent<IGiveProptieres>().getParentLayerMask(boxLayerToHit);
+            attackEnemy(closestEnemy);
             yield return new WaitForSeconds(stats["FireRate"]);
         }
         else if (closestEnemy == null)
@@ -116,6 +107,18 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected void strongestTargettign() { }
     //milestone 7
     protected void weakestTargettign() { }
+    //Milestone 7
+    protected virtual void attackEnemy(GameObject closestEnemy) {
+        gameObject.transform.LookAt(closestEnemy.transform);
+        Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
+        GameObject proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
+        GameObject projctileGO = Instantiate(proj, projctileSpawn, Quaternion.Euler(gameObject.transform.eulerAngles.x + 90, gameObject.transform.eulerAngles.y, 0));
+        projctileGO.GetComponent<IStatChange>().statChangePierce(stats["pierce"]);
+        projctileGO.GetComponent<IStatChange>().statChangeProjSpeed(stats["ProjctileSpeed"]);
+        projctileGO.GetComponent<IGiveEnemy>().setEnemy(closestEnemy);
+        projctileGO.GetComponent<IProjctileOwner>().setProjectileOwner(gameObject);
+        projctileGO.GetComponent<IGiveProptieres>().getParentLayerMask(boxLayerToHit);
+    }
     bool enemyInRange()
     {
         //milestone 7 layer mask
@@ -152,7 +155,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     }
     //milestone 7
-    protected void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade,bool hiddenDec)
+    protected virtual void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade,bool hiddenDec)
     {
         
         foreach (var statBuff in statsUpgrade)
