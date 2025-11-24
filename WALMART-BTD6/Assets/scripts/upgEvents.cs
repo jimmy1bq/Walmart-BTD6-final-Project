@@ -157,7 +157,7 @@ public class dMUpgradeEvents : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-250);
-            events.towerUpgrade.Invoke("mid", "", stats, false);
+            events.towerUpgrade.Invoke("mid", "tripleDartProjectile", stats, false);
         }
     }
     public void upgrade300()

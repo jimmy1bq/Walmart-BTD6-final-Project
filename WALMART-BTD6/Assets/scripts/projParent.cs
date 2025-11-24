@@ -35,7 +35,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
 
 
 
-    protected void Start()
+    protected virtual void Start()
     {
         if (targetEnemy != null)
         {

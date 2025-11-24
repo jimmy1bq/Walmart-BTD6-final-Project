@@ -55,20 +55,21 @@ public class WaveManager : MonoBehaviour
         listOfWaves.Add(startWave4);
         listOfWaves.Add(startWave5);
         listOfWaves.Add(startWave6);
+        listOfWaves.Add(startWave7);
+        listOfWaves.Add(startWave8);
     }
     void startWave1() {
         waveOnGoing = true;
         Debug.Log("summoning");
-        //StartCoroutine(spawnTimeInbetween(boxTypeToString["ceramic"], 20, 1f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
+        //StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
         //   StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 20, 1f), 2f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
     void startWave2()
     {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 35, 1f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blue"], 5, 2f),10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 35f));
     }
     void startWave3()
@@ -76,7 +77,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 5, 2f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 40f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
 
     void startWave4()
@@ -84,7 +85,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 10, 2f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 40f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
     }
 
     void startWave5()
@@ -93,16 +94,42 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 15, 0.5f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 37.5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 24f));
     }
     void startWave6()
     {
-
         waveOnGoing = true;
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 15, 0.5f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 3, 0.5f));
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 27.5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 24f));
     }
+
+    void startWave7()
+    {
+        waveOnGoing = true;
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["green"], 5, 0.5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["pink"], 5, 2f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
+    }
+
+    void startWave8()
+    {
+        waveOnGoing = true;
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["green"], 5, 0.5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 12, 2f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+
+    void startWave9()
+    {
+        waveOnGoing = true;
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["green"], 5, 0.5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 12, 2f), 5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["red"], 12, 2f), 8f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 12, 2f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+
 
 
 
