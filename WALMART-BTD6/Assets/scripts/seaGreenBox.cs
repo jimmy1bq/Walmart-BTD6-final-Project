@@ -13,17 +13,13 @@ public class seaGreenBoxScript : Box, IDamageTaken, IIndex
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
 
-        if (id == -1)
-        {
-            id = boxData.ID;
-        }
+        personalId = boxData.ID;
         boxData.ID++;
-        StartCoroutine(Iframes());
     }
     //milestone 7
     public override void damageTaken(int damage, GameObject p)
     {
-        Debug.Log("Pop");
+       
         boxType downToLayer = pop(damage, boxColor);
         if (downToLayer == boxType.none)
         {
@@ -52,7 +48,7 @@ public class seaGreenBoxScript : Box, IDamageTaken, IIndex
         }
              if(!camo)
                 {
-                Debug.Log("Pop3");
+              
                 if (damage == 1)
                     {
                         GameObject orangeBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "orange" + ".prefab");

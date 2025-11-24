@@ -46,10 +46,11 @@ public interface ICollidingWithTowers {
 public interface IGetSetID
 {
     public void setID(int ID);
-    public int GetID();
+    public int parentGetID();
+    public int personalGetID();
+    //milestrone 7: pure ID doesn't work  because if 2 gameobjects have the same id on the map the projectile will hit one and ignore the other one
 
-    
-
+   
 }
 public interface IGiveProptieres 
 {

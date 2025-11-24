@@ -8,16 +8,77 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
 {
     private void Awake()
     {
+        outerProtectiveLayer = 10;
         boxColor = boxType.ceramic;
         layer = balloonLayer[boxColor];
-        hp = 10;
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
-   
+        personalId = boxData.ID;
         boxData.ID++;
-        StartCoroutine(Iframes());
-      
+    }
+    public override void damageTaken(int damage, GameObject p)
+    {
 
+        
+        if (!(outerProtectiveLayer - damage <= 0))
+        {           
+            outerProtectiveLayer -= damage;
+        }
+        else
+        {
+           
+            boxType downToLayer = pop(damage-outerProtectiveLayer, boxColor);
+            if (downToLayer == boxType.none)
+            {
+                Destroy(gameObject);
+            }
+            if (camo)
+            {
+                if (damage - outerProtectiveLayer == 1)
+                {
+                    GameObject orangeBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoOrange" + ".prefab");
+                    spawnEnemiesAmount(orangeBox, 8);
+                }
+                else if (damage - outerProtectiveLayer == 2)
+                {
+                    GameObject white = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoWhite" + ".prefab");
+                    GameObject black = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoBlack" + ".prefab");
+                    spawnEnemiesAmount(white, 8);
+                    spawnEnemiesAmount(black, 8);
+                }
+                else if (damage - outerProtectiveLayer > 2)
+                {
+                    GameObject boxToMake;
+                    boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringCamo[downToLayer] + ".prefab");
+                    spawnEnemiesAmount(boxToMake, 16);
+                }
+            }
+            if (!camo)
+            {
+                Debug.Log(outerProtectiveLayer);
+                if (damage - outerProtectiveLayer == 1)
+                {
+                    GameObject orangeBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "orange" + ".prefab");
+                    spawnEnemiesAmount(orangeBox, 8);
+                }
+                else if (damage - outerProtectiveLayer == 2)
+                {
+                    GameObject white = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "white" + ".prefab");
+                    GameObject black = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "black" + ".prefab");
+                    spawnEnemiesAmount(white, 8);
+                    spawnEnemiesAmount(black, 8);
+                }
+                else if (damage - outerProtectiveLayer > 2)
+                {
+                    GameObject boxToMake;
+                    boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
+                    spawnEnemiesAmount(boxToMake, 16);
+                }
+            }
+            Destroy(gameObject);
+        }
     }
 }
+ 
+
 

@@ -12,11 +12,8 @@ public class YellowBox : Box, IDamageTaken, IIndex
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
-       
-        if (id == -1)
-        {
-            id = boxData.ID;
-        }
+
+        personalId = boxData.ID;
         boxData.ID++;
     }
 }

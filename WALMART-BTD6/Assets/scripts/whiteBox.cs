@@ -16,12 +16,8 @@ public class whiteBoxScript : Box, IDamageTaken, IIndex
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
 
-        if (id == -1)
-        {
-            id = boxData.ID;
-        }
+        personalId = boxData.ID;
         boxData.ID++;
-
     }
     public override void damageTaken(int damage, GameObject p)
     {

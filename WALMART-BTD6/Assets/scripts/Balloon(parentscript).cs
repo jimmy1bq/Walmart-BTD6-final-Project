@@ -15,6 +15,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
         ceramic, moab, bfb, zomg, ddt, bad
     }
 
+   
+
     [SerializeField] protected boxSO boxData;
     protected Coroutine AdvanceIndex;
     protected boxType boxColor;
@@ -22,9 +24,10 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     protected int layer;
     protected int balloonSpeedValue;
     protected int i = 0;
-    protected float hp;
+    protected int outerProtectiveLayer = 0;
     protected int totalWayPoints;
-    protected int id = -1;
+    protected int parentId = -1;
+    protected int personalId = -1;
     protected bool damaged = false;
 
     protected bool camo = false;
@@ -110,7 +113,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     protected void Start()
     {
         //milestone 7
-        Debug.Log(id);
+   
         if (gameObject.layer == 11) {
             camo = true;        
         }
@@ -181,23 +184,29 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     public virtual void damageTaken(int damage, GameObject p)
     {
         GameObject boxToMake;
-       boxType downToLayer = pop(damage, boxColor);
-        if (downToLayer ==boxType.none)
-        {
-            Destroy(gameObject);
+        boxType downToLayer = pop(damage, boxColor);
+        if (!(outerProtectiveLayer - damage <= 0)) {
+            outerProtectiveLayer -= damage;       
         }
         else
         {
-            if (camo)
+            if (downToLayer == boxType.none)
             {
-                boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringCamo[downToLayer] + ".prefab");
+                Destroy(gameObject);
             }
-            else 
+            else
             {
-                boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
+                if (camo)
+                {
+                    boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringCamo[downToLayer] + ".prefab");
+                }
+                else
+                {
+                    boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
+                }
+                spawnEnemiesAmount(boxToMake, 1);
+                Destroy(gameObject);
             }
-            spawnEnemiesAmount(boxToMake, 1);        
-            Destroy(gameObject);
         }
     }
     protected void spawnEnemiesAmount(GameObject enemyToSpawn, int amount) {
@@ -212,19 +221,21 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             IGetSetID boxidenfication = box.GetComponent<IGetSetID>();
             IIndex boxIndex = box.GetComponent<IIndex>();
             boxIndex.wayPointReciever(i);
-            boxidenfication.setID(id);
+            boxidenfication.setID(personalId);
         }
 
     }
 
-    public void setID(int IDs) {
-        Debug.Log(gameObject.name + IDs);
-        id = IDs;
+    public void setID(int IDs) {       
+        parentId = IDs;
     }
     
-    public int GetID() {
-        return id;  
+    public int parentGetID() {
+        return parentId;
     }
-    
+    public int personalGetID() {
+        return personalId;    
+    }
+
 
 }

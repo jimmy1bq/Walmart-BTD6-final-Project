@@ -111,14 +111,13 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             if (hit.Length > 0) {
         
                 for (int i = 0; i < hit.Length; i++)
-                {                    
-                    int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
-                    Debug.Log(idGO);
-                    Debug.Log(hit[i].collider.gameObject.name.ToString() + idGO);
-                    if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO))
+                {
+                    int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().parentGetID();
+                    int idGO2 = hit[i].collider.gameObject.GetComponent<IGetSetID>().personalGetID();
+                    if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
                     {                
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
-                        idOfNotToDamage.Add(idGO);
+                        idOfNotToDamage.Add(idGO2);
                         owner.GetComponent<IPopToPopCount>().damageDealt(damage);
                         pierce--;
                     }
@@ -142,13 +141,13 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             {
                
                 for (int i = 0; i < hit.Length; i++)
-                {                 
-                    int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().GetID();
-                    Debug.Log(hit[i].collider.gameObject.name.ToString() + idGO);
-                    if (isDead == false && i < hit.Length && !idOfNotToDamage.Contains(idGO))
+                {                    
+                    int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().parentGetID();
+                    int idGO2 = hit[i].collider.gameObject.GetComponent<IGetSetID>().personalGetID();
+                    if (isDead == false && i < hit.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
                     {
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
-                        idOfNotToDamage.Add(idGO);
+                        idOfNotToDamage.Add(idGO2);
                         owner.GetComponent<IPopToPopCount>().damageDealt(damage);
                         pierce--;
                     }

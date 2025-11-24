@@ -13,12 +13,9 @@ public class OrangeBox : Box, IDamageTaken, IIndex
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
-        if (id == -1)
-        {
-            id = boxData.ID;
-            boxData.ID++;
-        }
-       
+        personalId = boxData.ID;
+        boxData.ID++;
+
     }
     //milestone 7
     public override void damageTaken(int damage, GameObject p)
@@ -40,11 +37,11 @@ public class OrangeBox : Box, IDamageTaken, IIndex
 
                     GameObject whiteGO = Instantiate(white, gameObject.transform.position*1.1f, Quaternion.identity);                   
                     IGetSetID whiteBoxidenfication = whiteGO.GetComponent<IGetSetID>();
-                    whiteBoxidenfication.setID(id);
+                    whiteBoxidenfication.setID(personalId);
 
                     GameObject blackGO = Instantiate(black, gameObject.transform.position, Quaternion.identity);
                     IGetSetID blackBoxidenfication = blackGO.GetComponent<IGetSetID>();
-                    blackBoxidenfication.setID(id);
+                    blackBoxidenfication.setID(personalId);
 
                     IIndex whiteBoxIndex = whiteGO.GetComponent<IIndex>();
                     IIndex blackBoxIndex = blackGO.GetComponent<IIndex>();
@@ -61,11 +58,11 @@ public class OrangeBox : Box, IDamageTaken, IIndex
 
                     GameObject whiteGO = Instantiate(white, gameObject.transform.position * 1.1f, Quaternion.identity);
                     IGetSetID whiteBoxidenfication = whiteGO.GetComponent<IGetSetID>();
-                    whiteBoxidenfication.setID(id);
+                    whiteBoxidenfication.setID(personalId);
 
                     GameObject blackGO = Instantiate(black, gameObject.transform.position, Quaternion.identity);
                     IGetSetID blackBoxidenfication = blackGO.GetComponent<IGetSetID>();
-                    blackBoxidenfication.setID(id);
+                    blackBoxidenfication.setID(personalId);
 
                     IIndex whiteBoxIndex = whiteGO.GetComponent<IIndex>();
                     IIndex blackBoxIndex = blackGO.GetComponent<IIndex>();
