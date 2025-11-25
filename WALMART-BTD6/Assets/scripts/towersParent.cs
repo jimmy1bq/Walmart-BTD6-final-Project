@@ -92,7 +92,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         else if (closestEnemy == null)
         {
             //if theres no enemy in range waait until theres one in range
-            Debug.Log("NOTARGETSINRANGE");
+          
             yield return new WaitUntil(enemyInRange);
         }
         //later this is not going to be closesttargetting incase the player changes targetting

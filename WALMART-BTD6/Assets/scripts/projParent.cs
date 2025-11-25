@@ -102,12 +102,12 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     //    }
     //
     //basically use raycast to detect collision by shooting a ray forward and backwards by using the difference of position and normalizing the position to get direction. Backward shoots a raybackwards from the current to last position to check if it missed anything
-
+    //milestone 7
     protected void safetyCheckForCollisionBackWards() {
         RaycastHit[] hit = new RaycastHit[(int)pierce];
         if (lastPoistion != null) {
             Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion)* Vector3.Magnitude(gameObject.transform.position - lastPoistion) , Color.rebeccaPurple,0.01f);
-            hit = Physics.RaycastAll(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion),boxLayerToHit);
+            hit = Physics.RaycastAll(lastPoistion,Vector3.Normalize(gameObject.transform.position-lastPoistion),Vector3.Magnitude(gameObject.transform.position - lastPoistion),boxLayerToHit);
             if (hit.Length > 0) {
         
                 for (int i = 0; i < hit.Length; i++)

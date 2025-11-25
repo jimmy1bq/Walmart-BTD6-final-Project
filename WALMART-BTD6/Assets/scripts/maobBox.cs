@@ -5,7 +5,7 @@ public class moabBox : Box
 {
     private void Awake()
     {
-        balloonSpeedValue = 2.5f;
+        balloonSpeedValue = 2.3f;
         outerProtectiveLayer = 150;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;

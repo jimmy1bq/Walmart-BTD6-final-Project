@@ -69,7 +69,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     }
     protected override void attackEnemy(GameObject closestEnemy)
     {
-        Debug.Log(ithShot);
+        
         GameObject proj;
         if (critsShot4 == true && ithShot == 9)
         {
@@ -80,7 +80,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         {
             proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "critStrongestBolt" + ".prefab");
             ithShot = 0;
-            Debug.Log("WOINEFSKL");
+           
         }
         else {
             proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
