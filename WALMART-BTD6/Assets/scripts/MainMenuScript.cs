@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -17,10 +18,11 @@ public class MainMenuScript : MonoBehaviour
         GameObject bgColor = canvasGUI.transform.Find("BackGround").gameObject;
         originalPosMMF = monkeyMoneyFrame.transform.position;
         originalPosPB = playButton.transform.position;
-        oldBGColor = bgColor.GetComponent<UnityEngine.UI.Image>().color;
+        oldBGColor = bgColor.GetComponent<Image>().color;
         monkeyMoneyFrame.LeanMove(new Vector3(monkeyMoneyFrame.transform.position.x, 5000, monkeyMoneyFrame.transform.position.z), 1f);
         playButton.LeanMove(new Vector3(playButton.transform.position.x,  -5000, playButton.transform.position.z), 1f);
-        bgColor.LeanColor(new Color(64, 56, 42), 1f);
+        bgColor.LeanColor(new Color(64/255, 56/255, 42/255), 1f);
+        Debug.Log(bgColor);
 
     }
 
