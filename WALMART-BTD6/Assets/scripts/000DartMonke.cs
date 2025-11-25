@@ -64,8 +64,6 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             critsShot4 = false;
             critsShot5 = true;
         }
-        Debug.Log(critsShot5);
-        Debug.Log(critsShot4);
     }
     protected override void attackEnemy(GameObject closestEnemy)
     {

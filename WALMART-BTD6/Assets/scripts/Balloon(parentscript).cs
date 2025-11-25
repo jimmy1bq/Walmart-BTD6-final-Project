@@ -19,7 +19,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
 
     [SerializeField] protected boxSO boxData;
     protected Coroutine AdvanceIndex;
-    protected boxType boxColor;
+    protected boxType boxColor = boxType.none;
 
     protected int layer;
    
@@ -250,4 +250,6 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     {
        return Vector3.Distance(transform.position, WayPointManager.instance.wayPoints[i].position);
     }
+    public int returnBoxLayer() { return balloonLayer[boxColor]; }
+    public int returnOuterProtLayer() { return outerProtectiveLayer; }
 }

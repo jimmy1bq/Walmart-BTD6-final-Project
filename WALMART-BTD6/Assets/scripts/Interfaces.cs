@@ -63,6 +63,9 @@ public interface IreturnIndexNum
 {
     public int wayPointIndex();
     public float returnDistanceFromWayPoint();
+
+    public int returnBoxLayer();
+    public int returnOuterProtLayer();
 }
 
 
