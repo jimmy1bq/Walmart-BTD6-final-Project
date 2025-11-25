@@ -22,14 +22,16 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     protected boxType boxColor;
 
     protected int layer;
-    protected int balloonSpeedValue;
+   
     protected int i = 0;
     protected int outerProtectiveLayer = 0;
     protected int totalWayPoints;
     protected int parentId = -1;
     protected int personalId = -1;
-    protected bool damaged = false;
 
+    protected float balloonSpeedValue;
+
+    protected bool damaged = false;
     protected bool camo = false;
 
     protected string enemyModelPath = "Assets/Resources/boxEnemiesWScript/";
@@ -65,7 +67,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
             { 9,boxType.ceramic}
     };
     //balloon speed
-    protected Dictionary<boxType, int> balloonSpeed = new Dictionary<boxType, int>() {
+    protected Dictionary<boxType, float> balloonSpeed = new Dictionary<boxType, float>() {
             {boxType.red, 1 },
             {boxType.blue, 2},
             {boxType.green, 3 },
@@ -169,7 +171,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,int speed) { 
+    protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,float speed) { 
     gameObject.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
     protected IEnumerator Iframes()

@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class moabBox : Box
+public class BADBox : Box
 {
     private void Awake()
     {
-        balloonSpeedValue = 2.5f;
-        outerProtectiveLayer = 150;
+        balloonSpeedValue = 0.5f;
+        outerProtectiveLayer = 2000;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;
@@ -20,12 +20,21 @@ public class moabBox : Box
         {
             outerProtectiveLayer -= damage;
         }
-        else {
-            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "ceramic" + ".prefab");
-            spawnEnemiesAmount(boxToMake, 4);
-            Destroy(gameObject);
+        else
+        {
+            if (!(outerProtectiveLayer - damage < 0))
+            {
+                outerProtectiveLayer -= damage;
+            }
+            else
+            {
+                boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "zomgTank" + ".prefab");
+                spawnEnemiesAmount(boxToMake, 2);
+                boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "blackTank" + ".prefab");
+                spawnEnemiesAmount(boxToMake, 2);
+                Destroy(gameObject);
+            }
         }
-      
     }
     protected override IEnumerator advanceIndex()
     {

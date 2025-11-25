@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class moabBox : Box
+public class bfbBox : Box
 {
     private void Awake()
     {
-        balloonSpeedValue = 2.5f;
-        outerProtectiveLayer = 150;
+        balloonSpeedValue = 2;
+        outerProtectiveLayer = 400;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;
@@ -14,14 +14,14 @@ public class moabBox : Box
    
     public override void damageTaken(int damage, GameObject p)
     {
-
+        Debug.Log(damage);
         GameObject boxToMake;
         if (!(outerProtectiveLayer - damage < 0))
         {
             outerProtectiveLayer -= damage;
         }
         else {
-            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "ceramic" + ".prefab");
+            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "blueTank" + ".prefab");
             spawnEnemiesAmount(boxToMake, 4);
             Destroy(gameObject);
         }

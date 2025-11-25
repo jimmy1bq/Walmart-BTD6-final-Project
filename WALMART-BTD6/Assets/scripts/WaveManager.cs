@@ -14,7 +14,7 @@ public class WaveManager : MonoBehaviour
     Dictionary<string, GameObject> boxTypeToString = new Dictionary<string, GameObject>() {
     };
     List<string> boxName = new List<string>() { 
-    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic","blueTank"
+    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic","blueTank","redTank","zomgTank","blackTank","purpleTank"
     };
     //milestone 7 don't forget to say layer mask change
     List<string> camoBoxName = new List<string>() {
@@ -65,7 +65,7 @@ public class WaveManager : MonoBehaviour
     }
     void startWave1() {
         waveOnGoing = true;
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
         //StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
         //   StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 20, 1f), 2f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
@@ -163,10 +163,327 @@ public class WaveManager : MonoBehaviour
     {
         waveOnGoing = true;
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
-        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
+    }
+    void startWave14()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["pink"], 13, 2f), 2f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 35f));
     }
 
+    void startWave15()
+    {
+        waveOnGoing = true;
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 30, 2f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 5, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["black"], 5, 3f), 7f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 22f));
+    }
+    void startWave16()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 15, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 15, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blue"], 10, 3f), 5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
+    }
+    void startWave17()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["red"], 100, 0.5f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 50f));
+    }
+    void startWave18()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
+    }
 
+    void startWave19()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["metal"], 30, 0.5f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 15f));
+    }
+
+    void startWave20()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["metal"], 5, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["black"], 5, 3f), 2f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 5, 3f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["orange"], 5, 3f), 5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
+    }
+    void startWave21()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoPink"], 10, 1f), 5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoWhite"], 5, 2f), 7f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 22f));
+    }
+    void startWave22()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["red"], 10, 2f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blue"], 10, 4f), 2f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 10, 3f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 10, 1f), 4f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["pink"], 10, 5f), 5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 55f));
+    }
+    void startWave23()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["seaGreen"], 5, 1f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 5f));
+    }
+    void startWave24()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["seaGreen"], 10, 1f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["orange"], 10, 1f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoOrange"], 1, 1f), 5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 13f));
+    }
+    void startWave25()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["orange"], 16, 3f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 12, 3f), 5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 41f));
+    }
+    void startWave26()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 10, 1.5f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["black"], 10, 2.5f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["seaGreen"], 5, 3f),20f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["ceramic"], 3, 3f), 30f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 39f));
+    }
+    void startWave27()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["ceramic"], 10, 2.3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 23f));
+    }
+    void startWave28()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["white"], 10, 1.5f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["black"], 10, 2.5f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["metal"], 10, 5f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["seaGreen"], 5, 3f), 20f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 53f));
+    }
+    void startWave29()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["ceramic"], 10, 2.3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["seaGreen"], 5, 3f), 10f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave30()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 0f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 1f));
+    }
+    void startWave31()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoWhite"], 10, 3f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["metal"], 10, 3f), 8f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 38f));
+    }
+    void startWave32()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["red"], 100, 0.5f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 50f));
+    }
+    void startWave33()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoRed"], 100, 0.5f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 50f));
+    }
+    void startWave34()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 2, 20f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["metal"], 20, 2f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["purple"], 20, 0.5f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 40f));
+    }
+    void startWave35()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoMetal"], 5, 2f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 10f));
+    }
+    void startWave36()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoPurple"], 10, 3f), 5f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave37()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 5, 25f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 100f));
+    }
+    void startWave38()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 3f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 6f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 36f));
+    }
+    void startWave39()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["ceramic"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 5, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave40()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoSeaGreen"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWav41()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave42()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave43()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave44()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave45()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave46()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave47()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave48()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave49()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave50()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave51()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave52()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave53()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave54()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave55()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave56()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave57()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave58()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave59()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
+    void startWave60()
+    {
+        waveOnGoing = true;
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoYellow"], 10, 3f), 0f));
+        StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
+    }
 
 
 
@@ -233,3 +550,8 @@ public class WaveManager : MonoBehaviour
     }
 
 }
+//StartCoroutine(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f));
+//StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["redTank"], 1, 1f), 0f));
+//StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["zomgTank"], 1, 1f), 5f));
+//StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blackTank"], 1, 1f), 10f));
+//StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["purpleTank"], 1, 1f), 0f));

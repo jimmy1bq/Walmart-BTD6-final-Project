@@ -25,14 +25,13 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
             outerProtectiveLayer -= damage;
         }
         else
-        {
-           
+        {           
             boxType downToLayer = pop(damage-outerProtectiveLayer, boxColor);
             if (downToLayer == boxType.none)
             {
                 Destroy(gameObject);
             }
-            if (camo)
+            else if (camo)
             {
                 if (damage - outerProtectiveLayer == 0) {
                     GameObject seaGreenBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "camoSeaGreen" + ".prefab");
@@ -58,7 +57,7 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
                     spawnEnemiesAmount(boxToMake, 16);
                 }
             }
-            if (!camo)
+            else if (!camo)
             {
                 Debug.Log(damage - outerProtectiveLayer);
                 if (damage - outerProtectiveLayer == 0)

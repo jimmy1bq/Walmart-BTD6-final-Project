@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class moabBox : Box
+public class zomgBox : Box
 {
     private void Awake()
     {
-        balloonSpeedValue = 2.5f;
-        outerProtectiveLayer = 150;
+        balloonSpeedValue = 1;
+        outerProtectiveLayer = 800;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;
@@ -21,7 +21,7 @@ public class moabBox : Box
             outerProtectiveLayer -= damage;
         }
         else {
-            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "ceramic" + ".prefab");
+            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "redTank" + ".prefab");
             spawnEnemiesAmount(boxToMake, 4);
             Destroy(gameObject);
         }

@@ -78,7 +78,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         }
         else if (critsShot5 == true && ithShot == 4)
         {
-            proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "strongestBolt" + ".prefab");
+            proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "critStrongestBolt" + ".prefab");
             ithShot = 0;
             Debug.Log("WOINEFSKL");
         }
