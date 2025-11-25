@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static boxSO;
 
-public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
+public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexNum
 
 {
     protected enum boxType
@@ -124,7 +124,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
     }
     protected virtual IEnumerator advanceIndex()
     {
-        Debug.Log("hi");
+        
+      
         gameObject.transform.LookAt(WayPointManager.instance.wayPoints[i].transform);
         yield return new WaitUntil(onWayPoint);
         i++;
@@ -242,5 +243,11 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID
         return personalId;    
     }
 
-
+    public int wayPointIndex() { 
+        return i;
+    }
+    public float returnDistanceFromWayPoint()
+    {
+       return Vector3.Distance(transform.position, WayPointManager.instance.wayPoints[i].position);
+    }
 }

@@ -30,16 +30,28 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected LayerMask boxLayerToHit = 1 << 9;
 
     protected int price;
+    protected int targettingNum;
     
     protected Dictionary<string, int> pathToTier;
     protected Dictionary<string, float> stats;
     //later put an array with function 
     
-
+    public delegate IEnumerator TargettingDelegate();
 
     bool hoveringS = false;
 
+    protected List<TargettingDelegate> targgetingList = new List<TargettingDelegate>();
+    protected List<string> targettingListNames = new List<string> { "first", "closest", "last", "strongest","random" };
 
+    protected void Start() {
+        events.changeTarget.AddListener(changeTarget);
+        targgetingList.Add(() => firstTargetting());
+        targgetingList.Add(() => closestTargetting());       
+        targgetingList.Add(() => lastTargettign());
+        targgetingList.Add(() => strongestTargettign());
+        targgetingList.Add(() => randomTargettign());
+
+    }
     protected void Update()
     {
         if (hoveringS) {
@@ -96,18 +108,100 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             yield return new WaitUntil(enemyInRange);
         }
         //later this is not going to be closesttargetting incase the player changes targetting
-        StartCoroutine(closestTargetting());
+        StartCoroutine(targgetingList[targettingNum].Invoke());
 
     }
     //milestone 7
-    protected void firstTargetting() { }
+    protected IEnumerator firstTargetting() {
+        GameObject firstEnemy = null;
+        float distance = 99999f;
+        int indexHighest = 0;
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
+        foreach (var enemies in enemyCollider) {       
+            IreturnIndexNum ei = enemies.gameObject.GetComponent<IreturnIndexNum>();
+            Debug.Log(ei.wayPointIndex() > indexHighest);
+          
+            if (ei.wayPointIndex() > indexHighest)
+            {                
+                firstEnemy = enemies.gameObject;
+                distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                indexHighest = ei.wayPointIndex();
+            }           
+            else if (ei.wayPointIndex() == indexHighest) {
+                if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint() < distance) {
+                    Debug.Log("hi");
+                    firstEnemy = enemies.gameObject;
+                    distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                }            
+            }             
+        }
+        Debug.Log(firstEnemy);
+        if (firstEnemy != null)
+        {
+            Debug.Log("HI");
+            attackEnemy(firstEnemy);
+            yield return new WaitForSeconds(stats["FireRate"]);
+        }
+        else {  yield return new WaitUntil(enemyInRange); }
+        StartCoroutine(targgetingList[targettingNum].Invoke());
+    }
     //milestone 7
-    protected void lastTargettign() { }
+    protected IEnumerator lastTargettign()
+    {
+        GameObject lastEnemy = null;
+        float distance = 99999f;
+        int indexLowest = 0;
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
+        foreach (var enemies in enemyCollider)
+        {
+            IreturnIndexNum ei = enemies.gameObject.GetComponent<IreturnIndexNum>();
+            Debug.Log(ei.wayPointIndex() > indexLowest);
+
+            if (ei.wayPointIndex() < indexLowest)
+            {
+                lastEnemy = enemies.gameObject;
+                distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                indexLowest = ei.wayPointIndex();
+            }
+            else if (ei.wayPointIndex() == indexLowest)
+            {
+                if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint() > distance)
+                {
+                    Debug.Log("hi");
+                    lastEnemy = enemies.gameObject;
+                    distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                }
+            }
+        }
+        Debug.Log(lastEnemy);
+        if (lastEnemy != null)
+        {
+            Debug.Log("HI");
+            attackEnemy(lastEnemy);
+            yield return new WaitForSeconds(stats["FireRate"]);
+        }
+        else { yield return new WaitUntil(enemyInRange); }
+        StartCoroutine(targgetingList[targettingNum].Invoke());
+    }
     //milestone 7
-    protected void strongestTargettign() { }
-    //milestone 7
-    protected void weakestTargettign() { }
+    protected IEnumerator strongestTargettign() { yield return new WaitForSeconds(1); }
     //Milestone 7
+    protected IEnumerator randomTargettign() { yield return new WaitForSeconds(1); }
+    protected void changeTarget(int change) {
+        if (targettingNum + change >= 4)
+        {
+            targettingNum = 0;
+        }
+        else if (targettingNum + change <= -1)
+        {
+            Debug.Log("HI");
+            targettingNum = 3;
+        }
+        else {
+            targettingNum += change;
+        }
+        updateTargetGUI();
+    }
     protected virtual void attackEnemy(GameObject closestEnemy) {
         gameObject.transform.LookAt(closestEnemy.transform);
         Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
@@ -216,8 +310,14 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             newGO.name = h.Key;
             //milestone 7
             popCountGO.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
+            updateTargetGUI();
             Destroy(childToDestroyGO);
         }
+    }
+    protected void updateTargetGUI()
+    {
+        GameObject text = monkeyUI.transform.Find("curTarget").transform.gameObject;  
+        text.GetComponent<TextMeshProUGUI>().text = targettingListNames[targettingNum];
     }
     protected string checkForBlockedPaths()
     {
@@ -290,7 +390,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             rangeC.GetComponent<Renderer>().material.color = new Color(255 / 255, 255 / 255, 255 / 255, 0.3f);
             gameObject.GetComponent<BoxCollider>().enabled = true;
             events.GainCash.Invoke(-price);
-            StartCoroutine(spawnattackCD());
+            StartCoroutine(targgetingList[targettingNum].Invoke());
         }
         else
         {
@@ -346,7 +446,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         monkeyUI = Instantiate(genUI);
         //upgradeGUI frame
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
-        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(2250, 1050, 0);
+        monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300, 610, 0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
         updateGUI();
         monkeyUI.SetActive(true);

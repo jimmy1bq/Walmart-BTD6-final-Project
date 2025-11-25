@@ -59,6 +59,11 @@ public interface IGiveProptieres
     public void getParentLayerMask(LayerMask layerToHit);
 
 }
+public interface IreturnIndexNum
+{
+    public int wayPointIndex();
+    public float returnDistanceFromWayPoint();
+}
 
 
 
