@@ -6,7 +6,6 @@ public class GameOverOrWinScript : MonoBehaviour
 {
     public void gameRestart() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
     public void gameExitt() {
         SceneManager.LoadScene(1);

@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
    public static GameManager instance;
    public int hp;
    public int coins;
+    public int totalAccumMonkeyMoney = 0;
    public  bool monkeyGUIActive= false;
 
    private void Awake()
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
         hp -= damage;
         events.LoseLivesUI.Invoke(hp);
         if (hp <= 0) {
-            events.gameOver.Invoke(true);        
+            events.gameOverEvent.Invoke(totalAccumMonkeyMoney,false);        
         }
     }
     void gainCoins(int cash)
@@ -37,4 +38,5 @@ public class GameManager : MonoBehaviour
         coins += cash;
         events.GainCashUI.Invoke(coins);
     }
+    
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class moneytracker : MonoBehaviour
 {
     public static moneytracker instance;
-    int monkeyMoney = 0;
+    public int monkeyMoney = 0;
     private void Awake()
     {
         instance = this;

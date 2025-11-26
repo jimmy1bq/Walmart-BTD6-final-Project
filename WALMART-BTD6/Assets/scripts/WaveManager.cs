@@ -115,7 +115,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 20, 1f));
         //StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 10f));
+      //  StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
     void startWave2()
@@ -558,6 +558,7 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["zomgTank"], 2, 30f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
+        events.gameOverEvent.Invoke(GameManager.instance.totalAccumMonkeyMoney, true);
     }
 
 
@@ -611,6 +612,7 @@ public class WaveManager : MonoBehaviour
             }
             GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "WaveStartButton" + ".prefab"), startWaveButtonThing.transform.position, Quaternion.identity);
             speedUpButton.transform.parent = canvasGUI.transform;
+            GameManager.instance.totalAccumMonkeyMoney += 10;
             Destroy(startWaveButtonThing.gameObject);
         }
     }
