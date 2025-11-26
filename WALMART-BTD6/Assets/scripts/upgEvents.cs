@@ -267,4 +267,7 @@ public class dMUpgradeEvents : MonoBehaviour
             events.towerUpgrade.Invoke("bot", "strongestBolt", stats, true);
         }
     }
+    public void destroyTower() { 
+    events.destroyTower.Invoke("sigma");
+    }
 }

@@ -9,6 +9,12 @@ public static class events {
     public static UnityEvent<GameObject> towerSelected = new UnityEvent<GameObject>();  
     public static TowerUpgradeEvent towerUpgrade = new TowerUpgradeEvent();
     public static UnityEvent<int> changeTarget = new UnityEvent<int>();
+    public static UnityEvent<string> destroyTower = new UnityEvent<string>();
+    public static UnityEvent<int> onLoad = new UnityEvent<int>();
+    public static UnityEvent<int> addMM = new UnityEvent<int>();
+    public static UnityEvent<int> gainExp = new UnityEvent<int>();
+    public static UnityEvent<int> levelUp = new UnityEvent<int>();
+    public static UnityEvent<bool> gameOver = new UnityEvent<bool>();
 
 }
 //milestone 7

@@ -62,7 +62,55 @@ public class WaveManager : MonoBehaviour
         listOfWaves.Add(startWave11);
         listOfWaves.Add(startWave12);
         listOfWaves.Add(startWave13);
+        listOfWaves.Add(startWave14);
+        listOfWaves.Add(startWave15);
+        listOfWaves.Add(startWave16);
+        listOfWaves.Add(startWave17);
+        listOfWaves.Add(startWave18);
+        listOfWaves.Add(startWave19);
+        listOfWaves.Add(startWave20);
+        listOfWaves.Add(startWave21);
+        listOfWaves.Add(startWave22);
+        listOfWaves.Add(startWave23);
+        listOfWaves.Add(startWave24);
+        listOfWaves.Add(startWave25);
+        listOfWaves.Add(startWave26);
+        listOfWaves.Add(startWave27);
+        listOfWaves.Add(startWave28);
+        listOfWaves.Add(startWave29);
+        listOfWaves.Add(startWave30);
+        listOfWaves.Add(startWave31);
+        listOfWaves.Add(startWave32);
+        listOfWaves.Add(startWave33);
+        listOfWaves.Add(startWave34);
+        listOfWaves.Add(startWave35);
+        listOfWaves.Add(startWave36);
+        listOfWaves.Add(startWave37);
+        listOfWaves.Add(startWave38);
+        listOfWaves.Add(startWave39);
+        listOfWaves.Add(startWave40);
+        listOfWaves.Add(startWave41);
+        listOfWaves.Add(startWave42);
+        listOfWaves.Add(startWave43);
+        listOfWaves.Add(startWave44);
+        listOfWaves.Add(startWave45);
+        listOfWaves.Add(startWave46);
+        listOfWaves.Add(startWave47);
+        listOfWaves.Add(startWave48);
+        listOfWaves.Add(startWave49);
+        listOfWaves.Add(startWave50);
+        listOfWaves.Add(startWave51);
+        listOfWaves.Add(startWave52);
+        listOfWaves.Add(startWave53);
+        listOfWaves.Add(startWave54);
+        listOfWaves.Add(startWave55);
+        listOfWaves.Add(startWave56);
+        listOfWaves.Add(startWave57);
+        listOfWaves.Add(startWave58);
+        listOfWaves.Add(startWave59);
+        listOfWaves.Add(startWave60);
     }
+    
     void startWave1() {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 20, 1f));
@@ -364,7 +412,7 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoSeaGreen"], 10, 3f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 34f));
     }
-    void startWav41()
+    void startWave41()
     {
         waveOnGoing = true;
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 100, 0.5f), 0f));

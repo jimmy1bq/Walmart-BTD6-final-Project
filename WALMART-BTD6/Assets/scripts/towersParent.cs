@@ -207,7 +207,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             }
             else if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnOuterProtLayer() == hpHighest)
             {
-                
+
                 if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnBoxLayer() > layerHighest)
                 {
                     layerHighest = enemies.gameObject.GetComponent<IreturnIndexNum>().returnBoxLayer();
@@ -232,8 +232,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     //Milestone 7
     protected IEnumerator randomTargettign() {
-
-      
         Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
         float randoNUM = UnityEngine.Random.Range(0, (float)(enemyCollider.Count() - 1));
 
@@ -258,7 +256,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             targettingNum = 0;
         }
         else if (targettingNum + change <= -1)
-        {            
+        {
             targettingNum = 4;
         }
         else
@@ -509,6 +507,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.SetActive(true);
         GameManager.instance.monkeyGUIActive = true;
         events.towerUpgrade.AddListener(towerUpgrade);
+        events.destroyTower.AddListener(destroyTowere);
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
         monkeyUI = Instantiate(genUI);
         //upgradeGUI frame
@@ -520,6 +519,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     public void towerUnSelected()
     {
+        events.destroyTower.RemoveListener(destroyTowere);
         events.towerUpgrade.RemoveListener(towerUpgrade);
         GameManager.instance.monkeyGUIActive = false;
         rangeC.SetActive(false);
@@ -530,8 +530,10 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     {
         return colliding;
     }
-
-
+    public void destroyTowere(string nub) {
+        Destroy(monkeyUI);
+        Destroy(gameObject);
+    }
 }
 
 

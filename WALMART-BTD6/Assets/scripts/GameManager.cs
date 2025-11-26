@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     void loseLives(int damage) { 
         hp -= damage;
         events.LoseLivesUI.Invoke(hp);
+        if (hp <= 0) {
+            events.gameOver.Invoke(true);        
+        }
     }
     void gainCoins(int cash)
     {
