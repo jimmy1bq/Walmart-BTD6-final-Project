@@ -16,7 +16,7 @@ public class GameOverTHing : MonoBehaviour
             statusGUI.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Resources/MiscellaniousGUI/winSprite.png");
         } 
         gameObject.LeanMove(new Vector3(830, 550, 0), 1f);
-        waitForfuncton();
+        StartCoroutine(waitForfuncton());
         //works only if you go from scene 1->this
         //   moneytracker.instance.monkeyMoney += moneyEarned;
 
