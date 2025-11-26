@@ -5,13 +5,11 @@ public class bombTower : towersParent
 {
     [SerializeField] LayerMask enemyOnly;
     [SerializeField] GameObject rangeCirclePF;
-   
-
-   
     Vector3 castOrigin;
 
     private void Awake()
     {
+        towerName = "bombShooter";
         projctile = "bomb";
         rangeCircle = rangeCirclePF;
         stats = new Dictionary<string, float>() {

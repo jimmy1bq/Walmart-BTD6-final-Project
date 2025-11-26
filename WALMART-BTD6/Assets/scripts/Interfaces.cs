@@ -67,6 +67,10 @@ public interface IreturnIndexNum
     public int returnBoxLayer();
     public int returnOuterProtLayer();
 }
+public interface IaddDamage
+{ 
+    public void addDamage(int damageToAdd);
+}
 
 
 

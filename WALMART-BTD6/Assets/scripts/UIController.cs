@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
     }
     void gainCoins(int Cash)
     {
-        cashText.text = (GameManager.instance.coins - Cash).ToString();
+        cashText.text = (GameManager.instance.coins).ToString();
     }
 
     public void StartWaveEvent() {

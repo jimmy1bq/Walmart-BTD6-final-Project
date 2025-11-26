@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6250204670255235277}
   - component: {fileID: 3555160744682764019}
+  - component: {fileID: -4692742161164952815}
+  - component: {fileID: -6601407512646481466}
   m_Layer: 8
   m_Name: 000cannontower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +55,49 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   rangeCirclePF: {fileID: 9021750937961377394, guid: 3f458679e5e5d4142ba6319ddfd88402, type: 3}
+--- !u!65 &-4692742161164952815
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321878236489005689}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 4, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!64 &-6601407512646481466
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321878236489005689}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &3781712264845410471
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,7 +109,6 @@ GameObject:
   - component: {fileID: 4553288654418156061}
   - component: {fileID: 621316967158388152}
   - component: {fileID: 3421516584067719538}
-  - component: {fileID: 1159696148408044745}
   m_Layer: 8
   m_Name: Cart
   m_TagString: Untagged
@@ -143,28 +187,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1159696148408044745
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3781712264845410471}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3596191092224140292, guid: 7e6a761314e948949bcab82789fcd1f5, type: 3}
 --- !u!1 &7228259733230950356
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +198,6 @@ GameObject:
   - component: {fileID: 7999588393867398510}
   - component: {fileID: 6389452112513909451}
   - component: {fileID: 9173572535735956993}
-  - component: {fileID: 4783322142639967368}
   m_Layer: 8
   m_Name: Cannon
   m_TagString: Untagged
@@ -255,25 +276,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4783322142639967368
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7228259733230950356}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 369689273696691656, guid: 9c2e0232e5a4410381e194e491f442e3, type: 3}

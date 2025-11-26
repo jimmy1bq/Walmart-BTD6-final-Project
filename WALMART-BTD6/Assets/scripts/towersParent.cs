@@ -14,8 +14,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     protected string monkeyModelPath = "Assets/Resources/DartMonkey/";
     protected string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
-    protected string monkeyGUIPath = "Assets/Resources/towerGUI/dartMonkeyGUi/";
+    protected string monkeyGUIPath = "Assets/Resources/towerGUI/";
     protected string projctilePath = "Assets/Resources/Projectile/";
+    protected string towerName;
 
     protected GameObject monkeyUI;
     protected GameObject rangeC;
@@ -72,7 +73,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z) * .75f, quaternion.identity, (1 << 8 | 1 << 10));
         if (colliders.Length > 0)
         {
-
+            Debug.Log(colliders[0]);
             return true;
         }
         return false;
@@ -142,7 +143,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
                 }
             }
         }
-        Debug.Log(firstEnemy);
         if (firstEnemy != null)
         {
             Debug.Log("HI");
@@ -364,7 +364,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             }
             else if ((h.Key != blockedPath) && !maxPaths.Contains(h.Key))
             {
-                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + h.Value + ".prefab");
+                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath+towerName + h.Value + ".prefab");
             }
             //the 0th child is the frame containnig everything 
             GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
@@ -455,6 +455,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             rangeC.GetComponent<Renderer>().material.color = new Color(255 / 255, 255 / 255, 255 / 255, 0.3f);
             gameObject.GetComponent<BoxCollider>().enabled = true;
             events.GainCash.Invoke(-price);
+            Debug.Log(GameManager.instance.coins);
             StartCoroutine(targgetingList[targettingNum].Invoke());
         }
         else
@@ -515,6 +516,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300, 610, 0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
         updateGUI();
+        
         monkeyUI.SetActive(true);
     }
     public void towerUnSelected()

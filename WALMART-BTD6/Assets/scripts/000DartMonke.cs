@@ -30,6 +30,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
     //protected Dictionary<string, int> stats;
     private void Awake()
     {
+        towerName = "dartMonkey/";
         projctile = "dartProjectile";
         rangeCircle = rangeCirclePF;
         stats = new Dictionary<string, float>() {

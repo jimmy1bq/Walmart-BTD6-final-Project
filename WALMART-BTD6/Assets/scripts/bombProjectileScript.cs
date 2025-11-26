@@ -1,14 +1,48 @@
 using UnityEngine;
 
-public class bombProjectileScript : projectileParentForStraightLinearProj
+public class bombProjectileParent : projectileParentForStraightLinearProj
 {
-    private void Awake()
+    protected string expolosionGOPath = "Assets/Resources/explosions/";
+    protected string explosionToMake;
+    protected int additionalDamage;
+   
+    protected override void safetyCheckForCollisionBackWards()
     {
-        //Only does damage with explosion
-        damage = 0;
-        pierce = 1;
-        projSpeed = 0.6f;
-        lifespan = 5;
-        canHitLead = true;
+        RaycastHit[] hit = new RaycastHit[(int)pierce];
+        if (lastPoistion != null)
+        {
+            Debug.DrawRay(gameObject.transform.position, -Vector3.Normalize(gameObject.transform.position - lastPoistion) * Vector3.Magnitude(gameObject.transform.position - lastPoistion), Color.rebeccaPurple, 0.01f);
+            hit = Physics.RaycastAll(lastPoistion, Vector3.Normalize(gameObject.transform.position - lastPoistion), Vector3.Magnitude(gameObject.transform.position - lastPoistion), boxLayerToHit);
+            if (hit.Length > 0 && !isDead)
+            {
+                explode();
+               
+
+            }
+        }
+    }
+    protected override void safetyCheckForCollisionForward()
+    {
+        RaycastHit[] hit = new RaycastHit[(int)pierce];
+        if (!isDead)
+        {
+            Debug.DrawRay(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion) * gameObject.transform.localScale.y * .5f, Color.rebeccaPurple, 0.01f);
+            hit = Physics.RaycastAll(gameObject.transform.position, Vector3.Normalize(gameObject.transform.position - lastPoistion), gameObject.transform.localScale.y * .5f, boxLayerToHit);
+            if (hit.Length > 0 && !isDead)
+            {
+               explode();
+             
+            }
+        }
+
+    }
+    void explode() { 
+      GameObject unityThing = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(expolosionGOPath + explosionToMake + ".prefab");
+      GameObject explosionGO = Instantiate(unityThing, transform.position, Quaternion.identity);
+        explosionGO.GetComponent<IaddDamage>().addDamage(additionalDamage);
+        explosionGO.GetComponent<IProjctileOwner>().setProjectileOwner(owner);
+        isDead = true;
+        Destroy(gameObject);
+
     }
 }
