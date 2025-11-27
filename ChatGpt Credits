@@ -32,6 +32,10 @@ mutiple layer mask layer using ints:
 https://chatgpt.com/c/691e2461-8538-832a-bac8-733b90195442
 Color being on a scale of 0-1 not 0-255:
 https://chatgpt.com/
+LeanTween Slider for exp bar(the code part of   LeanTween.value(gameObject, gameObject.GetComponent<Slider>().value, progress, 0.5f).setOnUpdate((expVal)):
+https://chatgpt.com/c/6926519d-d2e4-8329-a5af-504193eadf00
+simple VFX stuff:
+https://chatgpt.com/c/6927cb92-14f0-8327-b72c-90ea7d67c9cd
 
 Cluade credits:
 This one was for debugging some stupid silly mistake(i was tried at this point) that i was trying to firgure for 1 hour:
