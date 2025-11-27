@@ -44,6 +44,10 @@ This one was for debugging some stupid silly mistake(i was tried at this point) 
 https://claude.ai/chat/97e8ae71-01d8-4eb4-8e2a-f9068c5a2013
 Raycast Bug fix(raycasting forward is better than behind which is something that I did not know; it probabley depends):
 https://claude.ai/chat/1f511942-6735-4568-b93a-820af2b5127e
+Recommend me to pull out the updateTargetting method outside of the forreach loop and fixed one bug(then after that i decided that the other bug was that wasthe refernce of monkeyUI in targetting and i was right):
+https://claude.ai/chat/dcf645f3-4e95-4585-81c3-152dad15d78a
+But thats weird it shouldn't of 
+
 
 Google Ai search credit(for getting assets from a path during runtime holy life saver):
 https://www.google.com/search?q=how+to+update+unity+game+object+model+from+asset+path&sca_esv=8bf17b38d04cf49d&sxsrf=AE3TifNIfM2yh8VTVLAjWOn5aaKxfxQ4kw%3A1762732441903&source=hp&ei=mSkRabrnNOOPp84P4vyT4QQ&iflsig=AOw8s4IAAAAAaRE3qb8a86OQh3GfK-SDg1lMeBvVI9uw&ved=0ahUKEwj6l6CIouaQAxXjx8kDHWL-JEwQ4dUDCBo&uact=5&oq=how+to+update+unity+game+object+model+from+asset+path&gs_lp=Egdnd3Mtd2l6IjVob3cgdG8gdXBkYXRlIHVuaXR5IGdhbWUgb2JqZWN0IG1vZGVsIGZyb20gYXNzZXQgcGF0aDIFECEYoAEyBRAhGKABMgUQIRigATIFECEYoAFIiQJQAFgAcAB4AJABAJgBf6ABf6oBAzAuMbgBA8gBAPgBAvgBAZgCAaAClAGYAwCSBwMwLjGgB9UFsgcDMC4xuAeUAcIHAzMtMcgHCA&sclient=gws-wiz
