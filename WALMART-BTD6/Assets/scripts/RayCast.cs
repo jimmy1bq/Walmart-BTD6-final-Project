@@ -85,7 +85,7 @@ public class RayCast : MonoBehaviour
                   
                     if (selectedTower)
                     {
-                    Debug.Log("HI");
+                   
                         selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
                     }
                 selectedTower = hit.collider.gameObject;

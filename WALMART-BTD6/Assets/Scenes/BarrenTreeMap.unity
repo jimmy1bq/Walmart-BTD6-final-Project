@@ -3046,7 +3046,6 @@ GameObject:
   - component: {fileID: 591275712}
   - component: {fileID: 591275711}
   - component: {fileID: 591275710}
-  - component: {fileID: 591275709}
   m_Layer: 5
   m_Name: GamePasuedGUI
   m_TagString: Untagged
@@ -3054,18 +3053,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &591275709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591275708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4719da1f3efb50459dc35a25d26c960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!114 &591275710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4936,7 +4923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   hp: 100
-  coins: 9999999
+  coins: 10000
   totalAccumMonkeyMoney: 0
   monkeyGUIActive: 0
 --- !u!4 &1203566116

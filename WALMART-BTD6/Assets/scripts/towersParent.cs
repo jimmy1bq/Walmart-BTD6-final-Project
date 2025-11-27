@@ -388,18 +388,19 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             newGO.name = h.Key;           
             //milestone 7
             popCountGO.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
-            updateTargetGUI();
+    
            
         }
         foreach (GameObject h in childernsTODestroy) {
-            Destroy(childernsTODestroy);
+            Destroy(h);
         }
-        
+        updateTargetGUI();
     }
     protected void updateTargetGUI()
     {
         GameObject text = null;
-        monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
+     //   monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
+      
         text = monkeyUI.transform.Find("curTarget").gameObject;
         text.GetComponent<TextMeshProUGUI>().text = targettingListNames[targettingNum];
     }
