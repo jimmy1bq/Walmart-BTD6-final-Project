@@ -5,6 +5,7 @@ public class ddtBox : Box
 {
     private void Awake()
     {
+        tankOrNot = true;
         balloonSpeedValue = 5f;
         outerProtectiveLayer = 250;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;

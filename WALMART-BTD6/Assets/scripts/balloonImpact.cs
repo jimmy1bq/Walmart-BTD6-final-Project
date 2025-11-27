@@ -1,19 +1,18 @@
 using UnityEngine;
 
-public class maulerExplsoin : explosiveParent
+public class balloonCrush : explosiveParent
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        damage = 1;
+        damage = 10;
         explosiveRadius = 3;
         pierce = 15;
     }
     protected override void domainExpansion()
     {
-        gameObject.LeanScale(new Vector3(explosiveRadius, explosiveRadius, explosiveRadius), 0.05f);
+        gameObject.LeanScale(new Vector3(explosiveRadius, explosiveRadius, explosiveRadius), 0.1f);
         GameObject VFXPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/VFX/explosionVFX.prefab");
-        GameObject VFXGO = Instantiate(VFXPath, transform.position, Quaternion.identity);
+        GameObject VFXGO = Instantiate(VFXPath, transform.position,Quaternion.identity);
         ParticleSystem particleSystems = VFXGO.GetComponent<ParticleSystem>();
         VFXGO.transform.localScale = new Vector3(explosiveRadius, explosiveRadius, explosiveRadius);
         particleSystems.Play();
@@ -27,19 +26,18 @@ public class maulerExplsoin : explosiveParent
                 int idGO2 = hits[i].gameObject.GetComponent<IGetSetID>().personalGetID();
                 if (isDead == false && i < hits.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
                 {
-                    if (hits[i].gameObject.GetComponent<IreturnIndexNum>().returnIfTank())
-                    {
-                        hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage * 10, gameObject);
+                    if (!(hits[i].gameObject.GetComponent<IreturnIndexNum>().returnIfTank())) {
+                        hits[i].gameObject.GetComponent<IStun>().stunEnemy(3f);
                     }
-                    else { hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject); }                    
+                    hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject);
                     idOfNotToDamage.Add(idGO2);
                     owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);
                     pierce--;
                 }
-                StartCoroutine(killExplosion(0.1f, VFXGO));
-
+                StartCoroutine(killExplosion(0.1f,VFXGO));
             }
         }
 
     }
+
 }

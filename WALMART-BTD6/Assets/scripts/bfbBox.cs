@@ -5,6 +5,7 @@ public class bfbBox : Box
 {
     private void Awake()
     {
+        tankOrNot = true;
         balloonSpeedValue = 2;
         outerProtectiveLayer = 400;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;

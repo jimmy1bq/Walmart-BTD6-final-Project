@@ -1,11 +1,11 @@
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
-public class maulerExplsoin : explosiveParent
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+public class crushSCript : explosiveParent 
+{ 
     private void Awake()
     {
-        damage = 1;
+        damage = 30;
         explosiveRadius = 3;
         pierce = 15;
     }
@@ -26,18 +26,16 @@ public class maulerExplsoin : explosiveParent
                 int idGO = hits[i].gameObject.GetComponent<IGetSetID>().parentGetID();
                 int idGO2 = hits[i].gameObject.GetComponent<IGetSetID>().personalGetID();
                 if (isDead == false && i < hits.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
-                {
-                    if (hits[i].gameObject.GetComponent<IreturnIndexNum>().returnIfTank())
-                    {
-                        hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage * 10, gameObject);
-                    }
-                    else { hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject); }                    
+                {           
+                    
+                    hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject);
+                    hits[i].gameObject.GetComponent<IStun>().stunEnemy(5f);
                     idOfNotToDamage.Add(idGO2);
                     owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);
                     pierce--;
                 }
-                StartCoroutine(killExplosion(0.1f, VFXGO));
-
+                StartCoroutine(killExplosion(0.3f, VFXGO));
+                 
             }
         }
 

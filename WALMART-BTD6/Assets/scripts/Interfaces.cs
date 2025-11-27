@@ -66,15 +66,17 @@ public interface IreturnIndexNum
 
     public int returnBoxLayer();
     public int returnOuterProtLayer();
+
+    public bool returnIfTank();
 }
 public interface IaddDamage
 { 
     public void addDamage(int damageToAdd);
     public void addRadius(float rad);
 }
-public interface IcheckClass 
-{
-    public bool isClassTank();
+public interface IStun { 
+
+    public void stunEnemy(float stunDuration);
 
 }
 

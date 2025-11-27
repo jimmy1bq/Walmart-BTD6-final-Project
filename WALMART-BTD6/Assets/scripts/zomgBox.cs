@@ -5,6 +5,7 @@ public class zomgBox : Box
 {
     private void Awake()
     {
+        tankOrNot = true;
         balloonSpeedValue = 1;
         outerProtectiveLayer = 800;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;

@@ -79,7 +79,7 @@ public class RayCast : MonoBehaviour
         }
         else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit) && !EventSystem.current.IsPointerOverGameObject())
         {
-            Debug.Log(hit.collider.gameObject.tag);
+           
                 if (hit.collider.gameObject.tag == "Tower")
                 {
                   
@@ -88,7 +88,7 @@ public class RayCast : MonoBehaviour
                         selectedTower.GetComponent<IUNORSelected>().towerUnSelected();
                     }
                 selectedTower = hit.collider.gameObject;
-                Debug.Log("wassup");
+          
                 selectedTower.GetComponent<IUNORSelected>().towerSelected();
                 }
                 else

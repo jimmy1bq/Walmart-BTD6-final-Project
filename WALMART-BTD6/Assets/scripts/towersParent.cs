@@ -74,7 +74,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, gameObject.transform.localScale.z) * .75f, quaternion.identity, (1 << 8 | 1 << 10));
         if (colliders.Length > 0)
         {
-            Debug.Log(colliders[0]);
+          
             return true;
         }
         return false;
@@ -126,8 +126,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         foreach (var enemies in enemyCollider)
         {
             IreturnIndexNum ei = enemies.gameObject.GetComponent<IreturnIndexNum>();
-            Debug.Log(ei.wayPointIndex() > indexHighest);
-
+          
             if (ei.wayPointIndex() > indexHighest)
             {
                 firstEnemy = enemies.gameObject;
@@ -138,7 +137,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             {
                 if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint() < distance)
                 {
-                    Debug.Log("hi");
+                   
                     firstEnemy = enemies.gameObject;
                     distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
                 }
@@ -146,7 +145,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         if (firstEnemy != null)
         {
-            Debug.Log("HI");
+          
             attackEnemy(firstEnemy);
             yield return new WaitForSeconds(stats["FireRate"]);
         }
@@ -303,7 +302,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             }
             Destroy(h.gameObject);
         }
-        string modelPath = "Assets/Resources/DartMonkey/" + modelName + ".prefab";
+        string modelPath = "Assets/Resources/"+towerName + modelName + ".prefab";
         GameObject newModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
         GameObject newModel = Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity);
         newModel.transform.parent = gameObject.transform;
@@ -366,13 +365,12 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             else if ((h.Key != blockedPath) && !maxPaths.Contains(h.Key))
             {
 
-                Debug.Log(h.Value);
-                Debug.Log(monkeyGUIPath + towerName + h.Value + ".prefab");
+               
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + towerName + h.Value + ".prefab");
             }
             //the 0th child is the frame containnig everything 
             GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
-            Debug.Log(newPreFab);
+          
             GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, Quaternion.identity);
             GameObject popCountGO = monkeyUI.transform.Find("popCount").gameObject;
             newGO.transform.SetParent(monkeyUI.transform.GetChild(0).transform);
@@ -460,7 +458,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             rangeC.GetComponent<Renderer>().material.color = new Color(255 / 255, 255 / 255, 255 / 255, 0.3f);
             gameObject.GetComponent<BoxCollider>().enabled = true;
             events.GainCash.Invoke(-price);
-            Debug.Log(GameManager.instance.coins);
+           
             StartCoroutine(targgetingList[targettingNum].Invoke());
         }
         else

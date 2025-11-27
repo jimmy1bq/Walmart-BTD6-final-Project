@@ -32,8 +32,14 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
     }
 
     protected virtual void domainExpansion() {
-        gameObject.LeanScale(new Vector3(explosiveRadius,explosiveRadius,explosiveRadius),0.05f);
+        gameObject.LeanScale(new Vector3(explosiveRadius,explosiveRadius,explosiveRadius),0.2f);
+        GameObject VFXPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/VFX/explosionVFX.prefab");
+        GameObject VFXGO = Instantiate(VFXPath, transform.position, Quaternion.identity);
+        ParticleSystem particleSystems = VFXGO.GetComponent<ParticleSystem>();
+        VFXGO.transform.localScale = new Vector3(explosiveRadius, explosiveRadius, explosiveRadius);
+        particleSystems.Play();
         Collider[] hits = new Collider[(int)pierce];
+      
         hits = Physics.OverlapSphere(transform.position, explosiveRadius, boxLayerToHit);
         if (hits.Length > 0)
         {
@@ -48,11 +54,7 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
                     owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);
                     pierce--;
                 }
-                if (pierce == 0)
-                {
-                    Destroy(gameObject);
-                    isDead = true;
-                }
+                StartCoroutine(killExplosion(0.3f,VFXGO));
             }
         }
 
@@ -75,5 +77,10 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
     }
     public void addRadius(float rad) {
         explosiveRadius += rad;
+    }
+    protected IEnumerator killExplosion(float time,GameObject woenfw) { 
+    yield return new WaitForSeconds(time);
+    Destroy(woenfw);
+    Destroy(gameObject);
     }
 }

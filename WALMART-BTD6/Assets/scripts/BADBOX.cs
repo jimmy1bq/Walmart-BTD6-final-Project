@@ -5,6 +5,7 @@ public class BADBox : Box
 {
     private void Awake()
     {
+        tankOrNot = true;
         balloonSpeedValue = 0.5f;
         outerProtectiveLayer = 2000;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;

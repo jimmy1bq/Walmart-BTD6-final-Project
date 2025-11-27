@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static boxSO;
 
-public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexNum
+public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexNum, IStun
 
 {
     protected enum boxType
@@ -33,10 +33,14 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
 
     protected bool damaged = false;
     protected bool camo = false;
+    protected bool tankOrNot = false;
 
     protected string enemyModelPath = "Assets/Resources/boxEnemiesWScript/";
 
-//  protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
+    protected Coroutine stunCoroutine;
+    protected float oldBalloonSpeed;
+
+    //  protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
     protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
             {boxType.none, 0 },
             {boxType.red, 1 },
@@ -172,7 +176,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     {
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
-    protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,float speed) { 
+    protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,float speed) {
+    Debug.Log(speed);
     gameObject.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
     protected IEnumerator Iframes()
@@ -252,4 +257,21 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     }
     public int returnBoxLayer() { return balloonLayer[boxColor]; }
     public int returnOuterProtLayer() { return outerProtectiveLayer; }
+    public bool returnIfTank() { return tankOrNot; }
+    public void stunEnemy(float stunDuration) {
+        Debug.Log("HI");
+        oldBalloonSpeed = balloonSpeedValue;
+        Debug.Log("HI");
+        balloonSpeedValue = 0;
+        //so we don't get mutiple coroutine happening 
+        if (stunCoroutine != null) {
+            StopCoroutine(stunCoroutine);
+        }
+        StartCoroutine(unStunEnemy(stunDuration));
+       
+    }
+    IEnumerator unStunEnemy(float duration) { 
+    yield return new WaitForSeconds(duration);
+        balloonSpeedValue = oldBalloonSpeed;
+    }
 }
