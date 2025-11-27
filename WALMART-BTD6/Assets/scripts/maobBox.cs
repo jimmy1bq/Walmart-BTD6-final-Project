@@ -7,7 +7,7 @@ public class moabBox : Box
     {
         tankOrNot = true;
         balloonSpeedValue = 2.3f;
-        outerProtectiveLayer = 150;
+        outerProtectiveLayer = 350;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;
@@ -15,7 +15,7 @@ public class moabBox : Box
    
     public override void damageTaken(int damage, GameObject p)
     {
-       // Debug.Log(damage);
+       
         GameObject boxToMake;
         if (!(outerProtectiveLayer - damage < 0))
         {

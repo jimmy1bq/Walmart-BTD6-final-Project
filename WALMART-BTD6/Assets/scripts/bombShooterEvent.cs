@@ -25,23 +25,23 @@ public class bombShooterEvent : MonoBehaviour
     }
     public void upgrade010()
     {
-        if (GameManager.instance.coins >= 220)
+        if (GameManager.instance.coins >= 210)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
-                    {"Range", 1},
-                    { "FireRate",0.8f},
+                    {"Range", 1.1f},
+                    { "FireRate",1f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1}
             };
-            events.GainCash.Invoke(-220);
+            events.GainCash.Invoke(-210);
             events.towerUpgrade.Invoke("mid", "", stats, false);
         }
     }
 
     public void upgrade001()
     {
-        if (GameManager.instance.coins >= 110)
+        if (GameManager.instance.coins >= 210)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
                     {"Range", 1.25f},
@@ -50,7 +50,7 @@ public class bombShooterEvent : MonoBehaviour
                     { "AddtionalDamage",1},
                     { "pierce",1},
             };
-            events.GainCash.Invoke(-110);
+            events.GainCash.Invoke(-210);
             events.towerUpgrade.Invoke("bot", "", stats, false);
         }
     }
@@ -72,18 +72,18 @@ public class bombShooterEvent : MonoBehaviour
     public void upgrade020()
     {
 
-        if (GameManager.instance.coins >= 10)
+        if (GameManager.instance.coins >= 340)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
-                    {"Range", 1},
-                    { "FireRate",0.83f},
+                    {"Range", 1.2f},
+                    { "FireRate",0.9f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
 
             };
-            events.GainCash.Invoke(-190);
-            events.towerUpgrade.Invoke("mid", "", stats, false);
+            events.GainCash.Invoke(-340);
+            events.towerUpgrade.Invoke("mid", "missileBomb", stats, false);
         }
     }
     public void upgrade002()
@@ -117,23 +117,23 @@ public class bombShooterEvent : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-650);
-            events.towerUpgrade.Invoke("bot", "arrowProj", stats, false);
+            events.towerUpgrade.Invoke("bot", "mainClusterBomb", stats, false);
         }
     }
     public void upgrade030()
     {
-        if (GameManager.instance.coins >= 250)
+        if (GameManager.instance.coins >= 850)
         {
 
             Dictionary<string, float> stats = new Dictionary<string, float> {
-                    {"Range", 1},
-                    { "FireRate",0.66f},
+                    {"Range", 1.3f},
+                    { "FireRate",0.9f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
             };
-            events.GainCash.Invoke(-250);
-            events.towerUpgrade.Invoke("mid", "tripleDartProjectile", stats, false);
+            events.GainCash.Invoke(-850);
+            events.towerUpgrade.Invoke("mid", "mauler", stats, false);
         }
     }
     public void upgrade300()
@@ -169,17 +169,17 @@ public class bombShooterEvent : MonoBehaviour
     }
     public void upgrade040()
     {
-        if (GameManager.instance.coins >= 7385)
+        if (GameManager.instance.coins >= 2930)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
-                    {"Range", 1f},
+                    {"Range", 1.3f},
                     { "FireRate",0.83f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
             };
-            events.GainCash.Invoke(-7385);
-            events.towerUpgrade.Invoke("mid", "", stats, false);
+            events.GainCash.Invoke(-2930);
+            events.towerUpgrade.Invoke("mid", "assassin", stats, false);
         }
     }
     public void upgrade004()
@@ -215,17 +215,17 @@ public class bombShooterEvent : MonoBehaviour
     }
     public void upgrade050()
     {
-        if (GameManager.instance.coins >= 46000)
+        if (GameManager.instance.coins >= 23800)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
-                    {"Range", 1f},
+                    {"Range", 1.2f},
                     { "FireRate",.73f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
             };
-            events.GainCash.Invoke(-46000);
-            events.towerUpgrade.Invoke("mid", "", stats, false);
+            events.GainCash.Invoke(-23800);
+            events.towerUpgrade.Invoke("mid", "tankElim", stats, false);
         }
     }
     public void upgrade005()

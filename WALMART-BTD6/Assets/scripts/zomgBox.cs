@@ -7,7 +7,7 @@ public class zomgBox : Box
     {
         tankOrNot = true;
         balloonSpeedValue = 1;
-        outerProtectiveLayer = 800;
+        outerProtectiveLayer = 1050;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;

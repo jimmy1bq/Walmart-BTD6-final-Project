@@ -166,7 +166,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Dictionary<string,float> stats = new Dictionary<string,float> {
                     {"Range", 1.15f},
-                    { "FireRate",1.83f},
+                    { "FireRate",1.1f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
@@ -182,7 +182,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
                     {"Range", 1f},
-                    { "FireRate",1f},
+                    { "FireRate",2.2f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
@@ -228,7 +228,7 @@ public class dMUpgradeEvents : MonoBehaviour
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
                     {"Range", 1f},
-                    { "FireRate",1f},
+                    { "FireRate",2f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},

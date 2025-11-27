@@ -7,7 +7,7 @@ public class bfbBox : Box
     {
         tankOrNot = true;
         balloonSpeedValue = 2;
-        outerProtectiveLayer = 400;
+        outerProtectiveLayer = 750;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;

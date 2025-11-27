@@ -12,6 +12,7 @@ public class GameOverOrWinScript : MonoBehaviour
     float orginalTimeScale;
     public void gameRestart() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
     }
     public void gameExitt() {
         SceneManager.LoadScene(1);
@@ -24,7 +25,7 @@ public class GameOverOrWinScript : MonoBehaviour
     }
     IEnumerator waitForfuncton()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         Time.timeScale = 0f;
     }
     public void unPauseGame() {

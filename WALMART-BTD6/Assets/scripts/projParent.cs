@@ -118,7 +118,10 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
                     {                
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
                         idOfNotToDamage.Add(idGO2);
-                        owner.GetComponent<IPopToPopCount>().damageDealt(damage);
+                        if (owner != null)
+                        {
+                            owner.GetComponent<IPopToPopCount>().damageDealt(damage);
+                        }
                         pierce--;
                     }
                     if (pierce == 0)
@@ -147,7 +150,8 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
                     {
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
                         idOfNotToDamage.Add(idGO2);
-                        owner.GetComponent<IPopToPopCount>().damageDealt(damage);
+                        if (owner != null) { owner.GetComponent<IPopToPopCount>().damageDealt(damage); }
+                        
                         pierce--;
                     }
                     if (pierce == 0)

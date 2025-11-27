@@ -7,7 +7,7 @@ public class ddtBox : Box
     {
         tankOrNot = true;
         balloonSpeedValue = 5f;
-        outerProtectiveLayer = 250;
+        outerProtectiveLayer = 350;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;

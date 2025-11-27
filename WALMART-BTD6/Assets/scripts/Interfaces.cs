@@ -77,7 +77,13 @@ public interface IaddDamage
 public interface IStun { 
 
     public void stunEnemy(float stunDuration);
+    public void stunChildEnemy(float stunDuration);
 
+}
+
+public interface Iexplodeable
+{
+    public void selfDet();
 }
 
 

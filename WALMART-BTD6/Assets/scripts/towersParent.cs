@@ -322,7 +322,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         if (projectile != "")
         {
-            projctile = projectile;
+            if (!checkForThirdTiers() || pathToTier[upgradeTier] >=3) { projctile = projectile; }          
         }
         if (hiddenDec)
         {
@@ -333,7 +333,14 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         changeModel();
     }
 
-
+    bool checkForThirdTiers() { 
+    foreach(var pTT in pathToTier) {
+            if (pTT.Value >=3) {
+                return true;
+            }
+        }
+        return false;
+    }
     protected void updateGUI()
     {
         //holy mircale I manage to do a simple intergration of my check for bloacked path and addmax paths code
@@ -384,7 +391,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     protected void updateTargetGUI()
     {
-        GameObject text = monkeyUI.transform.Find("curTarget").transform.gameObject;
+        GameObject text = null;
+        monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
+        text = monkeyUI.transform.Find("curTarget").gameObject;
         text.GetComponent<TextMeshProUGUI>().text = targettingListNames[targettingNum];
     }
     protected string checkForBlockedPaths()

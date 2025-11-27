@@ -26,12 +26,13 @@ public class crushSCript : explosiveParent
                 int idGO = hits[i].gameObject.GetComponent<IGetSetID>().parentGetID();
                 int idGO2 = hits[i].gameObject.GetComponent<IGetSetID>().personalGetID();
                 if (isDead == false && i < hits.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
-                {           
-                    
+                {
+                    hits[i].gameObject.GetComponent<IStun>().stunEnemy(3f);
                     hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject);
-                    hits[i].gameObject.GetComponent<IStun>().stunEnemy(5f);
+                 
                     idOfNotToDamage.Add(idGO2);
-                    owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);
+                    if (owner != null) { owner.GetComponent<IPopToPopCount>().damageDealt((int)damage); }
+                 
                     pierce--;
                 }
                 StartCoroutine(killExplosion(0.3f, VFXGO));

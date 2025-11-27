@@ -83,6 +83,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
         }
         else {
             proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + projctile + ".prefab");
+            Debug.Log(projctile);
             ithShot++;
         }
         gameObject.transform.LookAt(closestEnemy.transform);

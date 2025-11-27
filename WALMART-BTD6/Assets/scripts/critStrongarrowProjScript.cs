@@ -5,7 +5,7 @@ public class critStrongestarrowProjctile : projectileParentForStraightLinearProj
     private void Awake()
     {
         pierce = 10;
-        damage = 9000;
+        damage = 90;
         projSpeed = 5;
         canHitLead = true;
     }

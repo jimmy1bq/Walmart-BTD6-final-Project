@@ -28,6 +28,7 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
 
     protected void Start()
     {
+        
         domainExpansion();
     }
 
@@ -39,7 +40,7 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
         VFXGO.transform.localScale = new Vector3(explosiveRadius, explosiveRadius, explosiveRadius);
         particleSystems.Play();
         Collider[] hits = new Collider[(int)pierce];
-      
+        Debug.Log("hi");
         hits = Physics.OverlapSphere(transform.position, explosiveRadius, boxLayerToHit);
         if (hits.Length > 0)
         {
@@ -49,9 +50,11 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
                 int idGO2 = hits[i].gameObject.GetComponent<IGetSetID>().personalGetID();
                 if (isDead == false && i < hits.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
                 {
+                    Debug.Log(hits[i].gameObject.GetComponent<IDamageTaken>());
                     hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject);
                     idOfNotToDamage.Add(idGO2);
-                    owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);
+                    if (owner !=null) { owner.GetComponent<IPopToPopCount>().damageDealt((int)damage); }
+                   
                     pierce--;
                 }
                 StartCoroutine(killExplosion(0.3f,VFXGO));

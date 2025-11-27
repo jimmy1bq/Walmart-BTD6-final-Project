@@ -30,15 +30,19 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     protected int personalId = -1;
 
     protected float balloonSpeedValue;
+    protected float stundura;
 
-    protected bool damaged = false;
+    protected bool damageds = false;
     protected bool camo = false;
     protected bool tankOrNot = false;
+    protected bool stunned = false;
 
     protected string enemyModelPath = "Assets/Resources/boxEnemiesWScript/";
 
     protected Coroutine stunCoroutine;
     protected float oldBalloonSpeed;
+
+    protected List<int> listofDamage =new List<int>();
 
     //  protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
     protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
@@ -126,6 +130,13 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         }
         AdvanceIndex = StartCoroutine(advanceIndex());
     }
+
+    protected void Update()
+    {
+        if (damageds) {
+            StartCoroutine(emptyListAtEndOfFrame());
+        }
+    }
     protected virtual IEnumerator advanceIndex()
     {
         
@@ -168,6 +179,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
             downToLayer = layerToBalloon[damageTaken]; 
         }           
         int moneyEarned = balloonLayer[box] - balloonLayer[downToLayer];
+        Debug.Log(moneyEarned);
         events.GainCash.Invoke(moneyEarned);
         return downToLayer;
     }
@@ -177,7 +189,6 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         enemyMoveMethod(transform.position, wayPointOn, balloonSpeedValue);
     }
     protected void enemyMoveMethod(Vector3 position, Vector3 wayPoint,float speed) {
-    Debug.Log(speed);
     gameObject.transform.position = Vector3.MoveTowards(position, wayPoint, speed * Time.deltaTime);
     }
     protected IEnumerator Iframes()
@@ -194,10 +205,46 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     //mileestone 7 changed this to use assestdatabase to load my prefbs now
     public virtual void damageTaken(int damage, GameObject p)
     {
+        Debug.Log("damageTaken");
+        listofDamage.Add(damage);
+        damageds = true;
+       
+        //GameObject boxToMake;
+        //boxType downToLayer = pop(damage, boxColor);
+     
+        //if (!(outerProtectiveLayer - damage <= 0))
+        //{
+        //    outerProtectiveLayer -= damage;
+        //}
+        //else
+        //{
+        //    if (downToLayer == boxType.none)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //    else
+        //    {
+        //        if (camo)
+        //        {
+        //            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringCamo[downToLayer] + ".prefab");
+        //        }
+        //        else
+        //        {
+        //            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
+        //        }
+
+        //        spawnEnemiesAmount(boxToMake, 1);
+        //        Destroy(gameObject);
+        //    }
+        //}
+
+    }
+    public virtual void doDamage(int damage) {      
         GameObject boxToMake;
         boxType downToLayer = pop(damage, boxColor);
-        if (!(outerProtectiveLayer - damage <= 0)) {
-            outerProtectiveLayer -= damage;       
+        if (!(outerProtectiveLayer - damage <= 0))
+        {
+            outerProtectiveLayer -= damage;
         }
         else
         {
@@ -215,15 +262,31 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
                 {
                     boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
                 }
+
                 spawnEnemiesAmount(boxToMake, 1);
                 Destroy(gameObject);
             }
         }
+
+    }
+    protected IEnumerator emptyListAtEndOfFrame() { 
+        yield return new WaitForEndOfFrame();
+        int totalDamage = 0;
+        foreach (int damaged in listofDamage) {
+            totalDamage += damaged;        
+        }
+        Debug.Log("damageTaken2");
+        doDamage(totalDamage);
+        damageds = false;
+        listofDamage.Clear();
+
     }
     protected void spawnEnemiesAmount(GameObject enemyToSpawn, int amount) {
         List<GameObject> boxList = new List<GameObject>();
         for (int i = amount; i > 0; i--) {
-            GameObject boxToAddOntoList = Instantiate(enemyToSpawn,transform.position,Quaternion.identity);   
+           
+            GameObject boxToAddOntoList = Instantiate(enemyToSpawn,transform.position,Quaternion.identity);
+            if (stunned) { boxToAddOntoList.GetComponent<IStun>().stunEnemy(stundura); }
             boxList.Add(boxToAddOntoList);
         }
 
@@ -259,19 +322,29 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     public int returnOuterProtLayer() { return outerProtectiveLayer; }
     public bool returnIfTank() { return tankOrNot; }
     public void stunEnemy(float stunDuration) {
-        Debug.Log("HI");
-        oldBalloonSpeed = balloonSpeedValue;
-        Debug.Log("HI");
-        balloonSpeedValue = 0;
+        stunned = true;
         //so we don't get mutiple coroutine happening 
         if (stunCoroutine != null) {
             StopCoroutine(stunCoroutine);
         }
+        stundura = stunDuration;
+        oldBalloonSpeed = balloonSpeedValue;
+        balloonSpeedValue = 0;
         StartCoroutine(unStunEnemy(stunDuration));
        
     }
+    public void stunChildEnemy(float stunDuration) {
+        if (stunCoroutine != null)
+        {
+            StopCoroutine(stunCoroutine);
+        }
+        oldBalloonSpeed= balloonSpeedValue;
+        balloonSpeedValue = 0;
+        StartCoroutine(unStunEnemy(stunDuration));
+    }
     IEnumerator unStunEnemy(float duration) { 
     yield return new WaitForSeconds(duration);
+        stunned = false;
         balloonSpeedValue = oldBalloonSpeed;
     }
 }

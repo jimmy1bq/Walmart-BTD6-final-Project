@@ -4,7 +4,7 @@ public class balloonCrush : explosiveParent
 {
     private void Awake()
     {
-        damage = 10;
+        damage = 5;
         explosiveRadius = 3;
         pierce = 15;
     }
@@ -27,14 +27,15 @@ public class balloonCrush : explosiveParent
                 if (isDead == false && i < hits.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
                 {
                     if (!(hits[i].gameObject.GetComponent<IreturnIndexNum>().returnIfTank())) {
-                        hits[i].gameObject.GetComponent<IStun>().stunEnemy(3f);
+                         hits[i].gameObject.GetComponent<IStun>().stunEnemy(3f);
                     }
                     hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject);
                     idOfNotToDamage.Add(idGO2);
-                    owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);
+                    if (owner != null) { owner.GetComponent<IPopToPopCount>().damageDealt((int)damage); }
+                   
                     pierce--;
                 }
-                StartCoroutine(killExplosion(0.1f,VFXGO));
+                StartCoroutine(killExplosion(0.3f,VFXGO));
             }
         }
 

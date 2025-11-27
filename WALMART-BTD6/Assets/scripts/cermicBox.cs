@@ -59,7 +59,7 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
             }
             else if (!camo)
             {
-                Debug.Log(damage - outerProtectiveLayer);
+               
                 if (damage - outerProtectiveLayer == 0)
                 {
                     GameObject seaGreenBox = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + "seaGreen" + ".prefab");

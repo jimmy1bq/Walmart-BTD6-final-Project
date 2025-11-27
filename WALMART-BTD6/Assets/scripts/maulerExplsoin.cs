@@ -11,6 +11,7 @@ public class maulerExplsoin : explosiveParent
     }
     protected override void domainExpansion()
     {
+        Debug.Log(damage);
         gameObject.LeanScale(new Vector3(explosiveRadius, explosiveRadius, explosiveRadius), 0.05f);
         GameObject VFXPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/VFX/explosionVFX.prefab");
         GameObject VFXGO = Instantiate(VFXPath, transform.position, Quaternion.identity);
@@ -33,7 +34,8 @@ public class maulerExplsoin : explosiveParent
                     }
                     else { hits[i].gameObject.GetComponent<IDamageTaken>().damageTaken((int)damage, gameObject); }                    
                     idOfNotToDamage.Add(idGO2);
-                    owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);
+                    if (owner != null) {owner.GetComponent<IPopToPopCount>().damageDealt((int)damage);}
+                    
                     pierce--;
                 }
                 StartCoroutine(killExplosion(0.1f, VFXGO));

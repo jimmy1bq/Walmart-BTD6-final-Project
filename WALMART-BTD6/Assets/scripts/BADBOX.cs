@@ -7,7 +7,7 @@ public class BADBox : Box
     {
         tankOrNot = true;
         balloonSpeedValue = 0.5f;
-        outerProtectiveLayer = 2000;
+        outerProtectiveLayer = 3000;
         totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
         personalId = boxData.ID;
         boxData.ID++;

@@ -121,8 +121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2743771681417562356, guid: b6e5bd4c9ffffce4c99e37cb9131ece8, type: 3}
-        m_TargetAssemblyTypeName: dMUpgradeEvents, Assembly-CSharp
+      - m_Target: {fileID: 1394490297705053919, guid: 45699013f8406fe40922da820c8c7056, type: 3}
+        m_TargetAssemblyTypeName: bombShooterEvent, Assembly-CSharp
         m_MethodName: upgrade003
         m_Mode: 1
         m_Arguments:

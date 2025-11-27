@@ -37,7 +37,7 @@ public class bombProjectileParent : projectileParentForStraightLinearProj
         }
 
     }
-    void explode() { 
+    protected virtual void explode() { 
       GameObject unityThing = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(expolosionGOPath + explosionToMake + ".prefab");
       GameObject explosionGO = Instantiate(unityThing, transform.position, Quaternion.identity);
         explosionGO.GetComponent<IaddDamage>().addDamage(additionalDamage);
