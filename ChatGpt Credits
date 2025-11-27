@@ -36,6 +36,8 @@ LeanTween Slider for exp bar(the code part of   LeanTween.value(gameObject, game
 https://chatgpt.com/c/6926519d-d2e4-8329-a5af-504193eadf00
 simple VFX stuff:
 https://chatgpt.com/c/6927cb92-14f0-8327-b72c-90ea7d67c9cd
+Debugging for unity randomly setting your ui refernce into null randomly(i had this bug before):
+https://chatgpt.com/c/69287870-9f48-8332-a146-7f3297319e3f
 
 Cluade credits:
 This one was for debugging some stupid silly mistake(i was tried at this point) that i was trying to firgure for 1 hour:
