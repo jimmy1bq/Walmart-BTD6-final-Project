@@ -70,7 +70,14 @@ public interface IreturnIndexNum
 public interface IaddDamage
 { 
     public void addDamage(int damageToAdd);
+    public void addRadius(float rad);
 }
+public interface IcheckClass 
+{
+    public bool isClassTank();
+
+}
+
 
 
 

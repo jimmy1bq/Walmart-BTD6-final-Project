@@ -31,7 +31,7 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
         domainExpansion();
     }
 
-    protected void domainExpansion() {
+    protected virtual void domainExpansion() {
         gameObject.LeanScale(new Vector3(explosiveRadius,explosiveRadius,explosiveRadius),0.05f);
         Collider[] hits = new Collider[(int)pierce];
         hits = Physics.OverlapSphere(transform.position, explosiveRadius, boxLayerToHit);
@@ -72,5 +72,8 @@ public class explosiveParent : MonoBehaviour, IProjctileOwner, IGiveEnemy, IGive
     public void addDamage(int additionalDamage)
     {
         damage += additionalDamage;
+    }
+    public void addRadius(float rad) {
+        explosiveRadius += rad;
     }
 }

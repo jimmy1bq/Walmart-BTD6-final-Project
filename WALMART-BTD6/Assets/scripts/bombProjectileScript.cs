@@ -5,7 +5,8 @@ public class bombProjectileParent : projectileParentForStraightLinearProj
     protected string expolosionGOPath = "Assets/Resources/explosions/";
     protected string explosionToMake;
     protected int additionalDamage;
-   
+    protected float additionalRadius;
+
     protected override void safetyCheckForCollisionBackWards()
     {
         RaycastHit[] hit = new RaycastHit[(int)pierce];
@@ -40,6 +41,7 @@ public class bombProjectileParent : projectileParentForStraightLinearProj
       GameObject unityThing = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(expolosionGOPath + explosionToMake + ".prefab");
       GameObject explosionGO = Instantiate(unityThing, transform.position, Quaternion.identity);
         explosionGO.GetComponent<IaddDamage>().addDamage(additionalDamage);
+        explosionGO.GetComponent<IaddDamage>().addRadius(additionalRadius);
         explosionGO.GetComponent<IProjctileOwner>().setProjectileOwner(owner);
         isDead = true;
         Destroy(gameObject);
