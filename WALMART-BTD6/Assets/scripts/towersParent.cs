@@ -351,9 +351,11 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         tiersOnEachPath.Add("top", (pathToTier["top"] + 1) + "00");
         tiersOnEachPath.Add("mid", "0" + (pathToTier["mid"] + 1) + "0");
         tiersOnEachPath.Add("bot", "0" + "0" + (pathToTier["bot"] + 1));
+       // monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
         GameObject newPreFab = null;
         string blockedPath = checkForBlockedPaths();
         List<string> maxPaths = addmaxPaths();
+        List<GameObject> childernsTODestroy = new List<GameObject>();
         foreach (var h in tiersOnEachPath)
         {
 
@@ -370,24 +372,29 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "maxUp" + ".prefab");
             }
             else if ((h.Key != blockedPath) && !maxPaths.Contains(h.Key))
-            {
-
-               
+            {  
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + towerName + h.Value + ".prefab");
+                Debug.Log(newPreFab);
             }
             //the 0th child is the frame containnig everything 
-            GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
-          
+
+            GameObject childToDestroyGO = monkeyUI.transform.Find("upgradeGUI").gameObject.transform.Find(h.Key).gameObject;
+            childernsTODestroy.Add(childToDestroyGO);
             GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, Quaternion.identity);
+          
             GameObject popCountGO = monkeyUI.transform.Find("popCount").gameObject;
             newGO.transform.SetParent(monkeyUI.transform.GetChild(0).transform);
             newGO.gameObject.GetComponent<RectTransform>().localScale = childToDestroyGO.GetComponent<RectTransform>().localScale;
-            newGO.name = h.Key;
+            newGO.name = h.Key;           
             //milestone 7
             popCountGO.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
             updateTargetGUI();
-            Destroy(childToDestroyGO);
+           
         }
+        foreach (GameObject h in childernsTODestroy) {
+            Destroy(childernsTODestroy);
+        }
+        
     }
     protected void updateTargetGUI()
     {
@@ -522,6 +529,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         events.towerUpgrade.AddListener(towerUpgrade);
         events.destroyTower.AddListener(destroyTowere);
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
+        Debug.Log("HI");
         monkeyUI = Instantiate(genUI);
         //upgradeGUI frame
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
@@ -537,6 +545,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         events.towerUpgrade.RemoveListener(towerUpgrade);
         GameManager.instance.monkeyGUIActive = false;
         rangeC.SetActive(false);
+        monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
+        Debug.Log(monkeyUI);
         Destroy(monkeyUI);
     }
 

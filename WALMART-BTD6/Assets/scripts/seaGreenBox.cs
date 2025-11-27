@@ -17,11 +17,11 @@ public class seaGreenBoxScript : Box, IDamageTaken, IIndex
         boxData.ID++;
     }
     //milestone 7
-    public override void damageTaken(int damage, GameObject p)
+    public override void doDamage(int damage, GameObject p)
     {
 
         boxType downToLayer = pop(damage, boxColor);
-        Debug.Log(downToLayer);
+       
         if (downToLayer == boxType.none)
         {
 

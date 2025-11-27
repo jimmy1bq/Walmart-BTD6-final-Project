@@ -21,7 +21,7 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
         boxData.ID++;
     }
       
-    public override void damageTaken(int damage, GameObject p)
+    public override void doDamage(int damage, GameObject p)
     {
             GameObject boxToMake;
             boxType downToLayer = pop(damage, boxType.black);

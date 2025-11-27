@@ -7,7 +7,7 @@ public class clusterBombs : bombProjectileParent
         explosionToMake = "sExplosion";
         damage = 0;
         pierce = 1;
-        additionalDamage = 1;
+        additionalDamage = 0;
         projSpeed = 0.6f;
         lifespan = 5;
         additionalRadius = 0f;

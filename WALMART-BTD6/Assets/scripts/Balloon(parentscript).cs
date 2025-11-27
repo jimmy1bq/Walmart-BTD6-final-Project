@@ -20,6 +20,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     [SerializeField] protected boxSO boxData;
     protected Coroutine AdvanceIndex;
     protected boxType boxColor = boxType.none;
+    protected GameObject projectile;
 
     protected int layer;
    
@@ -42,7 +43,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     protected Coroutine stunCoroutine;
     protected float oldBalloonSpeed;
 
-    protected List<int> listofDamage =new List<int>();
+    protected List<float> listofDamage =new List<float>();
 
     //  protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
     protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
@@ -205,7 +206,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     //mileestone 7 changed this to use assestdatabase to load my prefbs now
     public virtual void damageTaken(int damage, GameObject p)
     {
-        Debug.Log("damageTaken");
+        projectile = p;
         listofDamage.Add(damage);
         damageds = true;
        
@@ -239,7 +240,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         //}
 
     }
-    public virtual void doDamage(int damage) {      
+    public virtual void doDamage(int damage,GameObject p) {      
         GameObject boxToMake;
         boxType downToLayer = pop(damage, boxColor);
         if (!(outerProtectiveLayer - damage <= 0))
@@ -271,12 +272,15 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     }
     protected IEnumerator emptyListAtEndOfFrame() { 
         yield return new WaitForEndOfFrame();
-        int totalDamage = 0;
-        foreach (int damaged in listofDamage) {
+        Debug.Log(listofDamage);
+        float totalDamage = 0;
+        foreach (float damaged in listofDamage) {
             totalDamage += damaged;        
         }
         Debug.Log("damageTaken2");
-        doDamage(totalDamage);
+        Debug.Log(totalDamage);
+        int flooredTotalDamage = Mathf.FloorToInt(totalDamage);
+        doDamage(flooredTotalDamage,projectile);
         damageds = false;
         listofDamage.Clear();
 

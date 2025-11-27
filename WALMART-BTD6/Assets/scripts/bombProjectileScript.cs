@@ -4,7 +4,7 @@ public class bombProjectileParent : projectileParentForStraightLinearProj
 {
     protected string expolosionGOPath = "Assets/Resources/explosions/";
     protected string explosionToMake;
-    protected int additionalDamage;
+    protected float additionalDamage;
     protected float additionalRadius;
 
     protected override void safetyCheckForCollisionBackWards()
@@ -16,9 +16,7 @@ public class bombProjectileParent : projectileParentForStraightLinearProj
             hit = Physics.RaycastAll(lastPoistion, Vector3.Normalize(gameObject.transform.position - lastPoistion), Vector3.Magnitude(gameObject.transform.position - lastPoistion), boxLayerToHit);
             if (hit.Length > 0 && !isDead)
             {
-                explode();
-               
-
+                explode();               
             }
         }
     }

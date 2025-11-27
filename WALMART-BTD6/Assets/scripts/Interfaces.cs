@@ -71,7 +71,7 @@ public interface IreturnIndexNum
 }
 public interface IaddDamage
 { 
-    public void addDamage(int damageToAdd);
+    public void addDamage(float damageToAdd);
     public void addRadius(float rad);
 }
 public interface IStun { 

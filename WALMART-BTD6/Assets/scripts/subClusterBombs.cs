@@ -8,7 +8,7 @@ public class subClusterBombs : bombProjectileParent, Iexplodeable
         explosionToMake = "sExplosion";
         damage = 0;
         pierce = 1;
-        additionalDamage = 1;
+        additionalDamage = -0.5f;
         projSpeed = 0.6f;
         lifespan = 5;
         additionalRadius = 0f;
@@ -16,7 +16,7 @@ public class subClusterBombs : bombProjectileParent, Iexplodeable
         isDead = false;
     }
     public void selfDet() {
-    Debug.Log("HI");
+    
     base.explode();
 
     }

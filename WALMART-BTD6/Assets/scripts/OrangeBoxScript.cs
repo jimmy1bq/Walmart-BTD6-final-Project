@@ -18,7 +18,7 @@ public class OrangeBox : Box, IDamageTaken, IIndex
 
     }
     //milestone 7
-    public override void damageTaken(int damage, GameObject p)
+    public override void doDamage(int damage, GameObject p)
     {
         boxType downToLayer = pop(damage, boxColor);
         if (downToLayer == boxType.none)

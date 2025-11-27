@@ -16,7 +16,7 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
         personalId = boxData.ID;
         boxData.ID++;
     }
-    public override void damageTaken(int damage, GameObject p)
+    public override void doDamage(int damage, GameObject p)
     {
 
         
