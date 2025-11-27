@@ -55,6 +55,7 @@ public interface IGetSetID
 public interface IGiveProptieres 
 {
     public bool returnCanHitLead();
+    public bool returnCanHitBlack();
 
     public void getParentLayerMask(LayerMask layerToHit);
 
@@ -84,6 +85,7 @@ public interface IStun {
 public interface Iexplodeable
 {
     public void selfDet();
+    public void recursion(int recurseAmount);
 }
 
 

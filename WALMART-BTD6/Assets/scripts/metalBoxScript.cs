@@ -19,7 +19,7 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
         boxData.ID++;
     }
     //milestone 7 added this script
-    public override void damageTaken(int damage, GameObject p)
+    public override void doDamage(int damage, GameObject p)
     {
         GameObject boxToMake;
         boxType downToLayer = pop(damage, boxColor);

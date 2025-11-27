@@ -20,11 +20,20 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
         personalId = boxData.ID;
         boxData.ID++;
     }
-      
+
     public override void doDamage(int damage, GameObject p)
     {
-            GameObject boxToMake;
-            boxType downToLayer = pop(damage, boxType.black);
+        GameObject boxToMake;
+        boxType downToLayer = pop(damage, boxColor);
+        bool canHitblackq = p.GetComponent<IGiveProptieres>().returnCanHitBlack();
+
+        if (!canHitblackq)
+        {
+           
+        }
+        else
+        {
+
             if (downToLayer == boxType.none)
             {
                 Destroy(gameObject);
@@ -45,4 +54,5 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
             }
         }
     }
+   }
 

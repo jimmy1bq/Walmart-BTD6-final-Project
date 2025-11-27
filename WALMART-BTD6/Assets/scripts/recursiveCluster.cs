@@ -1,7 +1,6 @@
-using System.Collections;
 using UnityEngine;
 
-public class clusterBombs : bombProjectileParent
+public class recursiveCluster : bombProjectileParent
 {
     private void Awake()
     {
@@ -14,32 +13,32 @@ public class clusterBombs : bombProjectileParent
         additionalRadius = 0f;
         canHitLead = true;
         isDead = false;
-        Debug.Log("CLUSTABUOB");
+        canHitblack = false;
+      
     }
     protected override void explode()
     {
-       StartCoroutine(makeClusterBomb());
+        makeClusterBomb();
         GameObject unityThing = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(expolosionGOPath + explosionToMake + ".prefab");
         GameObject explosionGO = Instantiate(unityThing, transform.position, Quaternion.identity);
         explosionGO.GetComponent<IaddDamage>().addDamage(additionalDamage);
         explosionGO.GetComponent<IaddDamage>().addRadius(additionalRadius);
         explosionGO.GetComponent<IProjctileOwner>().setProjectileOwner(owner);
-        isDead = true;               
+        isDead = true;
+        Destroy(gameObject);
     }
-   IEnumerator makeClusterBomb()
+    void makeClusterBomb()
     {
-       Debug.Log("hi");
-       yield return new WaitForSeconds(0.01f);
         float deg = 0;
-        Debug.Log("MAKING");
-        for (int i = 6; i > 0; i--) {
+        for (int i = 6; i > 0; i--)
+        {
             GameObject unityThing = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/Projectile/" + "subClusterBomb" + ".prefab");
             GameObject explosionGO = Instantiate(unityThing, transform.position + new Vector3(Mathf.Cos(deg) * 1, 0, Mathf.Sin(deg) * 1), Quaternion.identity);
             explosionGO.GetComponent<Iexplodeable>().selfDet();
-            deg+=45;
+            explosionGO.GetComponent<Iexplodeable>().recursion(1);
+            deg += 45;
         }
-        Destroy(gameObject);
+
     }
 
 }
-

@@ -19,7 +19,7 @@ public class cermBoxHp : Box, IDamageTaken, IIndex
     public override void doDamage(int damage, GameObject p)
     {
 
-        
+        Debug.Log(damage);
         if (!(outerProtectiveLayer - damage <= 0))
         {           
             outerProtectiveLayer -= damage;

@@ -88,7 +88,7 @@ public class bombShooterEvent : MonoBehaviour
     }
     public void upgrade002()
     {
-        //later add camo detc 
+     
         if (GameManager.instance.coins >= 150)
         {
 
@@ -100,13 +100,13 @@ public class bombShooterEvent : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-150);
-            events.towerUpgrade.Invoke("bot", "", stats, true);
+            events.towerUpgrade.Invoke("bot", "", stats, false);
         }
     }
     public void upgrade003()
     {
 
-        if (GameManager.instance.coins >= 650)
+        if (GameManager.instance.coins >= 3000)
         {
 
             Dictionary<string, float> stats = new Dictionary<string, float> {
@@ -116,7 +116,7 @@ public class bombShooterEvent : MonoBehaviour
                     { "AddtionalDamage",1},
                     { "pierce",1},
             };
-            events.GainCash.Invoke(-650);
+            events.GainCash.Invoke(-3000);
             events.towerUpgrade.Invoke("bot", "mainClusterBomb", stats, false);
         }
     }
@@ -148,7 +148,7 @@ public class bombShooterEvent : MonoBehaviour
                     { "pierce",1},
             };
             events.GainCash.Invoke(-300);
-            events.towerUpgrade.Invoke("top", "biggerbomb", stats, true);
+            events.towerUpgrade.Invoke("top", "biggerbomb", stats, false);
         }
     }
 
@@ -184,17 +184,17 @@ public class bombShooterEvent : MonoBehaviour
     }
     public void upgrade004()
     {
-        if (GameManager.instance.coins >= 2750)
+        if (GameManager.instance.coins >= 5000)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
                     {"Range", 1.1f},
-                    { "FireRate",0.83f},
+                    { "FireRate",1f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
             };
-            events.GainCash.Invoke(-2750);
-            events.towerUpgrade.Invoke("bot", "upgradedBolt", stats, true);
+            events.GainCash.Invoke(-5000);
+            events.towerUpgrade.Invoke("bot", "mainReClusterBomb", stats, false);
 
         }
     }
@@ -230,17 +230,18 @@ public class bombShooterEvent : MonoBehaviour
     }
     public void upgrade005()
     {
-        if (GameManager.instance.coins >= 22060)
+        if (GameManager.instance.coins >= 30000)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {
                     {"Range", 1.3f},
-                    { "FireRate",.125f},
+                    { "FireRate",.1f},
                     { "ProjctileSpeed",1},
                     { "AddtionalDamage",1},
                     { "pierce",1},
             };
-            events.GainCash.Invoke(-22060);
-            events.towerUpgrade.Invoke("bot", "strongestBolt", stats, true);
+            events.GainCash.Invoke(-30000);
+            //yes im giving bomb blitz camo 
+            events.towerUpgrade.Invoke("bot", "", stats, true);
         }
     }
 }

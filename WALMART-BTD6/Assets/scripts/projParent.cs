@@ -23,6 +23,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
 
 
     protected bool canHitLead;
+    protected bool canHitblack = true;
     protected bool mutipleOverLappingCollider = false;
     protected bool isDead =false;
     protected List<GameObject> listOfGO = new List<GameObject>();
@@ -185,5 +186,8 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         return canHitLead;
     
     }
-    
+    public bool returnCanHitBlack() {
+        return true;
+    }
+
 }

@@ -5,8 +5,9 @@ public class GameManager : MonoBehaviour
    public static GameManager instance;
    public int hp;
    public int coins;
-    public int totalAccumMonkeyMoney = 0;
+   public int totalAccumMonkeyMoney = 0;
    public  bool monkeyGUIActive= false;
+    //later bomb blitz ability
 
    private void Awake()
     {
