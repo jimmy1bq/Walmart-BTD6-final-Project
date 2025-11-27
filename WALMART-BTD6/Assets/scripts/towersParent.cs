@@ -14,6 +14,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     protected string monkeyModelPath = "Assets/Resources/DartMonkey/";
     protected string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
+    //no diff between general and monkeyGUIpath
     protected string monkeyGUIPath = "Assets/Resources/towerGUI/";
     protected string projctilePath = "Assets/Resources/Projectile/";
     protected string towerName;
@@ -364,10 +365,14 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             }
             else if ((h.Key != blockedPath) && !maxPaths.Contains(h.Key))
             {
-                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath+towerName + h.Value + ".prefab");
+
+                Debug.Log(h.Value);
+                Debug.Log(monkeyGUIPath + towerName + h.Value + ".prefab");
+                newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + towerName + h.Value + ".prefab");
             }
             //the 0th child is the frame containnig everything 
             GameObject childToDestroyGO = monkeyUI.transform.GetChild(0).gameObject.transform.Find(h.Key).gameObject;
+            Debug.Log(newPreFab);
             GameObject newGO = Instantiate(newPreFab, childToDestroyGO.transform.position, Quaternion.identity);
             GameObject popCountGO = monkeyUI.transform.Find("popCount").gameObject;
             newGO.transform.SetParent(monkeyUI.transform.GetChild(0).transform);

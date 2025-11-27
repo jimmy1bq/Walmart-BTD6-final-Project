@@ -9,7 +9,7 @@ public class bombTower : towersParent
 
     private void Awake()
     {
-        towerName = "bombShooter";
+        towerName = "bombShooter/";
         projctile = "bomb";
         rangeCircle = rangeCirclePF;
         stats = new Dictionary<string, float>() {
