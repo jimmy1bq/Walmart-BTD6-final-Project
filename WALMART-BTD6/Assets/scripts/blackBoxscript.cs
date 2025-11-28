@@ -16,12 +16,14 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
         boxColor = boxType.black;
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
-        totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
+        if (WayPointManager.instance != null) { totalWayPoints = WayPointManager.instance.wayPoints.Count - 1; }
         personalId = boxData.ID;
         boxData.ID++;
     }
 
+   
     //heres lies an isssue that was resolved. So basically I tried to get dodamage to check for proppeitires because damage taken could get called multiple time in a frame but that end up not working cuz null issue but i just figured to override damage taken since
+  //although  theres 1 bug that is very very unlikely frame perfect timing: a explosion and dart projectile both collides at the same time. Depending on what projectile get shoved in the gameobject the balloon might take damage
     public override void damageTaken(int damage, GameObject p)
     {
         if (!(p.GetComponent<IGiveProptieres>().returnCanHitBlack()))

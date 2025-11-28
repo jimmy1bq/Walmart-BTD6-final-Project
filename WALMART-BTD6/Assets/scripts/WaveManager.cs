@@ -28,6 +28,7 @@ public class WaveManager : MonoBehaviour
     int index = 0;
 
     bool waveOnGoing = false;
+    bool alternativeMap = false;
     string pathToGUIs = "Assets/Resources/MiscellaniousGUI/";
 
     public delegate void waves();
@@ -35,6 +36,9 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
+        if (GameObject.Find("Base") != null) {
+            alternativeMap = true;        
+        }
         waveDelegate += nextWave;
         foreach (string bn in boxName)
         {
@@ -48,7 +52,7 @@ public class WaveManager : MonoBehaviour
         }
     }
     void Start()
-    {
+    {        
         listOfWaves.Add(startWave1);
         listOfWaves.Add(startWave2);
         listOfWaves.Add(startWave3);
@@ -110,7 +114,7 @@ public class WaveManager : MonoBehaviour
         listOfWaves.Add(startWave59);
         listOfWaves.Add(startWave60);
     }
-    
+    //spawn between z 16.83 to -16.83 y1.19 x-25.35
     void startWave1() {
         waveOnGoing = true;
           StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
@@ -576,13 +580,27 @@ public class WaveManager : MonoBehaviour
 
 
     IEnumerator spawnTimeInbetween(GameObject boxsToSpawn, int amountToSpawn,float seconds) {
-    if(amountToSpawn != 0) 
 
+        if (alternativeMap) {
+            for (int i = amountToSpawn; i > 0; i--)
+            {
+                float z=UnityEngine.Random.Range(-16.83f,16.83f); 
+                Instantiate(boxsToSpawn, new Vector3(-25.35f,1.19f,z), Quaternion.identity);
+                yield return new WaitForSeconds(seconds);
+
+            }
+        } 
+        else 
         {
-            Instantiate(boxsToSpawn, spawnPoint.position,Quaternion.identity);
-            yield return new WaitForSeconds(seconds);
-            StartCoroutine(spawnTimeInbetween(boxsToSpawn, amountToSpawn - 1, seconds));
-        }      
+            for (int i = amountToSpawn; i > 0; i--)
+            {
+                Instantiate(boxsToSpawn, spawnPoint.position, Quaternion.identity);
+                yield return new WaitForSeconds(seconds);
+
+            }
+        }
+           
+              
     }
     IEnumerator delayedSpawn(IEnumerator coroutine,float timer)
     {

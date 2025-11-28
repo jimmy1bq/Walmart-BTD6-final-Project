@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 using static boxSO;
 
@@ -41,6 +42,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
 
     protected Coroutine stunCoroutine;
     protected float oldBalloonSpeed;
+
+    protected NavMeshAgent agent;
 
     protected List<float> listofDamage =new List<float>();
 
@@ -120,6 +123,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
             {boxType.seagreen, "camoSeaGreen"},
             {boxType.ceramic, "camoCeramic"},
     };
+   
 
     protected void Start()
     {
@@ -128,7 +132,16 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         if (gameObject.layer == 11) {
             camo = true;        
         }
-        AdvanceIndex = StartCoroutine(advanceIndex());
+        if (GameObject.Find("Base") != null)
+        {
+            agent = GetComponent<NavMeshAgent>();
+            Debug.Log(agent);
+            agent.SetDestination(GameObject.Find("Base").transform.position);
+        }
+        else
+        {
+            AdvanceIndex = StartCoroutine(advanceIndex());
+        }
        
     }
 

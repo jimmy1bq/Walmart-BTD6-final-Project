@@ -11,7 +11,7 @@ public class purpleBoxScript : Box, IDamageTaken, IIndex
         boxColor = boxType.purple;
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
-        totalWayPoints = WayPointManager.instance.wayPoints.Count - 1;
+        if (WayPointManager.instance != null) { totalWayPoints = WayPointManager.instance.wayPoints.Count - 1; }
         personalId = boxData.ID;
         boxData.ID++;
     }
