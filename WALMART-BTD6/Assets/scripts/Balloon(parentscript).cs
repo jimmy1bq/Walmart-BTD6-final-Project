@@ -217,11 +217,10 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         GameObject closestEnemy = null;
         Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, 999f, 1 << 8);
         Debug.Log(enemyCollider.Length);
-        float rangeClosest = 2f;
+        float rangeClosest = 999f;
         float distance;
         foreach (var enemies in enemyCollider)
         {
-            Debug.Log(enemies);
             distance = Vector3.Magnitude(gameObject.transform.position - enemies.transform.position);
             if (distance <= rangeClosest)
             {
@@ -229,7 +228,6 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
                 closestEnemy = enemies.gameObject;
             }
         }
-        Debug.Log(closestEnemy);
         if (closestEnemy != null)
         {
             Debug.Log(closestEnemy);
