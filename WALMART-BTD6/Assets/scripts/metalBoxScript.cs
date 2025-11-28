@@ -19,17 +19,23 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
         boxData.ID++;
     }
     //milestone 7 added this script
-    public override void doDamage(int damage, GameObject p)
+    public override void damageTaken(int damage, GameObject p)
     {
-        GameObject boxToMake;
-        boxType downToLayer = pop(damage, boxColor);
-        bool canHitLeadq = p.GetComponent<IGiveProptieres>().returnCanHitLead();
-        if (!canHitLeadq)
+        if (!(p.GetComponent<IGiveProptieres>().returnCanHitLead()))
         {
             Destroy(p);
         }
         else
         {
+            listofDamage.Add(damage);
+            damageds = true;
+        }
+
+    }
+    public override void doDamage(int damage)
+    {
+        GameObject boxToMake;
+        boxType downToLayer = pop(damage, boxColor);      
             if (downToLayer == boxType.none)
             {
                 Destroy(gameObject);              
@@ -49,5 +55,5 @@ public class metalBoxScript : Box, IDamageTaken, IIndex
             }         
         }
     }
-}
+
 

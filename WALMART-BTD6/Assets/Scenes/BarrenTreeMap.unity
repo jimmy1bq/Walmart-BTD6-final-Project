@@ -4923,7 +4923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   hp: 100
-  coins: 10000
+  coins: 10000000
   totalAccumMonkeyMoney: 0
   monkeyGUIActive: 0
 --- !u!4 &1203566116

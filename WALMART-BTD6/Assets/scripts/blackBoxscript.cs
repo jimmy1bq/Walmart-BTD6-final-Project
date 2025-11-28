@@ -21,19 +21,24 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
         boxData.ID++;
     }
 
-    public override void doDamage(int damage, GameObject p)
+    //heres lies an isssue that was resolved. So basically I tried to get dodamage to check for proppeitires because damage taken could get called multiple time in a frame but that end up not working cuz null issue but i just figured to override damage taken since
+    public override void damageTaken(int damage, GameObject p)
     {
-        GameObject boxToMake;
-        boxType downToLayer = pop(damage, boxColor);
-        bool canHitblackq = p.GetComponent<IGiveProptieres>().returnCanHitBlack();
-
-        if (!canHitblackq)
+        if (!(p.GetComponent<IGiveProptieres>().returnCanHitBlack()))
         {
-           
+          
         }
         else
         {
-
+            listofDamage.Add(damage);
+            damageds = true;
+        }
+           
+    }
+    public override void doDamage(int damage)
+    {
+        GameObject boxToMake;
+        boxType downToLayer = pop(damage, boxColor);
             if (downToLayer == boxType.none)
             {
                 Destroy(gameObject);
@@ -54,5 +59,5 @@ public class blackBoxScript : Box, IDamageTaken, IIndex
             }
         }
     }
-   }
+  
 

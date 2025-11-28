@@ -19,7 +19,7 @@ public class whiteBoxScript : Box, IDamageTaken, IIndex
         personalId = boxData.ID;
         boxData.ID++;
     }
-    public override void doDamage(int damage, GameObject p)
+    public override void doDamage(int damage)
     {
         GameObject boxToMake;
         boxType downToLayer = pop(damage, boxType.white);

@@ -183,8 +183,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         boxLayerToHit = layerToHit;    
     }
     public bool returnCanHitLead() {
-        return canHitLead;
-    
+        return canHitLead;    
     }
     public bool returnCanHitBlack() {
         return true;
