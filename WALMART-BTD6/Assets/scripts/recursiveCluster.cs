@@ -13,7 +13,7 @@ public class recursiveCluster : bombProjectileParent
         additionalRadius = 0f;
         canHitLead = true;
         isDead = false;
-        canHitblack = false;
+        
       
     }
     protected override void explode()

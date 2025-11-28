@@ -117,9 +117,10 @@ public class WaveManager : MonoBehaviour
     //spawn between z 16.83 to -16.83 y1.19 x-25.35
     void startWave1() {
         waveOnGoing = true;
-          StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
-        //StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 0f));
+       // StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
+       // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
+       // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
     void startWave2()

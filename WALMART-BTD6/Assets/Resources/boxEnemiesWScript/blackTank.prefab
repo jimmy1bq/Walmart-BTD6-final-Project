@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1433606089554441497}
   - component: {fileID: 3910102709547360997}
   - component: {fileID: 2849244109244135422}
+  - component: {fileID: 2764042702510618534}
   m_Layer: 11
   m_Name: blackTank
   m_TagString: Untagged
@@ -126,3 +127,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ddtBox
   boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
+--- !u!195 &2764042702510618534
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957560862006700006}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 4.197635
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.75
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

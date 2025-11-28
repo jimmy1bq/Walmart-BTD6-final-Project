@@ -56,7 +56,6 @@ public interface IGiveProptieres
 {
     public bool returnCanHitLead();
     public bool returnCanHitBlack();
-
     public void getParentLayerMask(LayerMask layerToHit);
 
 }

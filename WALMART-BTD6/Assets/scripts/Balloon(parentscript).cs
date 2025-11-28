@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR.Haptics;
 using UnityEngine.UIElements;
 using static boxSO;
 
@@ -15,8 +16,13 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         none, red, blue, green, yellow, pink, black, white, purple, lead, orange, seagreen,
         ceramic, moab, bfb, zomg, ddt, bad
     }
+    protected enum state
+    {
+        moving, attacking
+    }
 
-   
+    protected state currentState;
+
 
     [SerializeField] protected boxSO boxData;
     protected Coroutine AdvanceIndex;
@@ -34,6 +40,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     protected float stundura;
 
     protected bool damageds = false;
+    protected bool alt = false;
     protected bool camo = false;
     protected bool tankOrNot = false;
     protected bool stunned = false;
@@ -42,6 +49,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
 
     protected Coroutine stunCoroutine;
     protected float oldBalloonSpeed;
+    protected GameObject currentTarget;
 
     protected NavMeshAgent agent;
 
@@ -64,7 +72,23 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
             {boxType.ceramic, 9 },
 
     };
-   
+    protected Dictionary<boxType, int> damageValuer = new Dictionary<boxType, int>() {
+            {boxType.none, 0 },
+            {boxType.red, 1 },
+            {boxType.blue, 1 },
+            {boxType.green, 2 },
+            {boxType.yellow, 2 },
+            {boxType.pink, 3 },
+            {boxType.black, 2 },
+            {boxType.white, 2 },
+            {boxType.purple, 3 },
+            {boxType.orange, 4 },
+            {boxType.lead, 5 },
+            {boxType.seagreen, 3 },
+            {boxType.ceramic, 1 },
+
+    };
+
     //this dictionary is used to get the balloon based on layer boxSO I don't have to loop through the top dictionary to match the hp
     protected Dictionary<int,boxType> layerToBalloon = new Dictionary<int,boxType>() {
             { 1,boxType.red },
@@ -128,15 +152,18 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     protected void Start()
     {
         //milestone 7
-   
+        //mask layer not balloon layer
+
         if (gameObject.layer == 11) {
             camo = true;        
         }
         if (GameObject.Find("Base") != null)
         {
+            alt = true;
             agent = GetComponent<NavMeshAgent>();
-            Debug.Log(agent);
-            agent.SetDestination(GameObject.Find("Base").transform.position);
+            agent.speed = balloonSpeedValue;
+
+           // agent.SetDestination(GameObject.Find("Base").transform.position);         
         }
         else
         {
@@ -151,11 +178,102 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
             emptyListAtEndOfFrame();
             damageds = false;
         }
+        if (alt == true)
+        {
+            if (currentTarget == null)
+            {
+                Debug.Log("HI");
+                enemyClosestTargetting();
+            }           
+            else{
+                Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, 999f, 1 << 8);
+                if (enemyCollider.Length != 0) {
+                    GameObject closestEnemy = null;              
+                    float rangeClosest = 2f;
+                    float distance;
+                    foreach (var enemies in enemyCollider)
+                    {
+                        distance = Vector3.Magnitude(gameObject.transform.position - enemies.transform.position);
+                        if (distance <= rangeClosest)
+                        {
+                            rangeClosest = distance;
+                            closestEnemy = enemies.gameObject;
+                        }
+                    }
+                    if (closestEnemy != null)
+                    {
+                        currentState = state.attacking;
+                        switchStates(closestEnemy);
+                    }
+                }
+            }
+
+        }
     }
+    
+
+     protected void enemyClosestTargetting()
+    {
+        GameObject closestEnemy = null;
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, 999f, 1 << 8);
+        Debug.Log(enemyCollider.Length);
+        float rangeClosest = 2f;
+        float distance;
+        foreach (var enemies in enemyCollider)
+        {
+            Debug.Log(enemies);
+            distance = Vector3.Magnitude(gameObject.transform.position - enemies.transform.position);
+            if (distance <= rangeClosest)
+            {
+                rangeClosest = distance;
+                closestEnemy = enemies.gameObject;
+            }
+        }
+        Debug.Log(closestEnemy);
+        if (closestEnemy != null)
+        {
+            Debug.Log(closestEnemy);
+            agent.SetDestination(closestEnemy.transform.position);
+            currentTarget = closestEnemy;
+            currentState = state.moving;
+        }
+        else
+        {
+            agent.SetDestination(GameObject.Find("Base").transform.position);
+            currentTarget = GameObject.Find("Base");
+            currentState = state.moving;
+        }
+    }
+    protected void switchStates(GameObject enemyToAttack) {
+        switch (currentState) {
+            case state.moving:
+                enemyClosestTargetting();
+                break;
+            case state.attacking:
+                agent.speed = 0;
+                StartCoroutine(attackEnemy(enemyToAttack));
+                break;
+
+        }    
+    }
+    IEnumerator attackEnemy(GameObject enemy)
+    {
+        enemy.GetComponent<IDamageTaken>().damageTaken(damageValuer[boxColor], gameObject);
+        yield return new WaitForSeconds(1f);
+        if (enemy == null)
+        {
+            currentState = state.moving;
+            switchStates(null);
+        }
+        else
+        {
+            StartCoroutine(attackEnemy(enemy));
+        }
+    }
+    
     protected virtual IEnumerator advanceIndex()
     {
-        
-      
+ 
         gameObject.transform.LookAt(WayPointManager.instance.wayPoints[i].transform);
         yield return new WaitUntil(onWayPoint);
         i++;
@@ -194,7 +312,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
             downToLayer = layerToBalloon[damageTaken]; 
         }           
         int moneyEarned = balloonLayer[box] - balloonLayer[downToLayer];
-        Debug.Log(moneyEarned);
+       
         events.GainCash.Invoke(moneyEarned);
         return downToLayer;
     }
@@ -225,35 +343,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         listofDamage.Add(damage);
         damageds = true;
        
-        //GameObject boxToMake;
-        //boxType downToLayer = pop(damage, boxColor);
-     
-        //if (!(outerProtectiveLayer - damage <= 0))
-        //{
-        //    outerProtectiveLayer -= damage;
-        //}
-        //else
-        //{
-        //    if (downToLayer == boxType.none)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //    else
-        //    {
-        //        if (camo)
-        //        {
-        //            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringCamo[downToLayer] + ".prefab");
-        //        }
-        //        else
-        //        {
-        //            boxToMake = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(enemyModelPath + boxTypeToStringNonCamo[downToLayer] + ".prefab");
-        //        }
-
-        //        spawnEnemiesAmount(boxToMake, 1);
-        //        Destroy(gameObject);
-        //    }
-        //}
-
+       
     }
     public virtual void doDamage(int damage) {      
         GameObject boxToMake;

@@ -7,19 +7,29 @@ public class GameManager : MonoBehaviour
    public int coins;
    public int totalAccumMonkeyMoney = 0;
    public  bool monkeyGUIActive= false;
-    //later bomb blitz ability
+    //later bomb blitz ability when losing lives
 
    private void Awake()
     {
         instance = this;
         events.LoseLives.AddListener(loseLives);
         events.GainCash.AddListener(gainCoins);
-        //hp = 100;
-        //coins = 650;
+        if (GameObject.Find("Base") != null)
+        {
+            hp = 200;
+            coins = 1500;
+
+        }
+        else {
+            hp = 102;
+            coins = 652;
+        }
+        
     }
     void Start()
     {
-        
+        loseLives(0);
+        gainCoins(0);
     }
 
     // Update is called once per frame

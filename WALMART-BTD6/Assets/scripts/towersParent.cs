@@ -7,10 +7,11 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 
-public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount, ICollidingWithTowers
+public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount, ICollidingWithTowers,IDamageTaken
 {
 
     [SerializeField] protected LayerMask enemy;
+    protected enum gameMode {regular , alternate }
 
     protected string monkeyModelPath = "Assets/Resources/DartMonkey/";
     protected string monkeyGeneralGUIPath = "Assets/Resources/towerGUI/";
@@ -31,6 +32,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     protected int price;
     protected int targettingNum;
+    //hmmm
+    protected int hp;
 
     protected Dictionary<string, int> pathToTier;
     protected Dictionary<string, float> stats;
@@ -43,6 +46,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected List<TargettingDelegate> targgetingList = new List<TargettingDelegate>();
     protected List<string> targettingListNames = new List<string> { "first", "closest", "last", "strongest", "random" };
 
+    protected gameMode currentGM;
     protected void Start()
     {
         events.changeTarget.AddListener(changeTarget);
@@ -51,6 +55,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         targgetingList.Add(() => lastTargettign());
         targgetingList.Add(() => strongestTargettign());
         targgetingList.Add(() => randomTargettign());
+        if (GameObject.Find("Base") != null) { 
+        currentGM  = gameMode.alternate;
+        }
 
     }
     protected void Update()
@@ -117,70 +124,104 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     }
     //milestone 7
+    //first targetting=closest to base
     protected IEnumerator firstTargetting()
     {
         GameObject firstEnemy = null;
         float distance = 99999f;
         int indexHighest = 0;
         Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
-        foreach (var enemies in enemyCollider)
-        {
-            IreturnIndexNum ei = enemies.gameObject.GetComponent<IreturnIndexNum>();
-          
-            if (ei.wayPointIndex() > indexHighest)
-            {
-                firstEnemy = enemies.gameObject;
-                distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
-                indexHighest = ei.wayPointIndex();
-            }
-            else if (ei.wayPointIndex() == indexHighest)
-            {
-                if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint() < distance)
+        switch (currentGM) {
+            case gameMode.regular:
+                foreach (var enemies in enemyCollider)
                 {
-                   
-                    firstEnemy = enemies.gameObject;
-                    distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                    IreturnIndexNum ei = enemies.gameObject.GetComponent<IreturnIndexNum>();
+
+                    if (ei.wayPointIndex() > indexHighest)
+                    {
+                        firstEnemy = enemies.gameObject;
+                        distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                        indexHighest = ei.wayPointIndex();
+                    }
+                    else if (ei.wayPointIndex() == indexHighest)
+                    {
+                        if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint() < distance)
+                        {
+
+                            firstEnemy = enemies.gameObject;
+                            distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                        }
+                    }
                 }
-            }
+                break;
+
+            case gameMode.alternate:
+                  float oldDistance = distance;
+                    foreach (var enemies in enemyCollider)
+                    {
+                     distance = Vector3.Magnitude(GameObject.Find("Base").transform.position - enemies.transform.position);
+                    if (distance < oldDistance) { 
+                        oldDistance = distance;
+                        firstEnemy = enemies.gameObject;
+                    }
+                }
+                    break;        
         }
+      
         if (firstEnemy != null)
-        {
-          
+        {  
             attackEnemy(firstEnemy);
             yield return new WaitForSeconds(stats["FireRate"]);
         }
         else { yield return new WaitUntil(enemyInRange); }
         StartCoroutine(targgetingList[targettingNum].Invoke());
     }
+
     //milestone 7
+    //last targetting=furthest
     protected IEnumerator lastTargettign()
     {
         GameObject lastEnemy = null;
         float distance = 0f;
         int indexLowest = 0;
         Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
-        foreach (var enemies in enemyCollider)
-        {
-            IreturnIndexNum ei = enemies.gameObject.GetComponent<IreturnIndexNum>();
-            Debug.Log(ei.wayPointIndex() > indexLowest);
-
-            if (ei.wayPointIndex() < indexLowest)
-            {
-                lastEnemy = enemies.gameObject;
-                distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
-                indexLowest = ei.wayPointIndex();
-            }
-            else if (ei.wayPointIndex() == indexLowest)
-            {
-                if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint() > distance)
+        switch (currentGM) { 
+        case gameMode.regular:
+                foreach (var enemies in enemyCollider)
                 {
+                    IreturnIndexNum ei = enemies.gameObject.GetComponent<IreturnIndexNum>();
+                    Debug.Log(ei.wayPointIndex() > indexLowest);
 
-                    lastEnemy = enemies.gameObject;
-                    distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                    if (ei.wayPointIndex() < indexLowest)
+                    {
+                        lastEnemy = enemies.gameObject;
+                        distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                        indexLowest = ei.wayPointIndex();
+                    }
+                    else if (ei.wayPointIndex() == indexLowest)
+                    {
+                        if (enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint() > distance)
+                        {
+
+                            lastEnemy = enemies.gameObject;
+                            distance = enemies.gameObject.GetComponent<IreturnIndexNum>().returnDistanceFromWayPoint();
+                        }
+                    }
                 }
-            }
+                break;
+        case gameMode.alternate:
+                float oldDistance = distance;
+                foreach (var enemies in enemyCollider)
+                {
+                    distance = Vector3.Magnitude(GameObject.Find("Base").transform.position - enemies.transform.position);
+                    if (distance > oldDistance)
+                    {
+                        oldDistance = distance;
+                        lastEnemy = enemies.gameObject;
+                    }
+                }
+                break;
         }
-
         if (lastEnemy != null)
         {
             attackEnemy(lastEnemy);
@@ -558,6 +599,14 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     public void destroyTowere(string nub) {
         Destroy(monkeyUI);
         Destroy(gameObject);
+    }
+
+    public void damageTaken(int damageAmount, GameObject balloonDamage)
+    {
+        hp -= damageAmount;
+        if (hp <= 0) { 
+        Destroy(gameObject);
+        }
     }
 }
 

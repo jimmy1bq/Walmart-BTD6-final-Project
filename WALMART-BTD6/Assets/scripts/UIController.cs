@@ -14,6 +14,8 @@ public class UIController : MonoBehaviour
     {
         events.LoseLives.AddListener(loseLife);
         events.GainCash.AddListener(gainCoins);
+        loseLife(0);
+        gainCoins(0);
     }
 
     // Update is called once per frame
@@ -22,10 +24,12 @@ public class UIController : MonoBehaviour
         
     }
      void loseLife(int damage) {
-        livesText.text =(GameManager.instance.hp - damage).ToString();
+        Debug.Log("CALLED");
+        livesText.text =(GameManager.instance.hp).ToString();
     }
     void gainCoins(int Cash)
     {
+        Debug.Log("CALLED");
         cashText.text = (GameManager.instance.coins).ToString();
     }
 
