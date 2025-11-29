@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
    public int hp;
    public int coins;
    public int totalAccumMonkeyMoney = 0;
-   public  bool monkeyGUIActive= false;
+   public bool monkeyGUIActive= false;
     //later bomb blitz ability when losing lives
 
    private void Awake()
@@ -21,15 +21,14 @@ public class GameManager : MonoBehaviour
 
         }
         else {
-            hp = 102;
-            coins = 652;
+            hp = 100;
+            coins = 650;
         }
         
     }
     void Start()
     {
-        loseLives(0);
-        gainCoins(0);
+       
     }
 
     // Update is called once per frame

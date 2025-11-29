@@ -14,7 +14,7 @@ public class WaveManager : MonoBehaviour
     Dictionary<string, GameObject> boxTypeToString = new Dictionary<string, GameObject>() {
     };
     List<string> boxName = new List<string>() { 
-    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic","blueTank","redTank","zomgTank","blackTank","purpleTank"
+    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic","blueTank","redTank","zomgTank","blackTank","purpleTank","tankFortThe1ST"
     };
     //milestone 7 don't forget to say layer mask change
     List<string> camoBoxName = new List<string>() {
@@ -118,7 +118,7 @@ public class WaveManager : MonoBehaviour
     void startWave1() {
         waveOnGoing = true;
        // StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
+         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 10, 1f));
        // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
        // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
@@ -346,6 +346,11 @@ public class WaveManager : MonoBehaviour
     void startWave30()
     {
         waveOnGoing = true;
+        if (GameObject.Find("Base") != null)
+        {
+            events.GainCash.Invoke(3000);
+            StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["tankFortThe1ST"], 1, 0f), 10f));
+        }
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 0f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 1f));
     }
@@ -612,6 +617,7 @@ public class WaveManager : MonoBehaviour
     IEnumerator onGoingWaveCheck() {
         if (waveOnGoing) {
             Collider[] balloonsOnMap = Physics.OverlapSphere(gameObject.transform.position, 1000, (1 << 9));
+           
             if (balloonsOnMap.Length == 0) {
                 waveOnGoing = false;
             }
@@ -619,9 +625,12 @@ public class WaveManager : MonoBehaviour
         if (waveOnGoing)
         {
             yield return new WaitForSeconds(0.1f);
+           
             StartCoroutine(onGoingWaveCheck());
         }
         else {
+          
+            Time.timeScale = 1f;
             events.GainCash.Invoke(100);
             Transform startWaveButtonThing = null;
             Canvas canvasGUI=FindFirstObjectByType<Canvas>();

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2490339271825486572}
   - component: {fileID: 4569696808939858010}
   - component: {fileID: 1007699146863499721}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tank_gun_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 1483674013194759499}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 1.8012652, z: 0.6}
+  m_LocalPosition: {x: 0, y: 0.6199995, z: 0.80000013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7576007371216270092}
+  m_Father: {fileID: 8464850378069977040}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4569696808939858010
 MeshFilter:
@@ -100,8 +100,8 @@ GameObject:
   - component: {fileID: 8464850378069977040}
   - component: {fileID: 3797881360878966870}
   - component: {fileID: 8828680036555354768}
-  m_Layer: 0
-  m_Name: tank_tower_001
+  m_Layer: 9
+  m_Name: tankTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,11 +115,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3345582068299279613}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.03, y: 1.1812654, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2490339271825486572}
   m_Father: {fileID: 7576007371216270092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3797881360878966870
@@ -191,8 +192,10 @@ GameObject:
   - component: {fileID: 2783327363388108622}
   - component: {fileID: 8510302152427858219}
   - component: {fileID: 8240335202195454255}
+  - component: {fileID: 6878446621729419323}
+  - component: {fileID: -2711372282230945737}
   m_Layer: 9
-  m_Name: blueTankBoss
+  m_Name: tankFortThe1ST
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +215,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8464850378069977040}
-  - {fileID: 2490339271825486572}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &2783327363388108622
@@ -294,3 +296,37 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6878446621729419323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047364178283666204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e25e575f0fede45b175d69a800a795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  boxData: {fileID: 11400000, guid: 89e95abced0f5674b971b3adadc2e693, type: 2}
+--- !u!65 &-2711372282230945737
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047364178283666204}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.964389, y: 2.269673, z: 8.842468}
+  m_Center: {x: 0.00000059604656, y: 1.134823, z: -0.22359851}

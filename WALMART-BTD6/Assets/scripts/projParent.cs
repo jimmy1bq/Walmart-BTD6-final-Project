@@ -39,8 +39,9 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
     protected virtual void Start()
     {
         if (targetEnemy != null)
-        {
+        {         
             orgEnemyPosition = targetEnemy.transform.position;
+            Debug.Log(orgEnemyPosition);
         }
         StartCoroutine(selfDest());
     }

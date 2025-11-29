@@ -605,7 +605,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     {
        
         hp -= damageAmount;
-        Debug.Log(hp);
+     
         if (hp <= 0) { 
         Destroy(gameObject);
         }

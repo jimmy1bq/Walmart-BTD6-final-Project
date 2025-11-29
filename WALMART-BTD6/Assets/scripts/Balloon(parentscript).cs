@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,11 +32,13 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     protected int layer;
    
     protected int i = 0;
+   
     protected int outerProtectiveLayer = 0;
     protected int totalWayPoints;
     protected int parentId = -1;
     protected int personalId = -1;
 
+    protected float range = 2f;
     protected float balloonSpeedValue;
     protected float stundura;
 
@@ -190,10 +193,10 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
                 enemyClosestTargetting();
             }           
             else{
-                Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, 999f, 1 << 8);
+                Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, range, 1 << 8);
                 if (enemyCollider.Length != 0) {
                     GameObject closestEnemy = null;              
-                    float rangeClosest = 2f;
+                    float rangeClosest = range;
                     float distance;
                     foreach (var enemies in enemyCollider)
                     {
@@ -252,6 +255,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
                 break;
             case state.attacking:
                 agent.speed = 0;
+                Debug.Log(attackCoroutine == null);
                 if (attackCoroutine == null)
                 {
                     attackCoroutine=StartCoroutine(attackEnemy(enemyToAttack));
@@ -260,7 +264,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
 
         }    
     }
-    IEnumerator attackEnemy(GameObject enemy)
+  protected virtual IEnumerator attackEnemy(GameObject enemy)
     {        
         enemy.GetComponent<IDamageTaken>().damageTaken(damageValuer[boxColor], gameObject);
         yield return new WaitForSeconds(1f);
