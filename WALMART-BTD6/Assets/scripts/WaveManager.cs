@@ -122,6 +122,7 @@ public class WaveManager : MonoBehaviour
        // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
        // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
+        
     }
     void startWave2()
     {
@@ -132,8 +133,8 @@ public class WaveManager : MonoBehaviour
     void startWave3()
     {
         waveOnGoing = true;
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 5, 2f), 10f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 12, 1f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 1, 2f), 10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
     }
 
@@ -141,7 +142,7 @@ public class WaveManager : MonoBehaviour
     {
         waveOnGoing = true;
         StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 10, 1f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 10, 2f), 10f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["green"], 5, 2f), 10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
     }
 
@@ -149,8 +150,8 @@ public class WaveManager : MonoBehaviour
     {
 
         waveOnGoing = true;
-        StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 15, 0.5f));
-        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 7, 2f), 10f));
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["blue"], 13, 0.5f));
+        StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["yellow"], 3, 2f), 10f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 24f));
     }
     void startWave6()
@@ -621,6 +622,7 @@ public class WaveManager : MonoBehaviour
             StartCoroutine(onGoingWaveCheck());
         }
         else {
+            events.GainCash.Invoke(100);
             Transform startWaveButtonThing = null;
             Canvas canvasGUI=FindFirstObjectByType<Canvas>();
             int cc = canvasGUI.transform.childCount;

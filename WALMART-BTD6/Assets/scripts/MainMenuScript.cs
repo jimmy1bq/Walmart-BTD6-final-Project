@@ -70,6 +70,18 @@ public class MainMenuScript : MonoBehaviour
         SceneManager.UnloadSceneAsync("MainMenu");
 
     }
+    public void InvisibleTrailsMapSelected()
+    {
+        SceneManager.LoadSceneAsync("InvisibleTrails");
+        SceneManager.UnloadSceneAsync("MainMenu");
+
+    }
+    public void InfernoPlainsMapSelected()
+    {
+        SceneManager.LoadSceneAsync("InfernoPlains");
+        SceneManager.UnloadSceneAsync("MainMenu");
+
+    }
     public void plusMonkeyMoneyButton() {
      events.addMM.Invoke(1+(expGained/2));
      events.gainExp.Invoke(10);

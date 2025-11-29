@@ -14,7 +14,9 @@ public class UIController : MonoBehaviour
     {
         events.LoseLives.AddListener(loseLife);
         events.GainCash.AddListener(gainCoins);
-        loseLife(0);
+       
+            loseLife(0);
+          
         gainCoins(0);
     }
 
@@ -24,12 +26,15 @@ public class UIController : MonoBehaviour
         
     }
      void loseLife(int damage) {
-        Debug.Log("CALLED");
-        livesText.text =(GameManager.instance.hp).ToString();
+        if (GameObject.Find("Base") == null)
+        {
+            
+            livesText.text = (GameManager.instance.hp).ToString();
+        }
     }
     void gainCoins(int Cash)
     {
-        Debug.Log("CALLED");
+     
         cashText.text = (GameManager.instance.coins).ToString();
     }
 

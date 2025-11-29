@@ -9,6 +9,7 @@ public class bombTower : towersParent
 
     private void Awake()
     {
+        hp = 20;
         towerName = "bombShooter/";
         projctile = "bomb";
         rangeCircle = rangeCirclePF;

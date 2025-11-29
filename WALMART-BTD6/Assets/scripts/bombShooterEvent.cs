@@ -41,6 +41,7 @@ public class bombShooterEvent : MonoBehaviour
 
     public void upgrade001()
     {
+        Debug.Log(GameManager.instance.coins);
         if (GameManager.instance.coins >= 210)
         {
             Dictionary<string, float> stats = new Dictionary<string, float> {

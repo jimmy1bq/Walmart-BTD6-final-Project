@@ -603,7 +603,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     public void damageTaken(int damageAmount, GameObject balloonDamage)
     {
+       
         hp -= damageAmount;
+        Debug.Log(hp);
         if (hp <= 0) { 
         Destroy(gameObject);
         }

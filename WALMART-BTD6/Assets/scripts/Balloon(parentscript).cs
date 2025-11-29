@@ -40,6 +40,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     protected float stundura;
 
     protected bool damageds = false;
+    protected bool isDead = false;
     protected bool alt = false;
     protected bool camo = false;
     protected bool tankOrNot = false;
@@ -54,6 +55,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     protected NavMeshAgent agent;
 
     protected List<float> listofDamage =new List<float>();
+
+    protected Coroutine attackCoroutine;
 
     //  protected Dictionary<boxSO.boxType, GameObject> keyValuePairs = new Dictionary<boxSO.boxType, GameObject>();
     protected Dictionary<boxType, int> balloonLayer =new Dictionary<boxType, int>() {
@@ -167,6 +170,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         }
         else
         {
+            GetComponent<NavMeshAgent>().enabled = false;
             AdvanceIndex = StartCoroutine(advanceIndex());
         }
        
@@ -182,7 +186,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         {
             if (currentTarget == null)
             {
-                Debug.Log("HI");
+              
                 enemyClosestTargetting();
             }           
             else{
@@ -215,8 +219,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
      protected void enemyClosestTargetting()
     {
         GameObject closestEnemy = null;
-        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, 999f, 1 << 8);
-        Debug.Log(enemyCollider.Length);
+        Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, 9999f, 1 << 8);   
+        
         float rangeClosest = 999f;
         float distance;
         foreach (var enemies in enemyCollider)
@@ -228,40 +232,44 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
                 closestEnemy = enemies.gameObject;
             }
         }
-        if (closestEnemy != null)
+        if (closestEnemy != null && agent != null)
         {
-            Debug.Log(closestEnemy);
-            agent.SetDestination(closestEnemy.transform.position);
-            currentTarget = closestEnemy;
-            currentState = state.moving;
+            if (!isDead)
+            {
+                agent.SetDestination(closestEnemy.transform.position);
+                currentTarget = closestEnemy;
+                currentState = state.moving;
+            }           
         }
-        else
-        {
-            agent.SetDestination(GameObject.Find("Base").transform.position);
-            currentTarget = GameObject.Find("Base");
-            currentState = state.moving;
-        }
+           
+         
     }
     protected void switchStates(GameObject enemyToAttack) {
         switch (currentState) {
             case state.moving:
+                agent.speed = balloonSpeedValue;
                 enemyClosestTargetting();
                 break;
             case state.attacking:
                 agent.speed = 0;
-                StartCoroutine(attackEnemy(enemyToAttack));
+                if (attackCoroutine == null)
+                {
+                    attackCoroutine=StartCoroutine(attackEnemy(enemyToAttack));
+                }
                 break;
 
         }    
     }
     IEnumerator attackEnemy(GameObject enemy)
-    {
+    {        
         enemy.GetComponent<IDamageTaken>().damageTaken(damageValuer[boxColor], gameObject);
         yield return new WaitForSeconds(1f);
         if (enemy == null)
         {
+            
             currentState = state.moving;
             switchStates(null);
+            attackCoroutine = null;
         }
         else
         {
@@ -343,7 +351,8 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
        
        
     }
-    public virtual void doDamage(int damage) {      
+    public virtual void doDamage(int damage) {
+        isDead = true;
         GameObject boxToMake;
         boxType downToLayer = pop(damage, boxColor);
         if (!(outerProtectiveLayer - damage <= 0))
