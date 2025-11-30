@@ -92,6 +92,9 @@ public interface Iexplodeable
 public interface IbuffTower
     {
     public void buffTower(Dictionary<string,float> buff,LayerMask camo);
+    public void updateBuffTower(Dictionary<string, float> buff, LayerMask camo);
+
+    public void removeBuffTower();
 }
 
 

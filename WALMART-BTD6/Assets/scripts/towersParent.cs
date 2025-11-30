@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected string projctile;
     protected bool colliding;
     protected bool hiddenDec;
-    
+    protected bool beenBuffed = false;
+
 
     //milestone 7
     protected LayerMask boxLayerToHit = 1 << 9;
@@ -38,6 +40,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     protected Dictionary<string, int> pathToTier;
     protected Dictionary<string, float> stats;
+    protected Dictionary<string, float> oldStats;
     //later put an array with function 
 
     public delegate IEnumerator TargettingDelegate();
@@ -58,6 +61,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         targgetingList.Add(() => randomTargettign());
         if (GameObject.Find("Base") != null) { 
         currentGM  = gameMode.alternate;
+        oldStats = stats;
         }
 
     }
@@ -348,7 +352,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         GameObject newModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
         GameObject newModel = Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity);
         newModel.transform.parent = gameObject.transform;
-        newModel.GetComponent<BoxCollider>().enabled = false;
+        newModel.GetComponent<BoxCollider>().enabled = false;    
         rangeC.transform.parent = null;
         rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
         rangeC.transform.parent = gameObject.transform;
@@ -361,7 +365,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         foreach (var statBuff in statsUpgrade)
         {
             stats[statBuff.Key] *= statBuff.Value;
-            hp+= (int)(statBuff.Value * 10);
+            oldStats[statBuff.Key] *= statBuff.Value;
+            hp += (int)(statBuff.Value * 10);
         }
         if (projectile != "")
         {
@@ -417,7 +422,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             else if ((h.Key != blockedPath) && !maxPaths.Contains(h.Key))
             {  
                 newPreFab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGUIPath + towerName + h.Value + ".prefab");
-                Debug.Log(newPreFab);
+                
             }
             //the 0th child is the frame containnig everything 
 
@@ -537,12 +542,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             popText.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
         }
     }
-    protected IEnumerator spawnattackCD()
-    {
-        yield return new WaitForSeconds(1);
-        StartCoroutine(closestTargetting());
-    }
-
+   
+   
     protected int findFirstChild(string name, GameObject objectToSearch)
     {
         int i = 0;
@@ -615,17 +616,42 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     
     public void buffTower(Dictionary<string,float> buffs, LayerMask camo)
     {
-       
+        if (beenBuffed != false)
+        {
             boxLayerToHit = camo;
             foreach (var buff in buffs)
             {
                 stats[buff.Key] += buff.Value;
             }
-        
+        }
+        rangeC.transform.parent = null;
+        rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
+        rangeC.transform.parent = gameObject.transform;
+        Debug.Log(gameObject);
+    }
+    public void updateBuffTower(Dictionary<string, float> buff, LayerMask camo) {
+        boxLayerToHit = camo;
+        foreach (var buffs in buff)
+        {
+            stats[buffs.Key] += buffs.Value;
+          
+        }
+        rangeC.transform.parent = null;
+        rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
+        rangeC.transform.parent = gameObject.transform;
+        Debug.Log("HI");
     }
 
-    
+    public void removeBuffTower()
+    {
+        stats = oldStats;
+        rangeC.transform.parent = null;
+        rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
+        rangeC.transform.parent = gameObject.transform;
+        Debug.Log("HI");
+    }
 
+   
 }
 
 

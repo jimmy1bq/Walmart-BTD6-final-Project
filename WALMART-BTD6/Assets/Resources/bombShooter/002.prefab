@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 84401185857699243}
   - component: {fileID: 2152853820385788739}
   - component: {fileID: 7950902459799906797}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 485284481394105128}
   - component: {fileID: 2413895525868638312}
   - component: {fileID: 7388562595423399274}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 2629639208291867640}
   - component: {fileID: 8985350262384311064}
   - component: {fileID: 6709978320508093243}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,15 +11,15 @@ public class heroScript : towersParent
     [SerializeField] GameObject rangeCirclePF;
     //totalBuff so incase if the tower gets destroyed we can just subtract the float to decrease their stat back to normal
     Dictionary<string, float> totalBuffs = new Dictionary<string, float> {
-                    {"Range", 0f},
-                    { "FireRate",0f},
+                    {"Range", .1f},
+                    { "FireRate",-0.01f},
                     { "ProjctileSpeed",0f},
                     { "AddtionalDamage",0f},
                     { "pierce",0f}
              };
     Dictionary<string, float> buffs = new Dictionary<string, float> {
-                    {"Range", 0f},
-                    { "FireRate",0f},
+                    {"Range", .1f},
+                    { "FireRate",-0.01f},
                     { "ProjctileSpeed",0f},
                     { "AddtionalDamage",0f},
                     { "pierce",0f}
@@ -51,7 +51,9 @@ public class heroScript : towersParent
         rangeC.transform.parent = gameObject.transform;
         rangeC.SetActive(false);
         price = 500;
+        events.waveOver.AddListener(waveOvers);
     }
+  
     protected override void updateGUI()
     {
         GameObject textMesh = monkeyUI.transform.Find("xpBar").gameObject;
@@ -69,8 +71,6 @@ public class heroScript : towersParent
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalHeroGUI" + ".prefab");
 
         monkeyUI = Instantiate(genUI);
-        //upgradeGUI frame
-        GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300, 610, 0);
         monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
         updateGUI();
@@ -123,20 +123,20 @@ public class heroScript : towersParent
                     { "AddtionalDamage",0f},
                     { "pierce",0f}
              };
-            totalBuffs["Range"] -= 0.1f;
-            totalBuffs["FireRate"] += 0.01f;
+            totalBuffs["Range"] += 0.10f;
+            totalBuffs["FireRate"] -= 0.01f;
         }
         else if (currentLevel > 10 && currentLevel < 20)
         {
             buffs = new Dictionary<string, float> {
-                    {"Range", 0.15f},
-                    { "FireRate",-0.02f},
+                    {"Range", 0.2f},
+                    { "FireRate",-0.03f},
                     { "ProjctileSpeed",0f},
                     { "AddtionalDamage",0f},
                     { "pierce",0f}
              };
-            totalBuffs["Range"] -= 0.15f;
-            totalBuffs["FireRate"] += 0.02f;
+            totalBuffs["Range"] -= 0.2f;
+            totalBuffs["FireRate"] += 0.03f;
             camo = true;
         }
         else if (currentLevel == 20)
@@ -154,6 +154,14 @@ public class heroScript : towersParent
             //gain ability
 
         }
+        foreach (GameObject towers in buffedTowers)
+        {
+            if (towers != null)
+            {
+                if (!camo) {towers.GetComponent<IbuffTower>().updateBuffTower(buffs,1<<8);}
+                if (camo) { towers.GetComponent<IbuffTower>().updateBuffTower(buffs, (1 << 8 | 1 << 9));}
+            }
+        }
     }
 
     IEnumerator buffFriendlies()
@@ -161,14 +169,12 @@ public class heroScript : towersParent
         Collider[] friendlies = Physics.OverlapSphere(transform.position, stats["Range"], 1 << 8);
         foreach (Collider friendly in friendlies)
         {
-           
-            if (!buffedTowers.Contains(friendly.gameObject) && friendly.gameObject.tag!="Base")
-            {
-            
-               
-                if (!camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(buffs, 1 << 8); }
-                if (camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(buffs, (1 << 8 | 1 << 9)); }
-                buffedTowers.Add(friendly.gameObject);
+            Debug.Log(friendly.gameObject);           
+            if (!(buffedTowers.Contains(friendly.gameObject)) && friendly.gameObject.tag!="Base" && gameObject.GetComponent<IbuffTower>() != null)
+            {       
+                    if (!camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(totalBuffs, 1 << 8);}
+                    if (camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(totalBuffs, (1 << 8 | 1 << 9)); }
+                    buffedTowers.Add(friendly.gameObject);                
             }
         }
         yield return new WaitForSeconds(0.05f);
@@ -178,9 +184,26 @@ public class heroScript : towersParent
     {
         foreach (GameObject h in buffedTowers)
         {
-            h.GetComponent<IbuffTower>().buffTower(totalBuffs, 1 << 8);
+            if (h != null)
+            {
+                h.GetComponent<IbuffTower>().removeBuffTower();
+            }
         }
         Destroy(monkeyUI);
         Destroy(gameObject);
+    }
+    void waveOvers(int buh) {
+        currentExp += 100;
+        if (currentExp >= totalExp) {
+            currentExp -= totalExp;
+            currentLevel += 1;
+            towerUpgrade();
+            cost += 100;
+        }
+        if (monkeyUI != null) {
+            updateGUI();
+        }
+
+    
     }
 }

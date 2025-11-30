@@ -77,11 +77,12 @@ public class RayCast : MonoBehaviour
             }
            
         }
+       
         else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit) && !EventSystem.current.IsPointerOverGameObject())
         {
-
           
-                if (hit.collider.gameObject.tag == "Tower")
+
+            if (hit.collider.gameObject.tag == "Tower")
                 {
                   
                     if (selectedTower)

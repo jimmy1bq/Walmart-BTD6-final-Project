@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8078259154021447433}
   - component: {fileID: 6543040798987574241}
   - component: {fileID: 239736807096082055}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 9079199235624618398}
   - component: {fileID: 6264639872988646355}
   - component: {fileID: 6925471000899987722}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 4939796570391285691}
   - component: {fileID: 79290168554249882}
   - component: {fileID: 6019462055143510341}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 2588458266232487222}
   - component: {fileID: 365243556399154701}
   - component: {fileID: 1183080840350545591}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 5433495582855092449}
   - component: {fileID: 5883131747718310450}
   - component: {fileID: 8338636669452745496}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}

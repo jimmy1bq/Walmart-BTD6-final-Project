@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4130421629105356689}
   - component: {fileID: 7810940057790224118}
   - component: {fileID: 1921597411807641817}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Cart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 5845911031162496250}
   - component: {fileID: 4340489982615576667}
   - component: {fileID: 4273560770041664199}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
