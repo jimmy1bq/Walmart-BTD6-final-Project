@@ -1,26 +1,26 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 using static UnityEngine.GraphicsBuffer;
 
-public class bossTankScript : moabBox
+public class tankBossGreen : zomgBox
 {
     private void Awake()
     {
         tankOrNot = true;
-        balloonSpeedValue = 1.5f;
+        balloonSpeedValue = 1.0f;
         range = 10f;
-        outerProtectiveLayer = 150;
+        outerProtectiveLayer = 400;
         if (WayPointManager.instance != null) { totalWayPoints = WayPointManager.instance.wayPoints.Count - 1; }
         personalId = boxData.ID;
         boxData.ID++;
     }
-    
+
     protected override IEnumerator attackEnemy(GameObject enemy)
     {
-        GameObject turret=gameObject.transform.GetChild(0).gameObject;
+        GameObject turret = gameObject.transform.GetChild(0).gameObject;
         turret.transform.LookAt(enemy.transform);
-        shoot(enemy,turret);
-        yield return new WaitForSeconds(5f);
+        shoot(enemy, turret);
+        yield return new WaitForSeconds(3f);
         if (enemy == null)
         {
 
@@ -33,7 +33,8 @@ public class bossTankScript : moabBox
             StartCoroutine(attackEnemy(enemy));
         }
     }
-    void shoot(GameObject enemyToShoot,GameObject turret) {
+    void shoot(GameObject enemyToShoot, GameObject turret)
+    {
         Debug.Log(enemyToShoot);
         string projctilePath = "Assets/Resources/Projectile/";
         Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);

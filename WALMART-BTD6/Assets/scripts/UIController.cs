@@ -50,7 +50,7 @@ public class UIController : MonoBehaviour
     }
  
     public void speedUp() {
-        Time.timeScale = 5.0f;
+        Time.timeScale = 2.0f;
         canvasGUI = FindFirstObjectByType<Canvas>();
         GameObject speedWaveButtonThing = canvasGUI.transform.Find("speedUpButton(Clone)").gameObject;
         GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedDownButton" + ".prefab"), speedWaveButtonThing.transform.position, Quaternion.identity);

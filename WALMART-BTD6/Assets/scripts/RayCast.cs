@@ -137,7 +137,6 @@ public class RayCast : MonoBehaviour
 
         Physics.Raycast(ray, out hit);
         GameObject towerInst = Instantiate(tower, hit.point, Quaternion.identity);
-
         towerOnMouse = towerInst;
         towerOnMouse.GetComponent<IHovering>().hoveringState(true);
     }

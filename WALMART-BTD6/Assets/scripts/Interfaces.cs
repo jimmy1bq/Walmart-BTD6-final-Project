@@ -1,4 +1,7 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public interface IDamageTaken { 
     void damageTaken(int damageAmount, GameObject projectileThatDamageIt);
@@ -85,6 +88,10 @@ public interface Iexplodeable
 {
     public void selfDet();
     public void recursion(int recurseAmount);
+}
+public interface IbuffTower
+    {
+    public void buffTower(Dictionary<string,float> buff,LayerMask camo);
 }
 
 

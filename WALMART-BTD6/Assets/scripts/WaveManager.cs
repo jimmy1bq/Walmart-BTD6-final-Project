@@ -9,12 +9,13 @@ using UnityEngine.Rendering;
 public class WaveManager : MonoBehaviour
 {
 
+    static WaveManager instance;
     string enemiesFolder = "Assets/Resources/boxEnemiesWScript/";
     
     Dictionary<string, GameObject> boxTypeToString = new Dictionary<string, GameObject>() {
     };
     List<string> boxName = new List<string>() { 
-    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic","blueTank","redTank","zomgTank","blackTank","purpleTank","tankFortThe1ST"
+    "red","blue","green","yellow","pink","black","white","purple","metal","orange","seaGreen","ceramic","blueTank","redTank","zomgTank","blackTank","purpleTank","tankFortThe1ST","tankFortThe2ND","tankFortThe3RD"
     };
     //milestone 7 don't forget to say layer mask change
     List<string> camoBoxName = new List<string>() {
@@ -27,7 +28,7 @@ public class WaveManager : MonoBehaviour
 
     int index = 0;
 
-    bool waveOnGoing = false;
+    public bool waveOnGoing = false;
     bool alternativeMap = false;
     string pathToGUIs = "Assets/Resources/MiscellaniousGUI/";
 

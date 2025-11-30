@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 
-public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount, ICollidingWithTowers,IDamageTaken
+public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount, ICollidingWithTowers,IDamageTaken, IbuffTower
 {
 
     [SerializeField] protected LayerMask enemy;
@@ -26,6 +26,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected string projctile;
     protected bool colliding;
     protected bool hiddenDec;
+    
 
     //milestone 7
     protected LayerMask boxLayerToHit = 1 << 9;
@@ -360,6 +361,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         foreach (var statBuff in statsUpgrade)
         {
             stats[statBuff.Key] *= statBuff.Value;
+            hp+= (int)(statBuff.Value * 10);
         }
         if (projectile != "")
         {
@@ -382,7 +384,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         return false;
     }
-    protected void updateGUI()
+    protected virtual void updateGUI()
     {
         //holy mircale I manage to do a simple intergration of my check for bloacked path and addmax paths code
         //stores each GUI string name to whether they are top mid or bo
@@ -507,7 +509,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
 
 
-    protected void checkHovering(bool hovering)
+    protected virtual void checkHovering(bool hovering)
     {
         if (!hovering)
         {
@@ -564,14 +566,15 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         hoveringS = hovering;
         checkHovering(hovering);
     }
-    public void towerSelected()
+    //in reflection im never hardcording values in because it jsut makes inhertinace pain the in the butt to work with
+    public virtual void towerSelected()
     {
         rangeC.SetActive(true);
         GameManager.instance.monkeyGUIActive = true;
         events.towerUpgrade.AddListener(towerUpgrade);
         events.destroyTower.AddListener(destroyTowere);
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
-        Debug.Log("HI");
+      
         monkeyUI = Instantiate(genUI);
         //upgradeGUI frame
         GameObject upgradeGUI = monkeyUI.transform.GetChild(0).gameObject;
@@ -581,7 +584,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         
         monkeyUI.SetActive(true);
     }
-    public void towerUnSelected()
+    public virtual void towerUnSelected()
     {
         events.destroyTower.RemoveListener(destroyTowere);
         events.towerUpgrade.RemoveListener(towerUpgrade);
@@ -596,20 +599,33 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     {
         return colliding;
     }
-    public void destroyTowere(string nub) {
+    public virtual void destroyTowere(string nub) {
         Destroy(monkeyUI);
         Destroy(gameObject);
     }
 
     public void damageTaken(int damageAmount, GameObject balloonDamage)
-    {
-       
+    {       
         hp -= damageAmount;
      
         if (hp <= 0) { 
         Destroy(gameObject);
         }
     }
+    
+    public void buffTower(Dictionary<string,float> buffs, LayerMask camo)
+    {
+       
+            boxLayerToHit = camo;
+            foreach (var buff in buffs)
+            {
+                stats[buff.Key] += buff.Value;
+            }
+        
+    }
+
+    
+
 }
 
 

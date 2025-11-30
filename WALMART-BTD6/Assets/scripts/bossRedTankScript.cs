@@ -2,14 +2,14 @@ using System.Collections;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class bossTankScript : moabBox
+public class bossRedTankScript : bfbBox
 {
     private void Awake()
     {
         tankOrNot = true;
-        balloonSpeedValue = 1.5f;
+        balloonSpeedValue = 1.0f;
         range = 10f;
-        outerProtectiveLayer = 150;
+        outerProtectiveLayer = 400;
         if (WayPointManager.instance != null) { totalWayPoints = WayPointManager.instance.wayPoints.Count - 1; }
         personalId = boxData.ID;
         boxData.ID++;
@@ -20,7 +20,7 @@ public class bossTankScript : moabBox
         GameObject turret=gameObject.transform.GetChild(0).gameObject;
         turret.transform.LookAt(enemy.transform);
         shoot(enemy,turret);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         if (enemy == null)
         {
 

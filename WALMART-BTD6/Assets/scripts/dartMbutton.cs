@@ -4,6 +4,8 @@ public class towerButtons : MonoBehaviour
 {
     [SerializeField] GameObject DartMonkePrefab;
     [SerializeField] GameObject cannonTowerPrefab;
+    [SerializeField] GameObject TentsPrefab;
+
 
     [SerializeField] bool testBool1;
     public void selected() {
@@ -17,6 +19,14 @@ public class towerButtons : MonoBehaviour
         if (GameManager.instance.coins >= 300)
         {
             events.towerSelected.Invoke(cannonTowerPrefab);
+        }
+    }
+    public void selectedhero()
+    {
+        if (GameManager.instance.coins >= 500)
+        {
+            
+            events.towerSelected.Invoke(TentsPrefab);
         }
     }
 }
