@@ -571,7 +571,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     public virtual void towerSelected()
     {
         rangeC.SetActive(true);
-        GameManager.instance.monkeyGUIActive = true;
+     
         events.towerUpgrade.AddListener(towerUpgrade);
         events.destroyTower.AddListener(destroyTowere);
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
@@ -589,7 +589,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     {
         events.destroyTower.RemoveListener(destroyTowere);
         events.towerUpgrade.RemoveListener(towerUpgrade);
-        GameManager.instance.monkeyGUIActive = false;
+       
         rangeC.SetActive(false);
         monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
         Debug.Log(monkeyUI);

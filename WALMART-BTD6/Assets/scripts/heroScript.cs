@@ -25,7 +25,7 @@ public class heroScript : towersParent
                     { "pierce",0f}
              };
     List<GameObject> buffedTowers = new List<GameObject>();
-
+    int totalCost = 100;
     int cost = 100;
     int totalExp = 100;
     int currentExp = 0;
@@ -56,35 +56,43 @@ public class heroScript : towersParent
   
     protected override void updateGUI()
     {
-        GameObject textMesh = monkeyUI.transform.Find("xpBar").gameObject;
-        textMesh.GetComponent<Slider>().value = currentExp / totalExp;
-        textMesh.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text =currentExp + "/" + totalExp.ToString();
+        GameObject xpBar = monkeyUI.transform.Find("xpBar").gameObject;        
+        GameObject textMesh = monkeyUI.transform.Find("UpgradeButton").gameObject;  
+        xpBar.GetComponent<UnityEngine.UI.Slider>().value = currentExp / totalExp;
+        if (currentLevel != 20)
+        {
+            textMesh.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "Upgrade:" + cost;
+            xpBar.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text = currentExp + "/" + totalExp.ToString();
+        }
+        else {
+            textMesh.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
+            xpBar.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
+
+        }
+
 
     }
     public override void towerSelected()
     {
         rangeC.SetActive(true);
-        GameManager.instance.monkeyGUIActive = true;
         events.towerUpgrade.AddListener(towerUpgrade);
-        events.destroyTower.AddListener(destroyTowere);
-        Debug.Log("hi");
+        events.destroyTower.AddListener(destroyTowere);   
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalHeroGUI" + ".prefab");
-
         monkeyUI = Instantiate(genUI);
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300, 610, 0);
-        monkeyUI.transform.parent = GameObject.Find("Canvas").transform;
-        updateGUI();
-
+        monkeyUI.transform.parent = GameObject.Find("Canvas").transform;  
         monkeyUI.SetActive(true);
+        updateGUI();
+        Debug.Log(monkeyUI);
     }
+
     public override void towerUnSelected()
     {
+        Debug.Log(monkeyUI);
         events.destroyTower.RemoveListener(destroyTowere);
         events.towerUpgrade.RemoveListener(towerUpgrade);
-        GameManager.instance.monkeyGUIActive = false;
         rangeC.SetActive(false);
-        monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find(" generalHeroGUI(Clone)").gameObject;
-        Debug.Log(monkeyUI);
+      //  monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalHeroGUI(Clone)").gameObject;       
         Destroy(monkeyUI);
     }
 
@@ -107,13 +115,24 @@ public class heroScript : towersParent
     }
     public void towerButtonUpgrade()
     {
+        
         if (GameManager.instance.coins >= cost)
-        {
+        {       
+            currentExp = 0;
+            events.GainCash.Invoke(-cost);
             towerUpgrade();
         }
     }
     void towerUpgrade()
     {
+        currentLevel += 1;
+        totalExp += 100;
+        if (monkeyUI != null)
+        {      
+            cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
+            updateGUI();
+        }
+
         if (currentLevel < 10)
         {
             buffs = new Dictionary<string, float> {
@@ -135,8 +154,8 @@ public class heroScript : towersParent
                     { "AddtionalDamage",0f},
                     { "pierce",0f}
              };
-            totalBuffs["Range"] -= 0.2f;
-            totalBuffs["FireRate"] += 0.03f;
+            totalBuffs["Range"] += 0.2f;
+            totalBuffs["FireRate"] -= 0.03f;
             camo = true;
         }
         else if (currentLevel == 20)
@@ -148,20 +167,23 @@ public class heroScript : towersParent
                     { "AddtionalDamage",0f},
                     { "pierce",0f}
              };
-            totalBuffs["Range"] -= 0.15f;
-            totalBuffs["FireRate"] += 0.02f;
+            totalBuffs["Range"] += 0.15f;
+            totalBuffs["FireRate"] -= 0.02f;
             camo = true;
             //gain ability
 
         }
+     
         foreach (GameObject towers in buffedTowers)
         {
+           
             if (towers != null)
             {
                 if (!camo) {towers.GetComponent<IbuffTower>().updateBuffTower(buffs,1<<8);}
                 if (camo) { towers.GetComponent<IbuffTower>().updateBuffTower(buffs, (1 << 8 | 1 << 9));}
             }
         }
+       
     }
 
     IEnumerator buffFriendlies()
@@ -169,7 +191,7 @@ public class heroScript : towersParent
         Collider[] friendlies = Physics.OverlapSphere(transform.position, stats["Range"], 1 << 8);
         foreach (Collider friendly in friendlies)
         {
-            Debug.Log(friendly.gameObject);           
+                      
             if (!(buffedTowers.Contains(friendly.gameObject)) && friendly.gameObject.tag!="Base" && gameObject.GetComponent<IbuffTower>() != null)
             {       
                     if (!camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(totalBuffs, 1 << 8);}
@@ -193,17 +215,14 @@ public class heroScript : towersParent
         Destroy(gameObject);
     }
     void waveOvers(int buh) {
-        currentExp += 100;
+        currentExp += 10;
         if (currentExp >= totalExp) {
-            currentExp -= totalExp;
-            currentLevel += 1;
-            towerUpgrade();
-            cost += 100;
-        }
-        if (monkeyUI != null) {
+            currentExp -= totalExp;          
+            towerUpgrade();           
+        }     
+        else if (monkeyUI != null) {
+            cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
             updateGUI();
         }
-
-    
     }
 }

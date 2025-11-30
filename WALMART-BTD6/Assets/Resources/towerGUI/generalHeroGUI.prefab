@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Upgrade:1000$
+  m_text: 'Upgrade:100$
 
 '
   m_isRightToLeft: 0
@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -3583485091837132367, guid: 2b08b495bb3a5a1408a9e41d50172e9d, type: 3}
+      - m_Target: {fileID: 3963038830262014587, guid: 393adf2a9bec734478c67cce2342f27f, type: 3}
         m_TargetAssemblyTypeName: heroScript, Assembly-CSharp
         m_MethodName: towerButtonUpgrade
         m_Mode: 1
