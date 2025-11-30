@@ -172,9 +172,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3649710338072555228, guid: 2b08b495bb3a5a1408a9e41d50172e9d, type: 3}
     - target: {fileID: 1014283368685209572, guid: e1d159d8d1c881548bf38db07c8c0c6f, type: 3}
-      propertyPath: cannonTowerPrefab
+      propertyPath: TentsPrefab
       value: 
-      objectReference: {fileID: 1321878236489005689, guid: ac223a7bd71c57445859468a96f8f198, type: 3}
+      objectReference: {fileID: 4375315358695169257, guid: 7a38ded8087dd4846844b914c3c9a062, type: 3}
     - target: {fileID: 4068836500085988228, guid: e1d159d8d1c881548bf38db07c8c0c6f, type: 3}
       propertyPath: m_Name
       value: buytowers

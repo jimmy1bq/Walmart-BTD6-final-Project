@@ -5,6 +5,7 @@ using System.Collections;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.UIElements;
 public class heroScript : towersParent
 {
     [SerializeField] GameObject rangeCirclePF;
@@ -35,7 +36,7 @@ public class heroScript : towersParent
     {
         rangeCircle = rangeCirclePF;
         stats = new Dictionary<string, float>() {
-          {"Range", 7 },
+          {"Range", 14},
           {"FireRate",0},
           {"ProjctileSpeed",0},
           {"AddtionalDamage",0},
@@ -53,8 +54,10 @@ public class heroScript : towersParent
     }
     protected override void updateGUI()
     {
-        GameObject textMesh = monkeyUI.transform.Find("buh").gameObject;
-        textMesh.GetComponent<TextMeshProUGUI>().text = stats["popCount"].ToString();
+        GameObject textMesh = monkeyUI.transform.Find("xpBar").gameObject;
+        textMesh.GetComponent<Slider>().value = currentExp / totalExp;
+        textMesh.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text =currentExp + "/" + totalExp.ToString();
+
     }
     public override void towerSelected()
     {
@@ -62,6 +65,7 @@ public class heroScript : towersParent
         GameManager.instance.monkeyGUIActive = true;
         events.towerUpgrade.AddListener(towerUpgrade);
         events.destroyTower.AddListener(destroyTowere);
+        Debug.Log("hi");
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalHeroGUI" + ".prefab");
 
         monkeyUI = Instantiate(genUI);
@@ -157,8 +161,11 @@ public class heroScript : towersParent
         Collider[] friendlies = Physics.OverlapSphere(transform.position, stats["Range"], 1 << 8);
         foreach (Collider friendly in friendlies)
         {
-            if (!buffedTowers.Contains(friendly.gameObject))
+           
+            if (!buffedTowers.Contains(friendly.gameObject) && friendly.gameObject.tag!="Base")
             {
+            
+               
                 if (!camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(buffs, 1 << 8); }
                 if (camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(buffs, (1 << 8 | 1 << 9)); }
                 buffedTowers.Add(friendly.gameObject);
