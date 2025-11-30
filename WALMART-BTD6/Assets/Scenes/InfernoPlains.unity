@@ -171,10 +171,6 @@ PrefabInstance:
       propertyPath: tentPreFab
       value: 
       objectReference: {fileID: 3649710338072555228, guid: 2b08b495bb3a5a1408a9e41d50172e9d, type: 3}
-    - target: {fileID: 1014283368685209572, guid: e1d159d8d1c881548bf38db07c8c0c6f, type: 3}
-      propertyPath: TentsPrefab
-      value: 
-      objectReference: {fileID: 4375315358695169257, guid: 7a38ded8087dd4846844b914c3c9a062, type: 3}
     - target: {fileID: 4068836500085988228, guid: e1d159d8d1c881548bf38db07c8c0c6f, type: 3}
       propertyPath: m_Name
       value: buytowers
@@ -6524,7 +6520,7 @@ GameObject:
   - component: {fileID: 1635032190}
   m_Layer: 8
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: Base
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8270,28 +8266,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1630635852567533868
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3495572785481267835}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8308783470357007516, guid: d75000652e910694aa98c7666e439cd4, type: 3}
 --- !u!4 &1746652053773614638
 Transform:
   m_ObjectHideFlags: 0
@@ -8790,8 +8764,8 @@ GameObject:
   - component: {fileID: 4307996788223271105}
   - component: {fileID: 893630086754692964}
   - component: {fileID: 3135130540308274094}
-  - component: {fileID: 1630635852567533868}
   - component: {fileID: 4307996788223271106}
+  - component: {fileID: 4307996788223271107}
   m_Layer: 7
   m_Name: Map
   m_TagString: placeableArea
@@ -9085,6 +9059,28 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 11591b4980d2c37468738dc3f8eae335, type: 2}
   m_BuildHeightMesh: 0
+--- !u!64 &4307996788223271107
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3495572785481267835}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8308783470357007516, guid: d75000652e910694aa98c7666e439cd4, type: 3}
 --- !u!33 &4352946076993196837
 MeshFilter:
   m_ObjectHideFlags: 0
