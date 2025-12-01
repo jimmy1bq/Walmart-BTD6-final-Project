@@ -41,8 +41,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected int hp;
 
     protected Dictionary<string, int> pathToTier;
-    protected Dictionary<string, float> stats;
-    protected Dictionary<string, float> oldStats;
+    protected Dictionary<string, float> stats = new Dictionary<string, float>();
+    protected Dictionary<string, float> oldStats = new Dictionary<string, float>();
     //later put an array with function 
 
     public delegate IEnumerator TargettingDelegate();
@@ -65,7 +65,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         targgetingList.Add(() => randomTargettign());
         if (GameObject.Find("Base") != null) { 
         currentGM  = gameMode.alternate;
-        oldStats = stats;
+        oldStats = new Dictionary<string, float>(stats);
         }
 
     }
@@ -600,7 +600,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
        
         rangeC.SetActive(false);
         monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
-        Debug.Log(monkeyUI);
+        
         Destroy(monkeyUI);
     }
 
@@ -660,12 +660,13 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     public void removeBuffTower()
     {
-        stats = oldStats;
+        Debug.Log(oldStats["Range"]);
+        stats = new Dictionary<string, float>(oldStats);
         rangeC.transform.parent = null;
         rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
         rangeC.transform.parent = gameObject.transform;
         boxLayerToHit = oldBoxLayerToHit;
-        Debug.Log("HI");
+        
     }
 
    

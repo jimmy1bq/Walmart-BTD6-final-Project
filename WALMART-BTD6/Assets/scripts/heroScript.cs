@@ -27,11 +27,13 @@ public class heroScript : towersParent
              };
     List<GameObject> buffedTowers = new List<GameObject>();
     int totalCost = 100;
+    int coolDownGUI;
     int cost = 100;
     int totalExp = 100;
     int currentExp = 0;
     int currentLevel = 0;
     bool camo = false;
+    bool canAbility = true;
     bool onGoingWave = false;
 
     private void Awake()
@@ -71,7 +73,12 @@ public class heroScript : towersParent
         else {
             textMesh.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
             xpBar.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
-            //monkeyUI.transform.Find("radarAbilityButton").gameObject.SetActive(true);
+            monkeyUI.transform.Find("radarAbilityButton").gameObject.SetActive(true);
+            if (canAbility)
+            {
+                monkeyUI.transform.Find("radarAbilityButton").GetChild(0).gameObject.SetActive(false);
+            }
+            else { monkeyUI.transform.Find("radarAbilityButton").GetChild(0).GetComponent<TextMeshProUGUI>().text = coolDownGUI.ToString(); }
         }
 
 
@@ -123,7 +130,7 @@ public class heroScript : towersParent
     }
    void towerButtonUpgrade(int bunz) {
 
-        if (GameManager.instance.coins >= cost && currentLevel<=20) {
+        if (GameManager.instance.coins >= cost && currentLevel<20) {
       
         currentExp = 0;
         
@@ -217,24 +224,34 @@ public class heroScript : towersParent
         rangeC.transform.parent = gameObject.transform;
     }
     IEnumerator radarAbilityCD(int coolDown) {
-        events.abilityActivate.RemoveListener(radarAbilityAcivated);
+       
+       events.abilityActivate.RemoveListener(radarAbilityAcivated);
+       monkeyUI.transform.Find("radarAbilityButton").GetChild(0).gameObject.SetActive(true);
+       monkeyUI.transform.Find("radarAbilityButton").GetChild(0).GetComponent<TextMeshProUGUI>().text = coolDown.ToString();
         for (int i=coolDown; i>0;i--) {
+            coolDownGUI = i;
             if (onGoingWave)
             {
                 yield return new WaitForSeconds(1f);
+               
                 if (monkeyUI != null) {
+                  
                     monkeyUI.transform.Find("radarAbilityButton").GetChild(0).GetComponent<TextMeshProUGUI>().text = i.ToString();                
                 }
             }
             else {
                 yield return new WaitUntil(checkForOngoingWave);            
-            }        
+            }
+            
         }
         events.abilityActivate.AddListener(radarAbilityAcivated);
     }
-    void radarAbilityAcivated(int yesorno) { 
-    
-    
+    void radarAbilityAcivated(int cd) {
+        if (canAbility) {
+            Debug.Log("KACHOWOWWOWOOWO");
+            canAbility = false;
+            StartCoroutine(radarAbilityCD(cd));
+        }   
     }
     bool checkForOngoingWave() {
         if (onGoingWave)
@@ -276,7 +293,7 @@ public class heroScript : towersParent
     }
     //if wave is over==false else started = true
     void waveOvers(bool buh) {
-        if (!buh)
+        if (!buh && currentLevel < 20)
         {
             currentExp += 10;
 
