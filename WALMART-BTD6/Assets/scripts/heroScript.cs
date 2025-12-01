@@ -31,8 +31,8 @@ public class heroScript : towersParent
     int totalExp = 100;
     int currentExp = 0;
     int currentLevel = 0;
-    bool radarAbility = false;
     bool camo = false;
+    bool onGoingWave = false;
 
     private void Awake()
     {
@@ -54,6 +54,8 @@ public class heroScript : towersParent
         rangeC.SetActive(false);
         price = 500;
         events.waveOver.AddListener(waveOvers);
+        events.waveOver.AddListener(onGoingWaveEvent);
+
     }
   
     protected override void updateGUI()
@@ -70,7 +72,6 @@ public class heroScript : towersParent
             textMesh.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
             xpBar.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
             monkeyUI.transform.Find("radarAbilityButton").gameObject.SetActive(true);
-
         }
 
 
@@ -82,6 +83,7 @@ public class heroScript : towersParent
         
         events.destroyTower.AddListener(destroyTowere);
         events.heroUpgrade.AddListener(towerButtonUpgrade);
+        events.abilityActivate.AddListener(towerButtonUpgrade);
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalHeroGUI" + ".prefab");
         monkeyUI = Instantiate(genUI);
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300, 610, 0);
@@ -96,6 +98,7 @@ public class heroScript : towersParent
         Debug.Log(monkeyUI);
         events.destroyTower.RemoveListener(destroyTowere);
         events.heroUpgrade.RemoveListener(towerButtonUpgrade);
+        events.abilityActivate.RemoveListener(towerButtonUpgrade);
         rangeC.SetActive(false);
       //  monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalHeroGUI(Clone)").gameObject;       
         Destroy(monkeyUI);
@@ -149,7 +152,7 @@ public class heroScript : towersParent
             totalBuffs["Range"] += 0.10f;
             totalBuffs["FireRate"] -= 0.01f;
         }
-        else if (currentLevel > 10 && currentLevel < 20)
+        else if (currentLevel >= 10 && currentLevel < 20)
         {
             buffs = new Dictionary<string, float> {
                     {"Range", 0.2f},
@@ -174,8 +177,7 @@ public class heroScript : towersParent
             totalBuffs["Range"] += 0.15f;
             totalBuffs["FireRate"] -= 0.02f;
             camo = true;
-            radarAbility = true;
-
+            events.abilityActivate.AddListener(radarAbilityAcivated);
         }
      
         foreach (GameObject towers in buffedTowers)
@@ -183,8 +185,9 @@ public class heroScript : towersParent
            
             if (towers != null)
             {
-                if (!camo) {towers.GetComponent<IbuffTower>().updateBuffTower(buffs,1<<8);}
-                if (camo) { towers.GetComponent<IbuffTower>().updateBuffTower(buffs, (1 << 8 | 1 << 9));}
+                //update the buffs 
+                if (!camo) {towers.GetComponent<IbuffTower>().updateBuffTower(buffs,false);}
+                if (camo) { towers.GetComponent<IbuffTower>().updateBuffTower(buffs, true);}
             }
         }
         if (monkeyUI != null)
@@ -194,17 +197,46 @@ public class heroScript : towersParent
         }
 
     }
+    IEnumerator radarAbilityCD(int coolDown) {
+        events.abilityActivate.RemoveListener(radarAbilityAcivated);
+        for (int i=coolDown; i>0;i--) {
+            if (onGoingWave)
+            {
+                yield return new WaitForSeconds(1f);
+                if (monkeyUI != null) {
+                    monkeyUI.transform.Find("radarAbilityButton").GetChild(0).GetComponent<TextMeshProUGUI>().text = i.ToString();                
+                }
+            }
+            else {
+                yield return new WaitUntil(checkForOngoingWave);            
+            }        
+        }
+        events.abilityActivate.AddListener(radarAbilityAcivated);
+    }
+    void radarAbilityAcivated(int yesorno) { 
+    
+    
+    }
+    bool checkForOngoingWave() {
+        if (onGoingWave)
+        {
+            return true;
+        }
+        return false;
+    }
 
+    //checks for any unbuffed towers then buff them
     IEnumerator buffFriendlies()
     {
         Collider[] friendlies = Physics.OverlapSphere(transform.position, stats["Range"], 1 << 8);
         foreach (Collider friendly in friendlies)
         {
-                      
+           
             if (!(buffedTowers.Contains(friendly.gameObject)) && friendly.gameObject.tag!="Base" && gameObject.GetComponent<IbuffTower>() != null)
-            {       
-                    if (!camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(totalBuffs, 1 << 8);}
-                    if (camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(totalBuffs, (1 << 8 | 1 << 9)); }
+            {
+              
+                    if (!camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(totalBuffs,false);}
+                    if (camo) { friendly.gameObject.GetComponent<IbuffTower>().buffTower(totalBuffs, true); }
                     buffedTowers.Add(friendly.gameObject);                
             }
         }
@@ -223,15 +255,25 @@ public class heroScript : towersParent
         Destroy(monkeyUI);
         Destroy(gameObject);
     }
-    void waveOvers(int buh) {
-        currentExp += 10;
-        if (currentExp >= totalExp) {
-            currentExp -= totalExp;          
-            towerUpgrade();           
-        }     
-        else if (monkeyUI != null) {
-            updateGUI();
+    //if wave is over==false else started = true
+    void waveOvers(bool buh) {
+        if (!buh)
+        {
+            currentExp += 10;
+
+            if (currentExp >= totalExp)
+            {
+                currentExp -= totalExp;
+                towerUpgrade();
+            }
+            else if (monkeyUI != null)
+            {
+                updateGUI();
+            }
+            cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
         }
-        cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
+    }
+    void onGoingWaveEvent(bool onGoing) { 
+    onGoingWave=onGoing;
     }
 }

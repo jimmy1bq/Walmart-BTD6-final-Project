@@ -33,6 +33,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     //milestone 7
     protected LayerMask boxLayerToHit = 1 << 9;
+    protected LayerMask oldBoxLayerToHit;
 
     protected int price;
     protected int targettingNum;
@@ -56,6 +57,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     {
         //turn them into "function" so you don't lose the coroutine when you call it for the first time
         events.changeTarget.AddListener(changeTarget);
+        oldBoxLayerToHit = boxLayerToHit;
         targgetingList.Add(() => firstTargetting());
         targgetingList.Add(() => closestTargetting());
         targgetingList.Add(() => lastTargettign());
@@ -69,6 +71,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     protected void Update()
     {
+        Debug.Log(stats["Range"]);
+        Debug.Log(stats["FireRate"]);
+        Debug.Log(boxLayerToHit.value);
         if (hoveringS)
         {
             if (checkForCollisionWithTower())
@@ -375,8 +380,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
             if (!checkForThirdTiers() || pathToTier[upgradeTier] >=3) { projctile = projectile; }          
         }
         if (hiddenDec)
-        {
+        {         
             boxLayerToHit = (1 << 9 | 1 << 11);
+            oldBoxLayerToHit = boxLayerToHit;
         }
         pathToTier[upgradeTier] += 1;
         updateGUI();
@@ -616,11 +622,15 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
     }
     
-    public void buffTower(Dictionary<string,float> buffs, LayerMask camo)
+    public void buffTower(Dictionary<string,float> buffs, bool camo)
     {
-        if (beenBuffed != false)
+        
+        if (beenBuffed == false)
         {
-            boxLayerToHit = camo;
+            if (camo)
+            {
+                boxLayerToHit = 1 << 9 | 1 << 11;
+            }
             foreach (var buff in buffs)
             {
                 stats[buff.Key] += buff.Value;
@@ -629,15 +639,19 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.transform.parent = null;
         rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
         rangeC.transform.parent = gameObject.transform;
-        Debug.Log(gameObject);
+        
     }
-    public void updateBuffTower(Dictionary<string, float> buff, LayerMask camo) {
-        boxLayerToHit = camo;
-        foreach (var buffs in buff)
+    public void updateBuffTower(Dictionary<string, float> buff, bool camo) {
+
+        if (camo)
         {
-            stats[buffs.Key] += buffs.Value;
-          
+            boxLayerToHit = 1 << 9 | 1 << 11;
         }
+            foreach (var buffs in buff)
+            {
+                stats[buffs.Key] += buffs.Value;
+
+            }
         rangeC.transform.parent = null;
         rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
         rangeC.transform.parent = gameObject.transform;
@@ -650,6 +664,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.transform.parent = null;
         rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
         rangeC.transform.parent = gameObject.transform;
+        boxLayerToHit = oldBoxLayerToHit;
         Debug.Log("HI");
     }
 

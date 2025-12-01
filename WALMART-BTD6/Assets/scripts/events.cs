@@ -16,8 +16,9 @@ public static class events {
     public static UnityEvent<int> levelUp = new UnityEvent<int>();
     public static UnityEvent<int> gameOver = new UnityEvent<int>();
     public static UnityEvent<int> gamePaused = new UnityEvent<int>();
-    public static UnityEvent<int> waveOver = new UnityEvent<int>();
+    public static UnityEvent<bool> waveOver = new UnityEvent<bool>();
     public static UnityEvent<int> heroUpgrade = new UnityEvent<int>();
+    public static UnityEvent<int> abilityActivate = new UnityEvent<int>();
     public static gameOver gameOverEvent = new gameOver();
 
 }
