@@ -11,6 +11,7 @@ using UnityEngine.SocialPlatforms;
 public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCount, ICollidingWithTowers,IDamageTaken, IbuffTower
 {
 
+    //for targetting I probabley should I used a swtich statment since I already have the string
     [SerializeField] protected LayerMask enemy;
     protected enum gameMode {regular , alternate }
 
@@ -21,7 +22,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected string projctilePath = "Assets/Resources/Projectile/";
     protected string towerName;
 
-    protected GameObject monkeyUI;
+    [SerializeField] protected GameObject monkeyUI;
     protected GameObject rangeC;
     protected GameObject rangeCircle;
     protected string projctile;
@@ -53,6 +54,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected gameMode currentGM;
     protected void Start()
     {
+        //turn them into "function" so you don't lose the coroutine when you call it for the first time
         events.changeTarget.AddListener(changeTarget);
         targgetingList.Add(() => firstTargetting());
         targgetingList.Add(() => closestTargetting());

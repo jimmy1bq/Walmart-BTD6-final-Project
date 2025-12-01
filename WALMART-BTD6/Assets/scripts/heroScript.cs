@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.Mathematics;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UIElements;
+using System.Threading.Tasks;
 public class heroScript : towersParent
 {
     [SerializeField] GameObject rangeCirclePF;
@@ -30,6 +31,7 @@ public class heroScript : towersParent
     int totalExp = 100;
     int currentExp = 0;
     int currentLevel = 0;
+    bool radarAbility = false;
     bool camo = false;
 
     private void Awake()
@@ -72,11 +74,13 @@ public class heroScript : towersParent
 
 
     }
+   
     public override void towerSelected()
     {
         rangeC.SetActive(true);
-        events.towerUpgrade.AddListener(towerUpgrade);
-        events.destroyTower.AddListener(destroyTowere);   
+        
+        events.destroyTower.AddListener(destroyTowere);
+        events.heroUpgrade.AddListener(towerButtonUpgrade);
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalHeroGUI" + ".prefab");
         monkeyUI = Instantiate(genUI);
         monkeyUI.gameObject.GetComponent<RectTransform>().Translate(1300, 610, 0);
@@ -90,7 +94,7 @@ public class heroScript : towersParent
     {
         Debug.Log(monkeyUI);
         events.destroyTower.RemoveListener(destroyTowere);
-        events.towerUpgrade.RemoveListener(towerUpgrade);
+        events.heroUpgrade.RemoveListener(towerButtonUpgrade);
         rangeC.SetActive(false);
       //  monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalHeroGUI(Clone)").gameObject;       
         Destroy(monkeyUI);
@@ -113,25 +117,24 @@ public class heroScript : towersParent
             rangeC.SetActive(true);
         }
     }
-    public void towerButtonUpgrade()
-    {
+   void towerButtonUpgrade(int bunz) {
+
+        if (GameManager.instance.coins >= cost) {
+      
+        currentExp = 0;
         
-        if (GameManager.instance.coins >= cost)
-        {       
-            currentExp = 0;
-            events.GainCash.Invoke(-cost);
-            towerUpgrade();
-        }
+        events.GainCash.Invoke(-cost);
+       
+        towerUpgrade();
+        
     }
+}
     void towerUpgrade()
     {
         currentLevel += 1;
         totalExp += 100;
-        if (monkeyUI != null)
-        {      
-            cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
-            updateGUI();
-        }
+
+    
 
         if (currentLevel < 10)
         {
@@ -170,7 +173,7 @@ public class heroScript : towersParent
             totalBuffs["Range"] += 0.15f;
             totalBuffs["FireRate"] -= 0.02f;
             camo = true;
-            //gain ability
+            radarAbility = true;
 
         }
      
@@ -183,7 +186,12 @@ public class heroScript : towersParent
                 if (camo) { towers.GetComponent<IbuffTower>().updateBuffTower(buffs, (1 << 8 | 1 << 9));}
             }
         }
-       
+        if (monkeyUI != null)
+        {
+            cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
+            updateGUI();
+        }
+
     }
 
     IEnumerator buffFriendlies()
@@ -221,8 +229,8 @@ public class heroScript : towersParent
             towerUpgrade();           
         }     
         else if (monkeyUI != null) {
-            cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
             updateGUI();
         }
+        cost = (1 - currentExp / totalExp) * totalCost * currentLevel;
     }
 }

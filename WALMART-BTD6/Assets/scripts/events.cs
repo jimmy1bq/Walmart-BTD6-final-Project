@@ -17,11 +17,13 @@ public static class events {
     public static UnityEvent<int> gameOver = new UnityEvent<int>();
     public static UnityEvent<int> gamePaused = new UnityEvent<int>();
     public static UnityEvent<int> waveOver = new UnityEvent<int>();
+    public static UnityEvent<int> heroUpgrade = new UnityEvent<int>();
     public static gameOver gameOverEvent = new gameOver();
 
 }
 //milestone 7
 public class TowerUpgradeEvent : UnityEvent<string, string, Dictionary<string,float>,bool >{ }
+
 public class gameOver : UnityEvent<int,bool> { }
 
 public delegate bool waveStart();

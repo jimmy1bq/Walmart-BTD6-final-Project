@@ -633,6 +633,7 @@ public class WaveManager : MonoBehaviour
           
             Time.timeScale = 1f;
             events.GainCash.Invoke(100);
+            events.waveOver.Invoke(100);
             Transform startWaveButtonThing = null;
             Canvas canvasGUI=FindFirstObjectByType<Canvas>();
             int cc = canvasGUI.transform.childCount;

@@ -1424,7 +1424,6 @@ MonoBehaviour:
   hp: 100
   coins: 10000000
   totalAccumMonkeyMoney: 0
-  monkeyGUIActive: 0
 --- !u!4 &324581408
 Transform:
   m_ObjectHideFlags: 0

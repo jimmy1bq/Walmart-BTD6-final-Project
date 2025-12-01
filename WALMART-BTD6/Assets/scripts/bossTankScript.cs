@@ -34,7 +34,7 @@ public class bossTankScript : moabBox
         }
     }
     void shoot(GameObject enemyToShoot,GameObject turret) {
-        Debug.Log(enemyToShoot);
+      
         string projctilePath = "Assets/Resources/Projectile/";
         Vector3 projctileSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, transform.position.z);
         GameObject proj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(projctilePath + "tankRound" + ".prefab");
