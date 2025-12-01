@@ -71,7 +71,7 @@ public class heroScript : towersParent
         else {
             textMesh.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
             xpBar.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
-            monkeyUI.transform.Find("radarAbilityButton").gameObject.SetActive(true);
+            //monkeyUI.transform.Find("radarAbilityButton").gameObject.SetActive(true);
         }
 
 
@@ -123,7 +123,7 @@ public class heroScript : towersParent
     }
    void towerButtonUpgrade(int bunz) {
 
-        if (GameManager.instance.coins >= cost) {
+        if (GameManager.instance.coins >= cost && currentLevel<=20) {
       
         currentExp = 0;
         
@@ -178,6 +178,7 @@ public class heroScript : towersParent
             totalBuffs["FireRate"] -= 0.02f;
             camo = true;
             events.abilityActivate.AddListener(radarAbilityAcivated);
+            ChangeModel();
         }
      
         foreach (GameObject towers in buffedTowers)
@@ -196,6 +197,24 @@ public class heroScript : towersParent
             updateGUI();
         }
 
+    }
+    void ChangeModel() {
+        foreach (Transform h in gameObject.transform)
+        {
+            if (h.gameObject.name == "RangeCircleThing(Clone)")
+            {
+                continue;
+            }
+            Destroy(h.gameObject);
+        }
+        string modelPath = "Assets/Resources/" + "towerGUI/" + "Hero/"+ "tentThing20" + ".prefab";
+        GameObject newModelPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+        GameObject newModel = Instantiate(newModelPrefab, gameObject.transform.position, Quaternion.identity);
+        newModel.transform.parent = gameObject.transform;
+        newModel.GetComponent<BoxCollider>().enabled = false;
+        rangeC.transform.parent = null;
+        rangeC.transform.localScale = new Vector3(stats["Range"] * 2, .0001f, stats["Range"] * 2);
+        rangeC.transform.parent = gameObject.transform;
     }
     IEnumerator radarAbilityCD(int coolDown) {
         events.abilityActivate.RemoveListener(radarAbilityAcivated);
