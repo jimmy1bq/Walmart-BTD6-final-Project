@@ -37,11 +37,12 @@ public class UIController : MonoBehaviour
      
         cashText.text = (GameManager.instance.coins).ToString();
     }
-
+    //so previously I had a bug where CanvasGUi was null and the problem might of been that button onClick event was calling the prefab because the script was attached to the prefab
     public void StartWaveEvent() {
         bool buh = WaveManager.waveDelegate.Invoke();
         if (buh)
         {
+
             GameObject startWaveButtonThing = canvasGUI.transform.Find("WaveStartButton(Clone)").gameObject;
             GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedUpButton" + ".prefab"), startWaveButtonThing.transform.position, Quaternion.identity);
             speedUpButton.transform.parent = canvasGUI.transform;

@@ -120,6 +120,7 @@ public class heroScript : towersParent
             rangeC.GetComponent<Renderer>().material.color = new Color(255 / 255, 255 / 255, 255 / 255, 0.3f);
             gameObject.GetComponent<BoxCollider>().enabled = true;
             StartCoroutine(buffFriendlies());
+            events.heroPlaced.Invoke(2);
             events.GainCash.Invoke(-price);
         }
         else
@@ -288,6 +289,7 @@ public class heroScript : towersParent
                 h.GetComponent<IbuffTower>().removeBuffTower();
             }
         }
+        events.heroSold.Invoke(2);
         Destroy(monkeyUI);
         Destroy(gameObject);
     }
