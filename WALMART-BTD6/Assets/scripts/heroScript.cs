@@ -69,6 +69,7 @@ public class heroScript : towersParent
         else {
             textMesh.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
             xpBar.transform.Find("xpbar").GetComponent<TextMeshProUGUI>().text = "MAXLEVEL";
+            monkeyUI.transform.Find("radarAbilityButton").gameObject.SetActive(true);
 
         }
 
