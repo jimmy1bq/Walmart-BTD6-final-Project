@@ -53,6 +53,8 @@ Waitting for tween to finish:
 https://claude.ai/chat/1c32f547-d771-4409-a8d3-371ceeaface7
 LeanTween.Value:
 https://claude.ai/chat/9725a477-d49f-4ce5-ad3f-44941fcf976a
+GUI bug(so basically the button was refercing the prefab which make sense and is quite a lesson on how I should be careful when setting buttons up):
+https://claude.ai/chat/8f204632-9575-4142-92d4-a6676604c48f
 
 
 Google Ai search credit(for getting assets from a path during runtime holy life saver):
