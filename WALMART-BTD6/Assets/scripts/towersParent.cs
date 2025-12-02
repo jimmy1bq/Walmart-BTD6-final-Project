@@ -58,6 +58,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         //turn them into "function" so you don't lose the coroutine when you call it for the first time
         events.changeTarget.AddListener(changeTarget);
         oldBoxLayerToHit = boxLayerToHit;
+
+        //credits to cluade for telling me to do ()=> instead of just putting in the function(the reason was Im storing an Ienumrator type and once its called the functoin go bye bye. So thats why I need to do ()=> to store it as a function)
         targgetingList.Add(() => firstTargetting());
         targgetingList.Add(() => closestTargetting());
         targgetingList.Add(() => lastTargettign());
@@ -366,6 +368,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
     }
     //milestone 7
+   
     protected virtual void towerUpgrade(string upgradeTier, string projectile, Dictionary<string, float> statsUpgrade, bool hiddenDec)
     {
 
@@ -397,6 +400,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         return false;
     }
+    //credits to cluade for helping me debug this annyoing bug(the bug was somehow updateTargetGUI being in the loop breaking the GUIS)
     protected virtual void updateGUI()
     {
         //holy mircale I manage to do a simple intergration of my check for bloacked path and addmax paths code

@@ -10,7 +10,7 @@ public class onPlacedHero : MonoBehaviour
 
     void heroPlaceds(int nothing)
     {
-        Instantiate(replacementGUI, gameObject.transform);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        replacementGUI.SetActive(true);
     }
 }

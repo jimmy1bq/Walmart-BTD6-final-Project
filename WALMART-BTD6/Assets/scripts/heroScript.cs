@@ -1,12 +1,13 @@
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using TMPro;
 using Unity.Mathematics;
+using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UIElements;
-using System.Threading.Tasks;
+using static UnityEngine.Rendering.DebugUI;
 public class heroScript : towersParent
 {
     [SerializeField] GameObject rangeCirclePF;
@@ -129,6 +130,7 @@ public class heroScript : towersParent
             rangeC.SetActive(true);
         }
     }
+    //credits to claude for acutally helping me find a weird bug:
    void towerButtonUpgrade(int bunz) {
 
         if (GameManager.instance.coins >= cost && currentLevel<20) {
@@ -249,10 +251,82 @@ public class heroScript : towersParent
     }
     void radarAbilityAcivated(int cd) {
         if (canAbility) {
-            Debug.Log("KACHOWOWWOWOOWO");
-            canAbility = false;
-            StartCoroutine(radarAbilityCD(cd));
+            GameObject closestEnemy = null;
+            //milestone 7 layermask change
+            Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, 9999f, 1<<9|1<<11);
+            float rangeClosest = 999f;
+            float distance;
+            foreach (var enemies in enemyCollider)
+            {
+                distance = Vector3.Magnitude(gameObject.transform.position - enemies.transform.position);
+                if (distance <= rangeClosest)
+                {
+                    rangeClosest = distance;
+                    closestEnemy = enemies.gameObject;
+                }
+            }
+            if (closestEnemy != null)
+            {
+                Vector3 enemyPos = closestEnemy.transform.position;
+                GameObject radarGO = gameObject.transform.Find("tentThing20(Clone)").Find("oribtalGUn").gameObject;
+                radarGO.transform.LookAt(closestEnemy.transform);
+                GameObject radarBall = radarGO.transform.Find("egBall").gameObject;
+                radarBall.GetComponent<LineRenderer>().startWidth = 0.2f;
+                radarBall.GetComponent<LineRenderer>().endWidth = 5f;
+                radarBall.GetComponent<LineRenderer>().positionCount = 2;
+                radarBall.GetComponent<LineRenderer>().startColor = Color.cyan;
+                radarBall.GetComponent<LineRenderer>().endColor = Color.crimson;
+              
+                radarBall.GetComponent<LineRenderer>().SetPosition(0,radarBall.transform.position);
+                radarBall.GetComponent<LineRenderer>().SetPosition(1,radarBall.transform.position);
+                StartCoroutine(tweenLaser(enemyPos, radarBall.transform.position, radarBall));
+                canAbility = false;
+                StartCoroutine(radarAbilityCD(cd));
+            }  
         }   
+    }
+    IEnumerator tweenLaser(Vector3 enemyPos,Vector3 startingPos,GameObject radarBall) {
+        float time = 0f;
+        float timer = 3f;
+        for (; time <= timer; time += Time.deltaTime)
+        {
+            //pool the waitforseconds 
+         yield return new WaitForSeconds(0.008f);
+         Vector3 currPos = Vector3.Lerp(radarBall.transform.position, enemyPos, time / timer);
+          radarBall.GetComponent<LineRenderer>().SetPosition(1, currPos);
+        }
+        radarBall.GetComponent<LineRenderer>().SetPosition(1, enemyPos);
+        StartCoroutine(tweenAlphaValue(radarBall.GetComponent<LineRenderer>().material.color, radarBall.GetComponent<LineRenderer>().material.color, radarBall));
+        StartCoroutine(explosion(enemyPos));
+    }
+    IEnumerator tweenAlphaValue(Color endColors, Color startingColor, GameObject radarBall)
+    {
+        float time = 0f;
+        float timer = 3f;
+        for (; time <= timer; time += Time.deltaTime)
+        {
+            //pool the waitforseconds 
+            yield return new WaitForSeconds(0.008f);
+
+            Color currColor = Color.Lerp(new Color(startingColor.r, startingColor.g, startingColor.b,startingColor.a), new Color(endColors.r, endColors.g, endColors.b, 0), time / timer);
+     
+           //finish up on tweenignt he color
+        }
+      
+
+
+
+    }
+    IEnumerator explosion(Vector3 enemyPos) {
+        yield return new WaitForSeconds(1);
+        GameObject explosion = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/explosions/oribitalExplosion.prefab");
+        GameObject VFXPath = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/VFX/explosionVFX.prefab");
+        GameObject VFXGO = Instantiate(VFXPath, transform.position, Quaternion.identity);
+        ParticleSystem particleSystems = VFXGO.GetComponent<ParticleSystem>();
+        VFXGO.transform.localScale = new Vector3(999f, 999f, 99f);
+        particleSystems.Play();
+        Instantiate(explosion, enemyPos, quaternion.identity);
+  
     }
     bool checkForOngoingWave() {
         if (onGoingWave)

@@ -10,7 +10,7 @@ public class onTowerSold : MonoBehaviour
 
     void heroSolds(int nothing)
     {
-        Instantiate(replacementGUI, gameObject.transform);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        replacementGUI.SetActive(true);
     }
 }

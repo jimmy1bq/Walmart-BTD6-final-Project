@@ -9825,6 +9825,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 714609693}
+    - target: {fileID: 4371582261520551458, guid: 609c775acbfcc994a89c839ca5c423fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: selectedhero
+      objectReference: {fileID: 0}
     - target: {fileID: 5186497139594733187, guid: 609c775acbfcc994a89c839ca5c423fb, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
