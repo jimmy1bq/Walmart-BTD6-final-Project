@@ -6,10 +6,12 @@ public class updateMonkeyMoney : MonoBehaviour
     private void Awake()
     {
         Debug.Log("hi");
-        events.onLoad.AddListener(updateGUI);
+     
+      
     }
-   void updateGUI(int money)
+    private void Start()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = money.ToString();
+        gameObject.GetComponent<TextMeshProUGUI>().text = moneytracker.instance.monkeyMoney.ToString();
     }
+   
 }

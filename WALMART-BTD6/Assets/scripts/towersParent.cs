@@ -65,17 +65,16 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         targgetingList.Add(() => lastTargettign());
         targgetingList.Add(() => strongestTargettign());
         targgetingList.Add(() => randomTargettign());
+        oldStats = new Dictionary<string, float>(stats);
         if (GameObject.Find("Base") != null) { 
         currentGM  = gameMode.alternate;
-        oldStats = new Dictionary<string, float>(stats);
+       
         }
 
     }
     protected void Update()
     {
-        Debug.Log(stats["Range"]);
-        Debug.Log(stats["FireRate"]);
-        Debug.Log(boxLayerToHit.value);
+        
         if (hoveringS)
         {
             if (checkForCollisionWithTower())
@@ -374,7 +373,10 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
         foreach (var statBuff in statsUpgrade)
         {
-            stats[statBuff.Key] *= statBuff.Value;
+            Debug.Log(oldStats["Range"]);
+            float buffValue= oldStats[statBuff.Key] * statBuff.Value - oldStats[statBuff.Key];
+            stats[statBuff.Key] += buffValue;
+            Debug.Log(gameObject + ":" + stats[statBuff.Key]);
             oldStats[statBuff.Key] *= statBuff.Value;
             hp += (int)(statBuff.Value * 10);
         }
@@ -525,7 +527,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
 
 
-
+    //Ok i didn't realize but
     protected virtual void checkHovering(bool hovering)
     {
         if (!hovering)

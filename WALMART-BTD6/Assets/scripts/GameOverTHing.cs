@@ -17,8 +17,8 @@ public class GameOverTHing : MonoBehaviour
         } 
         gameObject.LeanMove(new Vector3(830, 550, 0), 1f);
         StartCoroutine(waitForfuncton());
-        //works only if you go from scene 1->this
-        //   moneytracker.instance.monkeyMoney += moneyEarned;
+        //works only if you go from scene 0->this      
+          moneytracker.instance.addMonkeyMoney(moneyEarned);
 
 
     }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3555160744682764019}
   - component: {fileID: -4692742161164952815}
   - component: {fileID: -6601407512646481466}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: 000cannontower
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ MonoBehaviour:
   enemy:
     serializedVersion: 2
     m_Bits: 0
+  monkeyUI: {fileID: 0}
   enemyOnly:
     serializedVersion: 2
     m_Bits: 512

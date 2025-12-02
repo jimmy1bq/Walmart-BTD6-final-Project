@@ -130,7 +130,7 @@ public class heroScript : towersParent
             rangeC.SetActive(true);
         }
     }
-    //credits to claude for acutally helping me find a weird bug:
+    //credits to claude for acutally helping me find a weird bug: the lesson learned is if you are going to add a prefab onto unity's button onclick event use UnityEvents so you don't get into a whole mess
    void towerButtonUpgrade(int bunz) {
 
         if (GameManager.instance.coins >= cost && currentLevel<20) {
@@ -303,19 +303,16 @@ public class heroScript : towersParent
     {
         float time = 0f;
         float timer = 3f;
+        radarBall.GetComponent<LineRenderer>().material.color = new Color(radarBall.GetComponent<LineRenderer>().material.color.r, radarBall.GetComponent<LineRenderer>().material.color.g, radarBall.GetComponent<LineRenderer>().material.color.b,0);
         for (; time <= timer; time += Time.deltaTime)
         {
             //pool the waitforseconds 
             yield return new WaitForSeconds(0.008f);
 
-            Color currColor = Color.Lerp(new Color(startingColor.r, startingColor.g, startingColor.b,startingColor.a), new Color(endColors.r, endColors.g, endColors.b, 0), time / timer);
-     
-           //finish up on tweenignt he color
+            //   Color currColor = Color.Lerp(new Color(startingColor.r, startingColor.g, startingColor.b,startingColor.a), new Color(endColors.r, endColors.g, endColors.b, 0), time / timer);
+            radarBall.GetComponent<LineRenderer>().material.color = new Color(radarBall.GetComponent<LineRenderer>().material.color.r, radarBall.GetComponent<LineRenderer>().material.color.g, radarBall.GetComponent<LineRenderer>().material.color.b, time / timer);
+          
         }
-      
-
-
-
     }
     IEnumerator explosion(Vector3 enemyPos) {
         yield return new WaitForSeconds(1);

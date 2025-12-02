@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(totalAccumMonkeyMoney);
     }
     void loseLives(int damage) { 
         hp -= damage;

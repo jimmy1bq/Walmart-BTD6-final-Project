@@ -936,7 +936,7 @@ GameObject:
   - component: {fileID: 2009081712479584887}
   - component: {fileID: 1909807788983667701}
   - component: {fileID: 4118539176471050822}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: 000DarkMonke
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -1000,6 +1000,7 @@ MonoBehaviour:
   enemy:
     serializedVersion: 2
     m_Bits: 0
+  monkeyUI: {fileID: 0}
   enemyOnly:
     serializedVersion: 2
     m_Bits: 512

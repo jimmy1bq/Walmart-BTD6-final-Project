@@ -25,7 +25,7 @@ public class towerButtons : MonoBehaviour
     {
         if (GameManager.instance.coins >= 500)
         {
-            
+            Debug.Log("HI");
             events.towerSelected.Invoke(TentsPrefab);
         }
     }

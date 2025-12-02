@@ -46,6 +46,7 @@ public class DartMonke : towersParent, IHovering, IUNORSelected, IPopToPopCount
             {"mid",0},
             {"bot",0}
        };
+       
         hp = 10;
         Vector3 rangePos = placeTowerRangeCircle(gameObject);
         rangeC = Instantiate(rangeCircle, rangePos, Quaternion.identity);

@@ -13,6 +13,10 @@ public class xpGained : MonoBehaviour
       //  Object.DontDestroyOnLoad(this.gameObject);
         events.gainExp.AddListener(gainEXPs);
     }
+    private void Start()
+    {
+       
+    }
     void levelUp() { 
         curXpNeeded += 10+(levelRightNow/2);
         curXp = 0;

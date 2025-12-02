@@ -16,8 +16,10 @@ public class moneytracker : MonoBehaviour
         events.onLoad.Invoke(monkeyMoney);
     }
 
-    void addMonkeyMoney(int money) { 
+    public void addMonkeyMoney(int money) { 
         monkeyMoney+=money;
+    }
+    public void upDateMonkeyMoneyGUI() {
         events.onLoad.Invoke(monkeyMoney);
     }
 }

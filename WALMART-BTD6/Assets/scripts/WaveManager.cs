@@ -27,6 +27,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] Transform spawnPoint;
 
     int index = 0;
+    int wave = 1;
 
     public bool waveOnGoing = false;
     bool alternativeMap = false;
@@ -570,7 +571,6 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["zomgTank"], 2, 30f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
-        events.gameOverEvent.Invoke(GameManager.instance.totalAccumMonkeyMoney, true);
     }
 
 
@@ -630,7 +630,11 @@ public class WaveManager : MonoBehaviour
             StartCoroutine(onGoingWaveCheck());
         }
         else {
-          
+            if (wave == 60)
+            {
+                events.gameOverEvent.Invoke(GameManager.instance.totalAccumMonkeyMoney, true);
+            }
+            wave++;
             Time.timeScale = 1f;
             events.GainCash.Invoke(100);
             events.waveOver.Invoke(false);

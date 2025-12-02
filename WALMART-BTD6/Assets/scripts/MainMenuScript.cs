@@ -21,6 +21,7 @@ public class MainMenuScript : MonoBehaviour
     }
     //yea I know this could be done with an loop and list saving the position
     public void playButton() {
+        Debug.Log("wkwkwk");
         Canvas canvasGUI = FindFirstObjectByType<Canvas>();
         GameObject barrenLandGUI = canvasGUI.transform.Find("BarrenTreesMapGUI").gameObject;
         GameObject monkeyMoneyFrame = canvasGUI.transform.Find("MoneyFrame").gameObject;
