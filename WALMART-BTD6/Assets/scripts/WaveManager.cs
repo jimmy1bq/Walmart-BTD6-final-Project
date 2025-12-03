@@ -121,8 +121,10 @@ public class WaveManager : MonoBehaviour
         waveOnGoing = true;
        // StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
          StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 10, 1f));
-       // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
-       // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 0f));
+        //debug tankfortthe1stlater explosion issue when base hp=0
+      //  StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["tankFortThe1ST"], 1, 0f), 10f));
+        // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
+        // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["blueTank"], 1, 1f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
         
     }

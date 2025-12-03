@@ -22,11 +22,13 @@ public class MainMenuScript : MonoBehaviour
     //yea I know this could be done with an loop and list saving the position
     public void playButton() {
         Debug.Log("wkwkwk");
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
         Canvas canvasGUI = FindFirstObjectByType<Canvas>();
         GameObject barrenLandGUI = canvasGUI.transform.Find("BarrenTreesMapGUI").gameObject;
         GameObject monkeyMoneyFrame = canvasGUI.transform.Find("MoneyFrame").gameObject;
         GameObject xpBar = canvasGUI.transform.Find("xpBar").gameObject;
         GameObject playButton = canvasGUI.transform.Find("PlayButton").gameObject;
+      
         GameObject bgColor = canvasGUI.transform.Find("BackGround").gameObject;
         UnityEngine.UI.Image bgColorImage = bgColor.GetComponent<UnityEngine.UI.Image>();
         GameObject backButton = canvasGUI.transform.Find("BackButton").gameObject;
@@ -36,12 +38,15 @@ public class MainMenuScript : MonoBehaviour
         originalPosPB = playButton.transform.position;
         originalBackButton = backButton.transform.position;
         oldBGColor = bgColor.GetComponent<UnityEngine.UI.Image>().color;
+        Debug.Log(originalBackButton);
         monkeyMoneyFrame.LeanMove(new Vector3(monkeyMoneyFrame.transform.position.x, 5000, monkeyMoneyFrame.transform.position.z), 0.5f);
+        
         xpBar.LeanMove(new Vector3(xpBar.transform.position.x, 5000, xpBar.transform.position.z), 0.5f);
         playButton.LeanMove(new Vector3(playButton.transform.position.x,  -5000, playButton.transform.position.z), 0.5f);
         backButton.LeanMove(new Vector3(backButton.transform.position.x, 100, backButton.transform.position.z), 0.5f);
         LeanTween.scale(barrenLandGUI.GetComponent<RectTransform>(), new Vector3(1,1,1), 0.2f);
         LeanTween.color(bgColorImage.rectTransform, new Color(0.25f, 0.22f, 0.16f), 0.5f);
+        Debug.Log("HI");
         // bgColor.GetComponent<Image>().color = new Color(0.25f, 0.22f, 0.16f);
 
         //bgColor.LeanColor(new Color(0.25f, 0.22f, 0.16f), 1f);
@@ -52,6 +57,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void backButtonClick()
     {
+        Debug.Log("BACKBUTTON");
         Canvas canvasGUI = FindFirstObjectByType<Canvas>();
         GameObject monkeyMoneyFrame = canvasGUI.transform.Find("MoneyFrame").gameObject;
         GameObject playButton = canvasGUI.transform.Find("PlayButton").gameObject;
@@ -86,6 +92,7 @@ public class MainMenuScript : MonoBehaviour
     public void plusMonkeyMoneyButton() {
      events.addMM.Invoke(1+(expGained/2));
      events.gainExp.Invoke(10);
+    
     }
 
     void levelUPED(int level) {

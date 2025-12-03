@@ -17,14 +17,16 @@ public class GameOverTHing : MonoBehaviour
         } 
         gameObject.LeanMove(new Vector3(830, 550, 0), 1f);
         StartCoroutine(waitForfuncton());
+      
         //works only if you go from scene 0->this      
-          moneytracker.instance.addMonkeyMoney(moneyEarned);
+        moneytracker.instance.addMonkeyMoney(moneyEarned);
 
 
     }
     IEnumerator waitForfuncton() {
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
+       
         Time.timeScale = 0f;
     }
 

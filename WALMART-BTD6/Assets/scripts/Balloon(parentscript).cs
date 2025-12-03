@@ -255,7 +255,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
                 break;
             case state.attacking:
                 agent.speed = 0;
-                Debug.Log(attackCoroutine == null);
+                
                 if (attackCoroutine == null)
                 {
                     attackCoroutine=StartCoroutine(attackEnemy(enemyToAttack));
