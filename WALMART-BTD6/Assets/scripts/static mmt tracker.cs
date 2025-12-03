@@ -2,6 +2,6 @@ using UnityEngine;
 
 public static class staticmmttracker
 {
-    static int monkeyMoney=0;
+    public static int monkeyMoney=0;
     
 }

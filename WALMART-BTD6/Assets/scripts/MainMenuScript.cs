@@ -2,54 +2,90 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEditor.SearchService;
+using NUnit.Framework.Internal.Execution;
+using System.Collections;
+using TMPro;
+
 
 public class MainMenuScript : MonoBehaviour
 {
   public static MainMenuScript instance;
+    [SerializeField] Canvas canvasGUI;
     Vector3 originalPosMMF;
     Vector3 originalPosXPBar;
     Vector3 originalPosPB;
     Scale originalSizeBTM;
     Vector3 originalBackButton;
     Color oldBGColor;
-
+    bool hasStoredOriginalPositions = false;
     int expGained = 10;
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
         events.levelUp.AddListener(levelUPED);
         instance = this;
     }
+     void Start()
+    {
+        Debug.Log(Camera.main.GetInstanceID());
+    }
+
+
     //yea I know this could be done with an loop and list saving the position
     public void playButton() {
-        Debug.Log("wkwkwk");
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
-        Canvas canvasGUI = FindFirstObjectByType<Canvas>();
+     
         GameObject barrenLandGUI = canvasGUI.transform.Find("BarrenTreesMapGUI").gameObject;
         GameObject monkeyMoneyFrame = canvasGUI.transform.Find("MoneyFrame").gameObject;
         GameObject xpBar = canvasGUI.transform.Find("xpBar").gameObject;
-        GameObject playButton = canvasGUI.transform.Find("PlayButton").gameObject;
-      
+        GameObject playButton = canvasGUI.transform.Find("PlayButton").gameObject;      
         GameObject bgColor = canvasGUI.transform.Find("BackGround").gameObject;
         UnityEngine.UI.Image bgColorImage = bgColor.GetComponent<UnityEngine.UI.Image>();
         GameObject backButton = canvasGUI.transform.Find("BackButton").gameObject;
-        originalPosXPBar = xpBar.transform.position;
-        originalSizeBTM = barrenLandGUI.transform.localScale;
-        originalPosMMF = monkeyMoneyFrame.transform.position;
-        originalPosPB = playButton.transform.position;
-        originalBackButton = backButton.transform.position;
-        oldBGColor = bgColor.GetComponent<UnityEngine.UI.Image>().color;
-        Debug.Log(originalBackButton);
-        monkeyMoneyFrame.LeanMove(new Vector3(monkeyMoneyFrame.transform.position.x, 5000, monkeyMoneyFrame.transform.position.z), 0.5f);
-        
-        xpBar.LeanMove(new Vector3(xpBar.transform.position.x, 5000, xpBar.transform.position.z), 0.5f);
-        playButton.LeanMove(new Vector3(playButton.transform.position.x,  -5000, playButton.transform.position.z), 0.5f);
-        backButton.LeanMove(new Vector3(backButton.transform.position.x, 100, backButton.transform.position.z), 0.5f);
-        LeanTween.scale(barrenLandGUI.GetComponent<RectTransform>(), new Vector3(1,1,1), 0.2f);
-        LeanTween.color(bgColorImage.rectTransform, new Color(0.25f, 0.22f, 0.16f), 0.5f);
-        Debug.Log("HI");
-        // bgColor.GetComponent<Image>().color = new Color(0.25f, 0.22f, 0.16f);
 
-        //bgColor.LeanColor(new Color(0.25f, 0.22f, 0.16f), 1f);
+       RectTransform playButtonRect = playButton.GetComponent<RectTransform>();
+      
+        //originalPosXPBar = xpBar.transform.position;
+        //originalSizeBTM = barrenLandGUI.transform.localScale;
+        //originalPosMMF = monkeyMoneyFrame.transform.position;
+        //originalPosPB = playButton.transform.position;
+        //originalBackButton = backButton.transform.position;
+        //oldBGColor = bgColor.GetComponent<UnityEngine.UI.Image>().color;
+
+        if (!hasStoredOriginalPositions)
+        {
+            originalPosXPBar = xpBar.transform.position;
+            originalSizeBTM = barrenLandGUI.transform.localScale;
+            originalPosMMF = monkeyMoneyFrame.transform.position;
+            originalPosPB = playButton.transform.position;
+            originalBackButton = backButton.transform.position;
+            oldBGColor = bgColor.GetComponent<UnityEngine.UI.Image>().color;
+            hasStoredOriginalPositions = true;
+
+
+        }
+        LeanTween.cancel(monkeyMoneyFrame);
+        LeanTween.cancel(xpBar);
+        LeanTween.cancel(playButton);
+        LeanTween.cancel(backButton);
+
+        //monkeyMoneyFrame.GetComponent<RectTransform>().anchoredPosition = originalPosXPBar;
+        //anchoring problem? seems like it
+        monkeyMoneyFrame.LeanMove(new Vector3(monkeyMoneyFrame.transform.position.x, 5000, monkeyMoneyFrame.transform.position.z), 0.5f);
+        xpBar.LeanMove(new Vector3(xpBar.transform.position.x, 5000, xpBar.transform.position.z), 0.5f);
+        playButton.LeanMove(new Vector3(playButton.transform.position.x, -5000, playButton.transform.position.z), 0.5f);
+       // LeanTween.moveLocal(playButton, new Vector3(playButtonRect.anchoredPosition.x, -5000, 0), 0.5f);
+        Debug.Log(playButton.transform.position);
+        backButton.LeanMove(new Vector3(backButton.transform.position.x, 100, backButton.transform.position.z), 0.5f);
+        LeanTween.scale(barrenLandGUI.GetComponent<RectTransform>(), new Vector3(1, 1, 1), 0.2f);
+        LeanTween.color(bgColorImage.rectTransform, new Color(0.25f, 0.22f, 0.16f), 0.5f);
+        bgColor.GetComponent<UnityEngine.UI.Image>().color = new Color(0.25f, 0.22f, 0.16f);
+
+        bgColor.LeanColor(new Color(0.25f, 0.22f, 0.16f), 1f);
 
 
 
@@ -72,19 +108,38 @@ public class MainMenuScript : MonoBehaviour
         LeanTween.scale(barrenLandGUI.GetComponent<RectTransform>(),new Vector3(0,0,0), 0.2f);
         backButton.LeanMove(originalBackButton, 0.5f);
     }
-    public void barrenTreesMapSelected() {
-        SceneManager.LoadSceneAsync("BarrenTreeMap");
-        SceneManager.UnloadSceneAsync("MainMenu");
 
+    public void BarrenTreesMapSelected()
+    {
+        StartCoroutine(LoadMap("BarrenTreeMap"));
     }
+
+    IEnumerator LoadMap(string mapName)
+    {
+        LeanTween.cancelAll();
+       
+
+        AsyncOperation load = SceneManager.LoadSceneAsync(mapName, LoadSceneMode.Additive);
+        yield return load;
+        SceneManager.UnloadSceneAsync("MainMenu");
+    }
+    //public void barrenTreesMapSelected() {
+    //    LeanTween.cancelAll();
+    //    SceneManager.LoadSceneAsync("BarrenTreeMap");
+    //    SceneManager.UnloadSceneAsync("MainMenu");
+
+    //}
     public void InvisibleTrailsMapSelected()
     {
-        SceneManager.LoadSceneAsync("InvisibleTrails");
+        LeanTween.cancelAll();
         SceneManager.UnloadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync("InvisibleTrails");
+       
 
     }
     public void InfernoPlainsMapSelected()
     {
+        LeanTween.cancelAll();
         SceneManager.LoadSceneAsync("InfernoPlains");
         SceneManager.UnloadSceneAsync("MainMenu");
 

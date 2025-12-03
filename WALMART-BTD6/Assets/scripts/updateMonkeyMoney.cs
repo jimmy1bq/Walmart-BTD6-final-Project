@@ -5,7 +5,7 @@ public class updateMonkeyMoney : MonoBehaviour
 {
     private void Awake()
     {
-        Debug.Log("hi");
+        
      
       
     }

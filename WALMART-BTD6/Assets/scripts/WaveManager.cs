@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 public class WaveManager : MonoBehaviour
 {
 
-    static WaveManager instance;
+    
     string enemiesFolder = "Assets/Resources/boxEnemiesWScript/";
     
     Dictionary<string, GameObject> boxTypeToString = new Dictionary<string, GameObject>() {
@@ -38,6 +38,7 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log(gameObject.GetInstanceID());
         if (GameObject.Find("Base") != null) {
             alternativeMap = true;        
         }
@@ -119,8 +120,9 @@ public class WaveManager : MonoBehaviour
     //spawn between z 16.83 to -16.83 y1.19 x-25.35
     void startWave1() {
         waveOnGoing = true;
-       // StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
-         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 10, 1f));
+        // StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
+        Debug.Log(gameObject.GetInstanceID());
+        StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 10, 1f));
         //debug tankfortthe1stlater explosion issue when base hp=0
       //  StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["tankFortThe1ST"], 1, 0f), 10f));
         // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));

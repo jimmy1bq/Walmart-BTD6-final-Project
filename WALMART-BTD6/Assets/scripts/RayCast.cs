@@ -1,7 +1,9 @@
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 public class RayCast : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI cantPlaceErrorMessage;
@@ -15,22 +17,30 @@ public class RayCast : MonoBehaviour
     public LayerMask layerMaskTowerHover;
     bool hasGoneOutsideOfGUI = false;
 
-    Camera cam;
+    [SerializeField] Camera cam;
 
     Vector3 mousePostionRaycast;
 
 
     GameObject selectedTower;
     GameObject towerOnMouse;
-
+    private void Awake()
+    {
+        SceneManager.sceneUnloaded += getCam;
+    }
+    private void getCam(UnityEngine.SceneManagement.Scene unloaded) { 
+    cam=Camera.main;  
+    }
     // sets the cam up for raycastiing and adds a listener to the tower selected event
     void Start()
     {
-        cam = Camera.main;
-        events.towerSelected.AddListener(towerSelectedEvent);
+       //unity is somehow nulling this cam somewhere and somehow didn't have this bug before but now its here which is weird.
+      //  cam = Camera.main;
+        //yep its getting the camera from the previous scene
+      //  Debug.Log(cam.GetInstanceID());
+        events.towerSelected.AddListener(towerSelectedEvent);       
     }
-
-
+   
     //changed remember to record this on milestone 4
     // made the code more readable and adding layermasking
     //hover is masking for when theres a tower on the mouse
@@ -38,8 +48,8 @@ public class RayCast : MonoBehaviour
     void Update()
     {
         Vector3 mousPos = Input.mousePosition;
-        Ray ray = cam.ScreenPointToRay(mousPos);
-
+        cam = Camera.main;
+        Ray ray = cam.ScreenPointToRay(mousPos);    
         RaycastHit hit;
         if (towerOnMouse != null)
         {
