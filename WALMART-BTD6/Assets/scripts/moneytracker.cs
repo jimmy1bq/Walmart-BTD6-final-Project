@@ -9,9 +9,9 @@ public class moneytracker : MonoBehaviour
     public int monkeyMoney = 0;
     private void Awake()
     {
-        instance = this;
+        if (instance == null) { instance = this; Object.DontDestroyOnLoad(this.gameObject); }
         events.addMM.AddListener(addMonkeyMoney);
-        Object.DontDestroyOnLoad(this.gameObject);
+     
     }
     void Start()
     {

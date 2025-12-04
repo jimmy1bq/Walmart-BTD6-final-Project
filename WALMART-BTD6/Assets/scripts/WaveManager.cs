@@ -38,7 +38,7 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log(gameObject.GetInstanceID());
+       
         if (GameObject.Find("Base") != null) {
             alternativeMap = true;        
         }
@@ -117,11 +117,18 @@ public class WaveManager : MonoBehaviour
         listOfWaves.Add(startWave59);
         listOfWaves.Add(startWave60);
     }
+    //don't forget to do this so you don't run into any scene loading issue
+    private void OnDisable()
+    {
+        waveDelegate = null;
+        Destroy(gameObject);
+    }
     //spawn between z 16.83 to -16.83 y1.19 x-25.35
     void startWave1() {
+        //one theory is the del
         waveOnGoing = true;
         // StartCoroutine(spawnTimeInbetween(boxTypeToString["metal"], 20, 1f));
-        Debug.Log(gameObject.GetInstanceID());
+        Debug.Log(gameObject == null);
         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 10, 1f));
         //debug tankfortthe1stlater explosion issue when base hp=0
       //  StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["tankFortThe1ST"], 1, 0f), 10f));

@@ -6,12 +6,14 @@ using UnityEditor.SearchService;
 using NUnit.Framework.Internal.Execution;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 
 
 public class MainMenuScript : MonoBehaviour
 {
   public static MainMenuScript instance;
     [SerializeField] Canvas canvasGUI;
+    [SerializeField] GameObject playButtonGO;
     Vector3 originalPosMMF;
     Vector3 originalPosXPBar;
     Vector3 originalPosPB;
@@ -29,25 +31,37 @@ public class MainMenuScript : MonoBehaviour
         }
         events.levelUp.AddListener(levelUPED);
         instance = this;
+        events.buttonEvent.AddListener(playButton);
     }
      void Start()
     {
-        Debug.Log(Camera.main.GetInstanceID());
+        StartCoroutine(SetupUI());
+    }
+    IEnumerator SetupUI()
+    {
+
+        yield return new WaitForNextFrameUnit() ;
+
+        Canvas.ForceUpdateCanvases();
+        GameObject playBuTToNGo = Instantiate(playButtonGO, new Vector3(960, 540, 0), Quaternion.identity);
+        playBuTToNGo.transform.parent = FindAnyObjectByType<Canvas>().transform;
+    }
+    public void clickclick() {
+        events.buttonEvent.Invoke(1);
     }
 
-
     //yea I know this could be done with an loop and list saving the position
-    public void playButton() {
-     
+    public void playButton(int buh) {
+        Debug.Log("HI");
         GameObject barrenLandGUI = canvasGUI.transform.Find("BarrenTreesMapGUI").gameObject;
         GameObject monkeyMoneyFrame = canvasGUI.transform.Find("MoneyFrame").gameObject;
         GameObject xpBar = canvasGUI.transform.Find("xpBar").gameObject;
-        GameObject playButton = canvasGUI.transform.Find("PlayButton").gameObject;      
+        GameObject playButton = canvasGUI.transform.Find("PlayButton(Clone)").gameObject;
+        Debug.Log(playButton.transform.position);
         GameObject bgColor = canvasGUI.transform.Find("BackGround").gameObject;
         UnityEngine.UI.Image bgColorImage = bgColor.GetComponent<UnityEngine.UI.Image>();
         GameObject backButton = canvasGUI.transform.Find("BackButton").gameObject;
-
-       RectTransform playButtonRect = playButton.GetComponent<RectTransform>();
+        RectTransform playButtonRect = playButton.GetComponent<RectTransform>();
       
         //originalPosXPBar = xpBar.transform.position;
         //originalSizeBTM = barrenLandGUI.transform.localScale;
@@ -67,12 +81,12 @@ public class MainMenuScript : MonoBehaviour
             hasStoredOriginalPositions = true;
 
 
-        }
+        }      
+        
         LeanTween.cancel(monkeyMoneyFrame);
         LeanTween.cancel(xpBar);
         LeanTween.cancel(playButton);
         LeanTween.cancel(backButton);
-
         //monkeyMoneyFrame.GetComponent<RectTransform>().anchoredPosition = originalPosXPBar;
         //anchoring problem? seems like it
         monkeyMoneyFrame.LeanMove(new Vector3(monkeyMoneyFrame.transform.position.x, 5000, monkeyMoneyFrame.transform.position.z), 0.5f);
