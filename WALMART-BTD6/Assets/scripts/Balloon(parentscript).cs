@@ -188,8 +188,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         if (alt == true)
         {
             if (currentTarget == null)
-            {
-              
+            {       
                 enemyClosestTargetting();
             }           
             else{
