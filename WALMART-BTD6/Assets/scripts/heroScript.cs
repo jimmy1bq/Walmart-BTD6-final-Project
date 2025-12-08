@@ -296,23 +296,16 @@ public class heroScript : towersParent
           radarBall.GetComponent<LineRenderer>().SetPosition(1, currPos);
         }
         radarBall.GetComponent<LineRenderer>().SetPosition(1, enemyPos);
-        StartCoroutine(tweenAlphaValue(radarBall.GetComponent<LineRenderer>().material.color, radarBall.GetComponent<LineRenderer>().material.color, radarBall));
+        StartCoroutine(destroyLaser(radarBall));
         StartCoroutine(explosion(enemyPos));
     }
-    IEnumerator tweenAlphaValue(Color endColors, Color startingColor, GameObject radarBall)
+    //yes before anyone ask there is a risk with passing in gameobject into coroutines that uses them 2 seconds later 
+   
+    IEnumerator destroyLaser(GameObject ball)
     {
-        float time = 0f;
-        float timer = 3f;
-        radarBall.GetComponent<LineRenderer>().material.color = new Color(radarBall.GetComponent<LineRenderer>().material.color.r, radarBall.GetComponent<LineRenderer>().material.color.g, radarBall.GetComponent<LineRenderer>().material.color.b,0);
-        for (; time <= timer; time += Time.deltaTime)
-        {
-            //pool the waitforseconds 
-            yield return new WaitForSeconds(0.008f);
-
-            //   Color currColor = Color.Lerp(new Color(startingColor.r, startingColor.g, startingColor.b,startingColor.a), new Color(endColors.r, endColors.g, endColors.b, 0), time / timer);
-            radarBall.GetComponent<LineRenderer>().material.color = new Color(radarBall.GetComponent<LineRenderer>().material.color.r, radarBall.GetComponent<LineRenderer>().material.color.g, radarBall.GetComponent<LineRenderer>().material.color.b, time / timer);
-          
-        }
+        yield return new WaitForSeconds(2);
+        ball.GetComponent<LineRenderer>().SetPosition(0, ball.transform.position);
+        ball.GetComponent<LineRenderer>().SetPosition(1, ball.transform.position);
     }
     IEnumerator explosion(Vector3 enemyPos) {
         yield return new WaitForSeconds(1);
