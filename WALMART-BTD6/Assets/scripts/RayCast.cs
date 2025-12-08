@@ -87,7 +87,7 @@ public class RayCast : MonoBehaviour
             }
            
         }
-       
+        //credit to ai(it was google gemmni i think) for acutally informing about this "EventSystem.current.IsPointerOverGameObject()"
         else if (towerOnMouse == null && Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit) && !EventSystem.current.IsPointerOverGameObject())
         {
           

@@ -25,7 +25,7 @@ public static class events {
     public static gameOver gameOverEvent = new gameOver();
 
 }
-//milestone 7
+//chatgpt for telling I acutally have to create a new class that stems from UnityEvent to make unity take multiple input(yeah I could just create a delagate to solve this issue)
 public class TowerUpgradeEvent : UnityEvent<string, string, Dictionary<string,float>,bool >{ }
 
 public class gameOver : UnityEvent<int,bool> { }

@@ -42,7 +42,7 @@ public class UIController : MonoBehaviour
         bool buh = WaveManager.waveDelegate.Invoke();
         if (buh)
         {
-
+    
             GameObject startWaveButtonThing = canvasGUI.transform.Find("WaveStartButton(Clone)").gameObject;
             GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedUpButton" + ".prefab"), startWaveButtonThing.transform.position, Quaternion.identity);
             speedUpButton.transform.parent = canvasGUI.transform;

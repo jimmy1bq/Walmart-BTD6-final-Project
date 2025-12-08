@@ -289,7 +289,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         Collider[] enemyCollider = Physics.OverlapSphere(gameObject.transform.position, stats["Range"], boxLayerToHit);
         float randoNUM = UnityEngine.Random.Range(0, (float)(enemyCollider.Count() - 1));
 
-
         if (enemyCollider.Length != 0)
         {
             attackEnemy(enemyCollider[(int)randoNUM].gameObject);
@@ -461,7 +460,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected void updateTargetGUI()
     {
         GameObject text = null;
-     //   monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
+     // monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
       
         text = monkeyUI.transform.Find("curTarget").gameObject;
         text.GetComponent<TextMeshProUGUI>().text = targettingListNames[targettingNum];
@@ -647,7 +646,8 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         rangeC.transform.parent = gameObject.transform;
         
     }
-    public void updateBuffTower(Dictionary<string, float> buff, bool camo) {
+    public void updateBuffTower(Dictionary<string, float> buff, bool camo)
+    {
 
         if (camo)
         {

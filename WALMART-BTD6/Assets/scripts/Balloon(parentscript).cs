@@ -260,7 +260,6 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
                     attackCoroutine=StartCoroutine(attackEnemy(enemyToAttack));
                 }
                 break;
-
         }    
     }
   protected virtual IEnumerator attackEnemy(GameObject enemy)
@@ -268,8 +267,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         enemy.GetComponent<IDamageTaken>().damageTaken(damageValuer[boxColor], gameObject);
         yield return new WaitForSeconds(1f);
         if (enemy == null)
-        {
-            
+        {      
             currentState = state.moving;
             switchStates(null);
             attackCoroutine = null;
@@ -347,8 +345,6 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
     //mileestone 7 changed this to use assestdatabase to load my prefbs now
     public virtual void damageTaken(int damage, GameObject p)
     {
-       
-       
         listofDamage.Add(damage);
         damageds = true;
        

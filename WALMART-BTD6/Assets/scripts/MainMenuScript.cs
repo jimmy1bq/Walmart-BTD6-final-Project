@@ -101,7 +101,7 @@ public class MainMenuScript : MonoBehaviour
         monkeyMoneyFrame.LeanMove(new Vector3(monkeyMoneyFrame.transform.position.x, 5000, monkeyMoneyFrame.transform.position.z), 0.5f);
         xpBar.LeanMove(new Vector3(xpBar.transform.position.x, 5000, xpBar.transform.position.z), 0.5f);
         playButton.LeanMove(new Vector3(playButton.transform.position.x, -5000, playButton.transform.position.z), 0.5f);
-        StartCoroutine(tweenPoistion(playButton, playButton.transform.position, new Vector3(playButton.transform.position.x, -1000, playButton.transform.position.z), 0.05f));
+       // StartCoroutine(tweenPoistion(playButton, playButton.transform.position, new Vector3(playButton.transform.position.x, -1000, playButton.transform.position.z), 0.05f));
         // LeanTween.moveLocal(playButton, new Vector3(playButtonRect.anchoredPosition.x, -5000, 0), 0.5f);
 
         backButton.LeanMove(new Vector3(backButton.transform.position.x, 100, backButton.transform.position.z), 0.5f);
@@ -113,6 +113,7 @@ public class MainMenuScript : MonoBehaviour
         Debug.Log("Active tweens: " + LeanTween.maxSearch);
         Debug.Log("Tweens in use: " + LeanTween.tweensRunning);
     }
+    //this was just used to debug
     IEnumerator tweenPoistion(GameObject gameObjectToTween,Vector3 originPosition, Vector3 targetPosition, float tweenTime) {
         //like object pooling(gameObject pooling) but with "object" or classes
         //yes this isn't AI I known this optimization strat for a bit of time along with Object pooling

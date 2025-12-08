@@ -26,7 +26,6 @@ public class GameOverTHing : MonoBehaviour
     IEnumerator waitForfuncton() {
 
         yield return new WaitForSeconds(2f);
-       
         Time.timeScale = 0f;
     }
 
