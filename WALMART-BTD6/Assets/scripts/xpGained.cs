@@ -32,7 +32,7 @@ public class xpGained : MonoBehaviour
             gameObject.transform.Find("level").GetComponent<TextMeshProUGUI>().text = "Level "+levelRightNow;
         }
         float progress = (float)curXp / (float)curXpNeeded;
-
+        //ty to claude or chatgpt for showing me how to use LeanTween.Value
         LeanTween.value(gameObject, gameObject.GetComponent<Slider>().value, progress, 0.5f).setOnUpdate((expVal) =>
         {
             gameObject.GetComponent<Slider>().value = expVal;

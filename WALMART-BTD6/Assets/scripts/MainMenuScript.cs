@@ -26,7 +26,7 @@ public class MainMenuScript : MonoBehaviour
     void Awake()
     {
         Time.timeScale = 1f;
-         Debug.Log(gameObject.name + ":" + gameObject.GetInstanceID());
+        Debug.Log(gameObject.name + ":" + gameObject.GetInstanceID());
         if (instance != null && instance != this) {  
             Destroy(gameObject);
             StopAllCoroutines();
@@ -49,18 +49,16 @@ public class MainMenuScript : MonoBehaviour
     }
     IEnumerator SetupUI()
     {
-
         yield return new WaitForNextFrameUnit() ;
         Canvas.ForceUpdateCanvases();
         GameObject playBuTToNGo = Instantiate(playButtonGO, new Vector3(960, 540, 0), Quaternion.identity);
         playBuTToNGo.transform.parent = FindAnyObjectByType<Canvas>().transform;
     }
     public void clickclick() {
-        Debug.Log("HI");
         events.buttonEvent.Invoke(1);
     }
 
-    //yea I know this could be done with an loop and list saving the position
+    //moves the guis
     public void playButton(int buh)
     {
 
@@ -73,13 +71,6 @@ public class MainMenuScript : MonoBehaviour
         UnityEngine.UI.Image bgColorImage = bgColor.GetComponent<UnityEngine.UI.Image>();
         GameObject backButton = canvasGUI.transform.Find("BackButton").gameObject;
         RectTransform playButtonRect = playButton.GetComponent<RectTransform>();
-
-        //originalPosXPBar = xpBar.transform.position;
-        //originalSizeBTM = barrenLandGUI.transform.localScale;
-        //originalPosMMF = monkeyMoneyFrame.transform.position;
-        //originalPosPB = playButton.transform.position;
-        //originalBackButton = backButton.transform.position;
-        //oldBGColor = bgColor.GetComponent<UnityEngine.UI.Image>().color;
 
         if (!hasStoredOriginalPositions)
         {
@@ -113,52 +104,9 @@ public class MainMenuScript : MonoBehaviour
         Debug.Log("Active tweens: " + LeanTween.maxSearch);
         Debug.Log("Tweens in use: " + LeanTween.tweensRunning);
     }
-    //this was just used to debug
-    IEnumerator tweenPoistion(GameObject gameObjectToTween,Vector3 originPosition, Vector3 targetPosition, float tweenTime) {
-        //like object pooling(gameObject pooling) but with "object" or classes
-        //yes this isn't AI I known this optimization strat for a bit of time along with Object pooling
-        Debug.Log("1:"+"HI");
-        Debug.Log("2:"+gameObjectToTween);
-        Debug.Log("3:"+originPosition);
-        Debug.Log("4:"+targetPosition);
-        Debug.Log(tweenTime);
-        float time = 0;
-        WaitForSeconds waitTime = new WaitForSeconds(0.08f);
-        Debug.Log("wheres the bug");
-        //for (; time <= tweenTime; time += Time.deltaTime) {
-        //    Debug.Log("5:"+"DUHH");
-        //    //broken loop??
-        //    Debug.Log(frequnceyOfChange);
+   
 
-        //    Debug.Log("WHY NO CHANGE");
-        //    Debug.Log("6:"+gameObjectToTween.transform.position);
-        //    Vector3 currentPosition = Vector3.Lerp(originPosition, targetPosition, time/tweenTime);
-        //    Debug.Log("7:"+currentPosition);
-        //    gameObjectToTween.transform.position=currentPosition;
-        //    Debug.Log("8:" + time);
-        //    Debug.Log("9:" + tweenTime);
-        //    //inf yield??
-        //    Debug.Log(frequnceyOfChange);
-
-        //    yield return null; 
-        //    Debug.Log("10:"+time);
-        //    Debug.Log("11:"+tweenTime);
-        //}
-        while (time < tweenTime) {
-            Debug.Log("10:" + time);
-            Debug.Log("10.5:" + Time.unscaledDeltaTime);
-            Debug.Log("10.5:" + Time.deltaTime);
-            Debug.Log("11:" + tweenTime);
-            Vector3 currentPosition = Vector3.Lerp(originPosition, targetPosition, time / tweenTime);
-            gameObjectToTween.transform.position = currentPosition;
-            yield return null;
-            time += Time.unscaledDeltaTime;
-
-        }
-
-
-    }
-
+    //
     public void backButtonClick()
     {
         Debug.Log("BACKBUTTON");

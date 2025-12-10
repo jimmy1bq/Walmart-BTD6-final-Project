@@ -46,7 +46,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         StartCoroutine(selfDest());
     }
 
-    // Update is called once per frame
+  
     protected void Update()
     {
         
@@ -57,13 +57,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             safetyCheckForCollisionBackWards();
             safetyCheckForCollisionForward();
         }
-        //if (mutipleOverLappingCollider && !isDead) {
-        //    for (int i = 0; i < pierce; i++) {
-        //        listOfGO[i].GetComponent<IDamageTaken>().damageTaken(damage);
-        //        isDead = true;
-        //    }
-        //    Destroy(gameObject);
-        //}
+       
     }
 
     protected IEnumerator selfDest()
@@ -71,42 +65,8 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         yield return new WaitForSeconds(lifespan);
         Destroy(gameObject);
     }
-    //for mutiple collision during a frame going over an projectile priece limit we can do raycast but get an array back limiting
-    //protected void OnTriggerEnter(Collider other)
-    //{
-    //    listOfGO = new List<GameObject>();
-    //    IDamageTaken enemyDamage = other.GetComponent<IDamageTaken>();
-    //    if (enemyDamage != null && other.gameObject.tag == "enemy")
-    //    {
-    //        //ok so added some lines of code to account for 5 collision in the same frame
-    //        //adds the gameobject onto a list
-            
-    //        listOfGO.Add(other.gameObject);
-           
-    //        //isDead is here because destory only gets rid of the GameObject at end of frame
-    //        //this works lmao
-    //        if (listOfGO.Count>pierce)
-    //        {
-    //            mutipleOverLappingCollider = true;
-    //        }
-    //        if (isDead == false) 
-    //        {
-    //            enemyDamage.damageTaken(damage);
-    //            owner.GetComponent<IPopToPopCount>().damageDealt(1);
-    //            pierce--;
-    //        }
-
-    //        if (pierce == 0)
-    //        {
-    //            isDead = true;
-    //            Destroy(gameObject);
-    //        }
-    //    }
-    //
-    //basically use raycast to detect collision by shooting a ray forward and backwards by using the difference of position and normalizing the position to get direction. Backward shoots a raybackwards from the current to last position to check if it missed anything
-    //milestone 7
-
-    //theres a bug where the projectile somehow hits the front enemy instead of the back enemy but its a rare occurance(i only manage to duplicate the bug semi regulary). Even less appreant at latter wave.
+    #region raycast
+    //raycast from last position to current
     protected virtual void safetyCheckForCollisionBackWards() {
         RaycastHit[] hit = new RaycastHit[(int)pierce];
         if (lastPoistion != null) {
@@ -137,6 +97,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
             }              
         }
     }
+    //raycast forwards
     protected virtual void safetyCheckForCollisionForward()
     {
         RaycastHit[] hit = new RaycastHit[(int)pierce];
@@ -168,28 +129,40 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         }
             
     }
+    #endregion
+    #region Interfaces
+
+    //sets the owner or tower that spawned it
     public void setProjectileOwner(GameObject trackstar)
     {
         owner = trackstar;
     }
+    //sets the targetted enemy for translate
     public void setEnemy(GameObject enemy) {       
         targetEnemy = enemy;
     }
+    //stat change for pierce
     public void statChangePierce(float addedpierce) {
         pierce *= addedpierce;
         math.floor(pierce);
     }
+    //stat change for Projectile Speed
     public void statChangeProjSpeed(float speed) {
        projSpeed *= speed;
     }
+    //Gets the tower that spawn it's layermask
     public void getParentLayerMask(LayerMask layerToHit) {
         boxLayerToHit = layerToHit;    
     }
+    //return if the projectile can hit lead enemies
     public bool returnCanHitLead() {
         return canHitLead;    
     }
+    //return if the projectile can hit black box enemies
     public bool returnCanHitBlack() {
         return true;
     }
+
+    #endregion
 
 }

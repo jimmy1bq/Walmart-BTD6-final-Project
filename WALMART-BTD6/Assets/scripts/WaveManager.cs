@@ -131,8 +131,8 @@ public class WaveManager : MonoBehaviour
         
         StartCoroutine(spawnTimeInbetween(boxTypeToString["red"], 20, 1f));
         //debug tankfortthe1stlater explosion issue when base hp=0
-        //StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["tankFortThe1ST"], 1, 0f), 10f));
-        // StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["camoCeramic"], 1, 1f),5f));
+        //StartCorou(delayedSpawn(spawnTimeInbetween(boxTypeToString["tankFortThe1ST"], 1, 0f), 10f));
+        // StartCoroutine(delayedSpawn(spawnTimeInbetween(tineboxTypeToString["camoCeramic"], 1, 1f),5f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 20f));
         
     }
@@ -582,20 +582,6 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(delayedSpawn(spawnTimeInbetween(boxTypeToString["zomgTank"], 2, 30f), 0f));
         StartCoroutine(delayedSpawn(onGoingWaveCheck(), 30f));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     IEnumerator spawnTimeInbetween(GameObject boxsToSpawn, int amountToSpawn,float seconds) {
 
