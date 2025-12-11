@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Mathematics;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -36,6 +37,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected LayerMask boxLayerToHit = 1 << 9;
     protected LayerMask oldBoxLayerToHit;
 
+    protected int testID = 0;
     protected int price;
     protected int targettingNum;
     protected int hp;
@@ -54,8 +56,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     protected gameMode currentGM;
     protected void Start()
     {
+       
         //turn them into "function" so you don't lose the coroutine when you call it for the first time
-        events.changeTarget.AddListener(changeTarget);
+   
         oldBoxLayerToHit = boxLayerToHit;
 
         //credits to cluade for telling me to do ()=> instead of just putting in the function(the reason was Im storing an Ienumrator type and once its called the functoin go bye bye. So thats why I need to do ()=> to store it as a function)
@@ -449,9 +452,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     protected void updateTargetGUI()
     {
+        Debug.Log(transform.position);
         GameObject text = null;
-   
-      
+       
         text = monkeyUI.transform.Find("curTarget").gameObject;
         text.GetComponent<TextMeshProUGUI>().text = targettingListNames[targettingNum];
     }
@@ -554,8 +557,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     //in reflection im never hardcording values in because it jsut makes inhertinace pain the in the butt to work with
     public virtual void towerSelected()
     {
+       
         rangeC.SetActive(true);
-     
+        events.changeTarget.AddListener(changeTarget);
         events.towerUpgrade.AddListener(towerUpgrade);
         events.destroyTower.AddListener(destroyTowere);
         GameObject genUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(monkeyGeneralGUIPath + "generalGUI" + ".prefab");
@@ -571,9 +575,10 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     }
     public virtual void towerUnSelected()
     {
+        events.changeTarget.RemoveListener(changeTarget);
         events.destroyTower.RemoveListener(destroyTowere);
         events.towerUpgrade.RemoveListener(towerUpgrade);
-       
+        Debug.Log("removed");
         rangeC.SetActive(false);
         monkeyUI = FindAnyObjectByType<Canvas>().gameObject.transform.Find("generalGUI(Clone)").gameObject;
         
