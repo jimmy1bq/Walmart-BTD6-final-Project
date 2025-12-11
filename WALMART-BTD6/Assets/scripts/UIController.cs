@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI cashText;
     [SerializeField] Canvas canvasGUI;
-
+    bool pasued;
     string pathToGUIs = "Assets/Resources/MiscellaniousGUI/";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,7 +42,7 @@ public class UIController : MonoBehaviour
         bool buh = WaveManager.waveDelegate.Invoke();
         if (buh)
         {
-    
+            pasued = GameOverOrWinScript.instance.pasued;
             GameObject startWaveButtonThing = canvasGUI.transform.Find("WaveStartButton(Clone)").gameObject;
             GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedUpButton" + ".prefab"), startWaveButtonThing.transform.position, Quaternion.identity);
             speedUpButton.transform.parent = canvasGUI.transform;
@@ -51,6 +51,8 @@ public class UIController : MonoBehaviour
     }
  
     public void speedUp() {
+        pasued = GameOverOrWinScript.instance.pasued;
+        if (pasued) { return; }
         Time.timeScale =5.0f;
         canvasGUI = FindFirstObjectByType<Canvas>();
         GameObject speedWaveButtonThing = canvasGUI.transform.Find("speedUpButton(Clone)").gameObject;
@@ -59,6 +61,8 @@ public class UIController : MonoBehaviour
         Destroy(speedWaveButtonThing);
     }
     public void speedDown() {
+        pasued = GameOverOrWinScript.instance.pasued;
+        if (pasued) { return; }
         Time.timeScale = 1f;
         GameObject slowWaveButtonThing = canvasGUI.transform.Find("speedDownButton(Clone)").gameObject;
         GameObject speedUpButton = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(pathToGUIs + "speedUpButton" + ".prefab"), slowWaveButtonThing.transform.position, Quaternion.identity);

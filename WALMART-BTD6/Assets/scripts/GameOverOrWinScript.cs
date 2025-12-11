@@ -8,8 +8,17 @@ using UnityEngine.UI;
 
 public class GameOverOrWinScript : MonoBehaviour
 {
+    public static GameOverOrWinScript instance;
+    Coroutine waitForFunction=null;
+    
+    public bool pasued = false;
     [SerializeField] GameObject pauseScreenGUI;
     float orginalTimeScale;
+    private void Awake()
+    {
+        if (instance != null) { return; }
+        instance = this;
+    }
 
     public void gameRestart() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -19,13 +28,24 @@ public class GameOverOrWinScript : MonoBehaviour
         SceneManager.LoadScene(1);
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
     }
-    public void pauseGame() { 
-        orginalTimeScale = Time.timeScale;
+    public void pauseGame() {
+        if (Time.timeScale!=0) {
+            orginalTimeScale = Time.timeScale;
+        }
+        if (waitForFunction != null) {
+            StopCoroutine(waitForfuncton());
+        }
         pauseScreenGUI.LeanMove(new Vector3(830, 550, 0), 1f);
-        StartCoroutine(waitForfuncton());
+        waitForFunction=StartCoroutine(waitForfuncton());
+        pasued = true;
     }
     public void unPauseGame()
     {
+        if (waitForFunction != null) {
+        StopCoroutine(waitForFunction);   
+            
+        }
+        pasued=false;
         Time.timeScale = orginalTimeScale;
         pauseScreenGUI.LeanMove(new Vector3(830, 1500, 0), 1f);
     }
@@ -33,7 +53,10 @@ public class GameOverOrWinScript : MonoBehaviour
     IEnumerator waitForfuncton()
     {
         yield return new WaitForSeconds(1.5f);
-        Time.timeScale = 0f;
+        if (pasued)
+        {
+            Time.timeScale = 0f;
+        }
     }
-  
+   
 }

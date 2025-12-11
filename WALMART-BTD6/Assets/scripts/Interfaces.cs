@@ -96,6 +96,10 @@ public interface IbuffTower
 
     public void removeBuffTower();
 }
+public interface IGET
+{
+    public bool getPausedGame();
+}
 
 
 
