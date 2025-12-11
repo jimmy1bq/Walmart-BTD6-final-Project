@@ -66,6 +66,7 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
         Destroy(gameObject);
     }
     #region raycast
+    //bug the is that some balloons share the same id not a raycast bug
     //raycast from last position to current
     protected virtual void safetyCheckForCollisionBackWards() {
         RaycastHit[] hit = new RaycastHit[(int)pierce];
@@ -78,6 +79,8 @@ public class projectileParentForStraightLinearProj : MonoBehaviour, IProjctileOw
                 {
                     int idGO = hit[i].collider.gameObject.GetComponent<IGetSetID>().parentGetID();
                     int idGO2 = hit[i].collider.gameObject.GetComponent<IGetSetID>().personalGetID();
+                    Debug.Log(!idOfNotToDamage.Contains(idGO));
+                    Debug.Log(!idOfNotToDamage.Contains(idGO2));
                     if (isDead == false && i<hit.Length && !idOfNotToDamage.Contains(idGO) && !idOfNotToDamage.Contains(idGO2))
                     {                
                         hit[i].collider.gameObject.GetComponent<IDamageTaken>().damageTaken(damage,gameObject);
