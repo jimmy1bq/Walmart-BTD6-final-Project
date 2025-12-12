@@ -163,6 +163,7 @@ public class Box : MonoBehaviour, IDamageTaken, IIndex, IGetSetID, IreturnIndexN
         if (gameObject.layer == 11) {
             camo = true;        
         }
+
         if (GameObject.Find("Base") != null)
         {
             alt = true;

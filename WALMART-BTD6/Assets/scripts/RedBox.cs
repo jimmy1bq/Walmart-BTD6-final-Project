@@ -14,7 +14,8 @@ public class RedBox : Box , IIndex, IDamageTaken
         layer = balloonLayer[boxColor];
         balloonSpeedValue = balloonSpeed[boxColor];
         if (WayPointManager.instance != null) { totalWayPoints = WayPointManager.instance.wayPoints.Count - 1; }
-        personalId = boxData.ID;
-        boxData.ID++;
+        personalId = GameManager.instance.boxID;
+        GameManager.instance.boxID++;
+     
     }
 }

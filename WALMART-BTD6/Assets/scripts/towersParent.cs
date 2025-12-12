@@ -377,7 +377,7 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
 
         foreach (var statBuff in statsUpgrade)
         {
-            Debug.Log(oldStats["Range"]);
+           
             float buffValue= oldStats[statBuff.Key] * statBuff.Value - oldStats[statBuff.Key];
             stats[statBuff.Key] += buffValue;
             Debug.Log(gameObject + ":" + stats[statBuff.Key]);
@@ -482,7 +482,6 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
         }
         if (restricted)
         {
-
             return nonUpgradedPath;
         }
         return null;
@@ -597,8 +596,9 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     public void damageTaken(int damageAmount, GameObject balloonDamage)
     {       
         hp -= damageAmount;
-     
+
         if (hp <= 0) { 
+
         Destroy(gameObject);
         }
     }

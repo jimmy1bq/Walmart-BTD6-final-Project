@@ -6,12 +6,17 @@ public class GameManager : MonoBehaviour
    public int hp;
    public int coins;
    public int totalAccumMonkeyMoney = 0;
- 
+   public int boxID = 0;
+
     //later bomb blitz ability when losing lives
 
-   private void Awake()
+    private void Awake()
     {
-        instance = this;
+        if (instance != null)
+        {
+        }
+        else { instance = this; }
+          
         events.LoseLives.AddListener(loseLives);
         events.GainCash.AddListener(gainCoins);
         if (GameObject.Find("Base") != null)
