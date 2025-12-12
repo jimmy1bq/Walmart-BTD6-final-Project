@@ -597,9 +597,10 @@ public class towersParent : MonoBehaviour, IHovering, IUNORSelected, IPopToPopCo
     {       
         hp -= damageAmount;
 
-        if (hp <= 0) { 
-
-        Destroy(gameObject);
+        if (hp <= 0) {
+          
+            Destroy(monkeyUI);
+            Destroy(gameObject);
         }
     }
     
